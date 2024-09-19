@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Comfortaa', sans-serif; /* Змінено на Comfortaa */
     background-color: #000;
     color: #ffffff;
     background-image: url('https://i.imgur.com/2IUsv4r.png');
@@ -13,12 +13,12 @@ body {
     justify-content: space-between;
     align-items: center;
     background-color: rgba(30, 30, 30, 0.8);
-    padding: 15px;
+    padding: 10px; /* Менше відступлення */
     border-bottom: 2px solid #ff9800;
 }
 
 .title {
-    font-size: 2.5em;
+    font-size: 1.8em; /* Зменшений заголовок */
 }
 
 .container, .login-container, .info-container {
@@ -59,14 +59,22 @@ input {
 
 .btn {
     margin: 10px 0;
-    background-color: #1e88e5;
+    background-color: rgba(211, 211, 211, 0.3); /* Світло сірий фон з прозорістю */
     padding: 10px 15px;
     border-radius: 5px;
     text-decoration: none;
-    color: white;
-    transition: background-color 0.3s;
+    color: gray; /* Текст сірого кольору */
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .btn:hover {
-    background-color: #1565c0;
+    color: white; /* Текст стає білим при наведенні */
+}
+
+.info-container {
+    text-align: left; /* Вирівнювання тексту */
+}
+
+h2 {
+    font-size: 2em; /* Збільшити заголовки секцій */
 }
