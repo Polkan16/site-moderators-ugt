@@ -11,23 +11,19 @@
     <header>
         <h1>Модератори</h1>
         <nav>
-            <ul>
-                <li><button onclick="openLogin()">Вхід</button></li>
-                <li><button onclick="location.href='#'">Про нас</button></li>
-                <li><button onclick="location.href='#'">Контакти</button></li>
-            </ul>
+            <button onclick="openLogin()">Вхід</button>
         </nav>
     </header>
 
-    <main id="main-content" style="display:none;">
+    <main id="main-content">
         <section>
             <h2>Про роботу модератора</h2>
-            <p>Модератори забезпечують дотримання правил спільноти, взаємодіють з учасниками та вирішують конфлікти.</p>
-            <p>Основні обов'язки модератора:</p>
+            <p>Модератори відповідають за підтримку порядку та дотримання правил у спільноті.</p>
+            <p>Обов'язки модератора включають:</p>
             <ul>
-                <li>Моніторинг активності учасників</li>
+                <li>Контроль за активністю учасників</li>
                 <li>Вирішення конфліктів</li>
-                <li>Організація подій та акцій</li>
+                <li>Організація подій</li>
             </ul>
             <div class="gallery">
                 <img src="image1.jpg" alt="Модератор 1">
@@ -37,47 +33,41 @@
     </main>
 
     <div id="dashboard" class="dashboard" style="display:none;">
+        <h2>Кабінет модераторів</h2>
         <nav class="dashboard-nav">
-            <button onclick="showPage('info')">Інформація про модераторів</button>
-            <button onclick="showPage('stats')">Статистика</button>
+            <button onclick="showPage('info')">Інформація</button>
             <button onclick="showPage('settings')">Налаштування</button>
             <button onclick="logout()">Вихід</button>
         </nav>
         <div id="dashboard-content">
-            <h2>Кабінет модераторів</h2>
-            <div id="info" class="dashboard-section" style="display:none;">
+            <div id="info" class="dashboard-section">
                 <p>Список модераторів:</p>
                 <ul>
-                    <li>Модератор 1: Вік, Посада, Фото</li>
-                    <li>Модератор 2: Вік, Посада, Фото</li>
+                    <li>Модератор 1: Вік, Посада</li>
+                    <li>Модератор 2: Вік, Посада</li>
                 </ul>
             </div>
-            <div id="stats" class="dashboard-section" style="display:none;">
-                <p>Статистика модераторів...</p>
-            </div>
             <div id="settings" class="dashboard-section" style="display:none;">
-                <p>Налаштування...</p>
+                <p>Налаштування профілю...</p>
             </div>
         </div>
     </div>
-
-    <footer id="footer" style="display:none;">
-        <button onclick="location.href='#'">Подати за'явку на модератора</button>
-        <button onclick="location.href='#'">Зв'язок з Senior Moderator</button>
-        <p>Усі права захищені 2024 Moderator Discord. Усі права захищені</p>
-    </footer>
 
     <div id="login-modal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeLogin()">&times;</span>
             <h2>Вхід</h2>
-            <form id="login-form" onsubmit="return login()">
+            <form onsubmit="return login()">
                 <input type="text" id="username" placeholder="Логін" required>
                 <input type="password" id="password" placeholder="Пароль" required>
                 <button type="submit">Увійти</button>
             </form>
         </div>
     </div>
+
+    <footer>
+        <p>Усі права захищені 2024 Moderator Discord.</p>
+    </footer>
 
     <script>
         function openLogin() {
@@ -95,7 +85,6 @@
             if (username === "moderator" && password === "QAZ7845") {
                 closeLogin();
                 document.getElementById('main-content').style.display = 'none';
-                document.getElementById('footer').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
                 showPage('info');
             } else {
@@ -106,17 +95,13 @@
 
         function showPage(page) {
             const sections = document.querySelectorAll('.dashboard-section');
-            sections.forEach(section => {
-                section.style.display = 'none';
-            });
+            sections.forEach(section => section.style.display = 'none');
             document.getElementById(page).style.display = 'block';
         }
 
         function logout() {
             document.getElementById('dashboard').style.display = 'none';
-            document.getElementById('main-content').style.display = 'none';
-            document.getElementById('footer').style.display = 'none';
-            document.getElementById('login-modal').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
             alert('Ви вийшли з кабінету.');
         }
 
