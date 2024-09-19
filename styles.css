@@ -39,6 +39,28 @@ main {
     text-align: center;
 }
 
+.gallery {
+    margin: 20px 0;
+}
+
+.gallery img {
+    width: 200px;
+    height: auto;
+    margin: 0 10px;
+}
+
+.dashboard {
+    padding: 20px;
+}
+
+.dashboard-nav {
+    margin-bottom: 20px;
+}
+
+.dashboard-section {
+    display: none;
+}
+
 footer {
     padding: 20px;
     text-align: center;
