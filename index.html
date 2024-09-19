@@ -8,24 +8,40 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
+    <header id="login-header">
         <h1>Вхід</h1>
-        <form id="login-form">
-            <input type="text" placeholder="Логін" required>
-            <input type="password" placeholder="Пароль" required>
+        <form id="login-form" onsubmit="return login()">
+            <input type="text" id="username" placeholder="Логін" required>
+            <input type="password" id="password" placeholder="Пароль" required>
             <button type="submit">Увійти</button>
         </form>
     </header>
 
-    <main>
+    <main id="main-content" style="display:none;">
         <h2>Про роботу модератора</h2>
         <p>Модератори забезпечують дотримання правил спільноти, взаємодіють з учасниками та вирішують конфлікти.</p>
     </main>
 
-    <footer>
+    <footer id="footer" style="display:none;">
         <button onclick="location.href='#'">Подати за'явку на модератора</button>
         <button onclick="location.href='#'">Зв'язок з Senior Moderator</button>
         <p>Усі права захищені 2024 Moderator Discord. Усі права захищені</p>
     </footer>
+
+    <script>
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === "moderator" && password === "QAZ7845") {
+                document.getElementById('login-header').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                document.getElementById('footer').style.display = 'block';
+            } else {
+                alert('Неправильний логін або пароль!');
+            }
+            return false; // Зупиняємо перезавантаження сторінки
+        }
+    </script>
 </body>
 </html>
