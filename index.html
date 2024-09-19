@@ -22,9 +22,6 @@
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
         }
-        h1 {
-            text-align: center;
-        }
         .nav {
             background: rgba(0, 0, 0, 0.9);
             padding: 15px;
@@ -44,28 +41,30 @@
         .nav button:hover {
             background: rgba(255, 204, 0, 0.3);
         }
-        .page-content {
-            display: none;
-        }
         .modal {
             display: none;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(30, 30, 30, 0.9);
+            background: #000;
             padding: 20px;
             border-radius: 12px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
             z-index: 1000;
+            border: 2px solid #ffcc00; /* Тонка оранжева рамка */
+        }
+        .modal h2 {
+            text-align: center;
+            color: #ffcc00;
         }
         .modal input {
-            width: 100%;
+            width: calc(100% - 20px);
             padding: 10px;
             margin-bottom: 15px;
             border-radius: 8px;
-            border: none;
-            background-color: #444;
+            border: 1px solid #ffcc00; /* Оранжева рамка для полів */
+            background-color: #333;
             color: #fff;
         }
         .modal button {
