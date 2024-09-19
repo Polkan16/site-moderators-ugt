@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Головна Сторінка</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .login {
+            display: none;
+        }
+        .nav {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .nav button {
+            margin-left: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Головна Сторінка</h1>
+    <p>Ласкаво просимо на наш сайт! Тут ви знайдете багато цікавого.</p>
+    
+    <div class="nav">
+        <button id="loginBtn">Вхід</button>
+    </div>
+
+    <div class="login" id="loginForm">
+        <h2>Вхід</h2>
+        <input type="text" id="username" placeholder="Логін" required>
+        <input type="password" id="password" placeholder="Пароль" required>
+        <button id="submitLogin">Увійти</button>
+    </div>
+
+    <div class="pages" id="pages" style="display: none;">
+        <h2>Вітаємо! Ви увійшли.</h2>
+        <button onclick="showPage(1)">Сторінка 1</button>
+        <button onclick="showPage(2)">Сторінка 2</button>
+        <button onclick="showPage(3)">Сторінка 3</button>
+        
+        <div id="pageContent"></div>
+    </div>
+</div>
+
+<script>
+    const validUsername = "admin"; // Встановіть ваш логін
+    const validPassword = "password"; // Встановіть ваш пароль
+
+    document.getElementById('loginBtn').addEventListener('click', function() {
+        document.getElementById('loginForm').style.display = 'block';
+    });
+
+    document.getElementById('submitLogin').addEventListener('click', function() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        if (username === validUsername && password === validPassword) {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('pages').style.display = 'block';
+        } else {
+            alert('Неправильний логін або пароль.');
+        }
+    });
+
+    function showPage(page) {
+        const pageContent = document.getElementById('pageContent');
+        switch (page) {
+            case 1:
+                pageContent.innerHTML = "<h3>Сторінка 1</h3><p>Це вміст сторінки 1.</p>";
+                break;
+            case 2:
+                pageContent.innerHTML = "<h3>Сторінка 2</h3><p>Це вміст сторінки 2.</p>";
+                break;
+            case 3:
+                pageContent.innerHTML = "<h3>Сторінка 3</h3><p>Це вміст сторінки 3.</p>";
+                break;
+        }
+    }
+</script>
+
+</body>
+</html>
