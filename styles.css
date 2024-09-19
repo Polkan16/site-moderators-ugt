@@ -1,47 +1,64 @@
+/* Базові стилі для тіла */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-}
-
-nav {
-    background-color: #333;
-    padding: 10px;
-}
-
-nav ul {
-    list-style-type: none;
     margin: 0;
     padding: 0;
-    display: flex;
+    font-family: Arial, sans-serif;
+    background-color: #2c2c2c;
+    background-image: url('https://i.imgur.com/gxpN7VC.png');
+    background-size: cover;
+    background-position: center;
 }
 
-nav ul li {
-    margin-right: 15px;
-}
-
-nav ul li a {
+/* Стилі для контитулу */
+.header {
+    background-color: rgba(0, 0, 0, 0.7);
     color: white;
-    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
 }
 
-.login-container {
-    max-width: 300px;
-    margin: 0 auto;
-    background-color: white;
+button {
+    background-color: #ffcc00;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #000;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #e6b800;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Стилі для форми авторизації */
+.login-form {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
 }
 
-table {
+input {
+    display: block;
     width: 100%;
-    border-collapse: collapse;
-}
-
-table, th, td {
-    border: 1px solid black;
-}
-
-th, td {
     padding: 10px;
-    text-align: left;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
 }
