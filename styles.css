@@ -45,7 +45,7 @@ form {
     border: 2px solid #ff9800;
     border-radius: 10px;
     padding: 20px;
-    background-color: rgba(40, 40, 40, 0.8);
+    background-color: rgba(40, 40, 40, 0.8); /* Без сірого квадрата */
 }
 
 input {
