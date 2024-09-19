@@ -20,3 +20,9 @@ function login() {
         document.getElementById('errorMessage').textContent = 'Невірний логін або пароль!';
     }
 }
+
+// Функція для виходу
+function logout() {
+    // Перенаправлення на головну сторінку
+    window.location.href = 'index.html';
+}
