@@ -10,23 +10,44 @@
     <div class="header">
         <h1>Про нашу діяльність</h1>
         <div class="nav-buttons">
-            <button onclick="showLogin()">Вхід</button>
+            <button onclick="showLogin('stats')">Вхід</button>
             <button onclick="showContact()">Зв'язок</button>
             <button onclick="showModeratorForm()">Подати заявку на модератора</button>
-            <button onclick="showAdminPanel()">Адмін панель</button>
-            <button onclick="showGuide()">Посібник</button>
+            <button onclick="showLogin('admin')">Адмін панель</button>
+            <button onclick="showLogin('guide')">Посібник</button>
         </div>
     </div>
+
     <div id="loginModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h2>Авторизація</h2>
             <input type="text" placeholder="Логін" id="login"><br>
             <input type="password" placeholder="Пароль" id="password"><br>
-            <button onclick="authenticate()">Увійти</button>
+            <button id="authButton" onclick="authenticate()">Увійти</button>
         </div>
     </div>
-    <!-- Додаткові модальні вікна для статистики та адмін панелі тут -->
+
+    <div id="adminPanel" class="hidden">
+        <h2>Адмін панель</h2>
+        <div id="moderatorsList"></div>
+        <button onclick="showStatistics('moderator1')">Статистика Модератора 1</button>
+        <button onclick="showStatistics('moderator2')">Статистика Модератора 2</button>
+        <!-- Додайте більше кнопок за потреби -->
+    </div>
+
+    <div id="statisticsModal" class="hidden">
+        <h2 id="statTitle"></h2>
+        <p>Статистика: <span id="statData"></span></p>
+        <button onclick="closeStatistics()">Закрити</button>
+    </div>
+
+    <div id="guideModal" class="hidden">
+        <h2>Посібник</h2>
+        <p>Тут буде інформація для посібника.</p>
+        <button onclick="closeGuide()">Закрити</button>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
