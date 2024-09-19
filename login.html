@@ -7,32 +7,16 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="nav">
+        <h1 class="title">Авторизація</h1>
+        <a href="index.html" class="btn">На головну</a>
+    </div>
     <div class="login-container">
-        <h1>Авторизація</h1>
         <form id="login-form">
             <input type="text" placeholder="Логін" required>
             <input type="password" placeholder="Пароль" required>
-            <div>
-                <input type="checkbox" id="remember">
-                <label for="remember">Пам'ятати мене</label>
-            </div>
             <button type="submit" class="btn">Увійти</button>
-            <p><a href="#">Забули пароль?</a></p>
         </form>
     </div>
-    <script>
-        document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const username = e.target[0].value;
-            const password = e.target[1].value;
-            
-            // Єдиний логін і пароль
-            if (username === 'moderator' && password === 'QAZ7845') {
-                window.location.href = 'info.html'; // Перейти на сторінку інформації
-            } else {
-                alert('Неправильний логін або пароль!');
-            }
-        });
-    </script>
 </body>
 </html>
