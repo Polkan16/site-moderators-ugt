@@ -20,5 +20,19 @@
             <p><a href="#">Забули пароль?</a></p>
         </form>
     </div>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = e.target[0].value;
+            const password = e.target[1].value;
+            
+            // Єдиний логін і пароль
+            if (username === 'moderator' && password === 'QAZ7845') {
+                window.location.href = 'info.html'; // Перейти на сторінку інформації
+            } else {
+                alert('Неправильний логін або пароль!');
+            }
+        });
+    </script>
 </body>
 </html>
