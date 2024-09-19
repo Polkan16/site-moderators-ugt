@@ -21,7 +21,7 @@ body {
     font-size: 1.5em; /* Зменшений заголовок */
 }
 
-.container, .login-container, .info-container {
+.container {
     max-width: 800px;
     margin: auto;
     padding: 20px;
@@ -30,52 +30,24 @@ body {
     border-radius: 10px;
 }
 
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 300px;
-    border: 2px solid #ff9800;
-    border-radius: 10px;
-    padding: 20px;
-    background-color: rgba(40, 40, 40, 0.8); /* Без сірого квадрата */
-}
-
-input {
-    margin: 10px 0;
-    padding: 10px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    background-color: #333;
-    color: white;
-}
-
-.btn {
-    margin: 10px 0;
-    background-color: rgba(211, 211, 211, 0.3); /* Світло сірий фон з прозорістю */
-    padding: 10px 15px;
-    border-radius: 5px;
-    text-decoration: none;
-    color: gray; /* Текст сірого кольору */
-    transition: background-color 0.3s, color 0.3s;
-    text-align: center; /* Центрування тексту */
-}
-
-.btn:hover {
-    color: white; /* Текст стає білим при наведенні */
-}
-
-.info-container {
-    text-align: left; /* Вирівнювання тексту */
-}
-
 h2 {
     font-size: 2em; /* Збільшити заголовки секцій */
+}
+
+.image-gallery {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.gallery-image {
+    width: 200px; /* Ширина зображення */
+    height: auto;
+    border-radius: 15px; /* Заокруглені кути */
+    margin: 10px;
+    transition: transform 0.3s; /* Ефект при наведенні */
+}
+
+.gallery-image:hover {
+    transform: scale(1.05); /* Збільшення зображення при наведенні */
 }
