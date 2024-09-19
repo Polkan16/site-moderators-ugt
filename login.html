@@ -12,11 +12,27 @@
         <a href="index.html" class="btn">На головну</a>
     </div>
     <div class="login-container">
-        <form id="login-form">
-            <input type="text" placeholder="Логін" required>
-            <input type="password" placeholder="Пароль" required>
+        <form id="login-form" onsubmit="return login()">
+            <input type="text" id="username" placeholder="Логін" required>
+            <input type="password" id="password" placeholder="Пароль" required>
             <button type="submit" class="btn">Увійти</button>
         </form>
+        <p id="error-message" style="color: red;"></p>
     </div>
+    <script>
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Перевірка логіна та пароля
+            if (username === 'moderator' && password === 'QAZ7845') {
+                window.location.href = 'info.html'; // Перенаправлення на сторінку інформації
+                return false; // Не надсилати форму
+            } else {
+                document.getElementById('error-message').innerText = 'Неправильний логін або пароль.';
+                return false; // Не надсилати форму
+            }
+        }
+    </script>
 </body>
 </html>
