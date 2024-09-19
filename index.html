@@ -8,42 +8,75 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 20px;
-            background-color: #f4f4f4;
-            color: #333;
+            padding: 0;
+            background-image: url('https://i.imgur.com/ta8VMVU.jpeg');
+            background-size: cover;
+            color: #ffffff;
         }
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
-            background: white;
             padding: 20px;
+            background: rgba(30, 30, 30, 0.7);
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
         h1 {
             text-align: center;
         }
-        .login {
-            display: none;
-        }
         .nav {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
         }
         .nav button {
             margin-left: 10px;
             padding: 10px;
+            color: #ffffff;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+        .login {
+            display: none;
+        }
+        .page-content {
+            display: none;
         }
     </style>
 </head>
 <body>
 
+<div class="nav">
+    <div>
+        <button onclick="showPage('home')">Головна</button>
+        <button onclick="showPage('page1')">Сторінка 1</button>
+        <button onclick="showPage('page2')">Сторінка 2</button>
+        <button onclick="showPage('page3')">Сторінка 3</button>
+    </div>
+    <button id="loginBtn">Вхід</button>
+</div>
+
 <div class="container">
-    <h1>Головна Сторінка</h1>
-    <p>Ласкаво просимо на наш сайт! Тут ви знайдете багато цікавого.</p>
+    <div id="home" class="page-content" style="display: block;">
+        <h1>Головна Сторінка</h1>
+        <p>Ласкаво просимо на наш сайт! Тут ви знайдете багато цікавого.</p>
+    </div>
     
-    <div class="nav">
-        <button id="loginBtn">Вхід</button>
+    <div id="page1" class="page-content">
+        <h1>Сторінка 1</h1>
+        <p>Це вміст сторінки 1.</p>
+    </div>
+    
+    <div id="page2" class="page-content">
+        <h1>Сторінка 2</h1>
+        <p>Це вміст сторінки 2.</p>
+    </div>
+    
+    <div id="page3" class="page-content">
+        <h1>Сторінка 3</h1>
+        <p>Це вміст сторінки 3.</p>
     </div>
 
     <div class="login" id="loginForm">
@@ -53,19 +86,11 @@
         <button id="submitLogin">Увійти</button>
     </div>
 
-    <div class="pages" id="pages" style="display: none;">
-        <h2>Вітаємо! Ви увійшли.</h2>
-        <button onclick="showPage(1)">Сторінка 1</button>
-        <button onclick="showPage(2)">Сторінка 2</button>
-        <button onclick="showPage(3)">Сторінка 3</button>
-        
-        <div id="pageContent"></div>
-    </div>
 </div>
 
 <script>
-    const validUsername = "admin"; // Встановіть ваш логін
-    const validPassword = "password"; // Встановіть ваш пароль
+    const validUsername = "admin"; // Ваш логін
+    const validPassword = "password"; // Ваш пароль
 
     document.getElementById('loginBtn').addEventListener('click', function() {
         document.getElementById('loginForm').style.display = 'block';
@@ -77,25 +102,16 @@
 
         if (username === validUsername && password === validPassword) {
             document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('pages').style.display = 'block';
+            alert('Вхід успішний!');
         } else {
             alert('Неправильний логін або пароль.');
         }
     });
 
     function showPage(page) {
-        const pageContent = document.getElementById('pageContent');
-        switch (page) {
-            case 1:
-                pageContent.innerHTML = "<h3>Сторінка 1</h3><p>Це вміст сторінки 1.</p>";
-                break;
-            case 2:
-                pageContent.innerHTML = "<h3>Сторінка 2</h3><p>Це вміст сторінки 2.</p>";
-                break;
-            case 3:
-                pageContent.innerHTML = "<h3>Сторінка 3</h3><p>Це вміст сторінки 3.</p>";
-                break;
-        }
+        const pages = document.querySelectorAll('.page-content');
+        pages.forEach(p => p.style.display = 'none'); // Сховати всі сторінки
+        document.getElementById(page).style.display = 'block'; // Показати вибрану сторінку
     }
 </script>
 
