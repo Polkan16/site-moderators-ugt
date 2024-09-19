@@ -4,18 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Головна сторінка</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="/">Головна</a></li>
-            <li><a href="/login">Вхід</a></li>
-        </ul>
-    </nav>
-    <div class="content">
-        <h1>Вітаємо на сайті команди модераторів!</h1>
-        <p>Увійдіть, щоб отримати доступ до панелі модератора.</p>
+    <div class="header">
+        <h1>Контитул</h1>
+        <button id="loginButton" onclick="showLoginForm()">Вхід</button>
     </div>
+    
+    <div id="loginForm" class="login-form hidden">
+        <h2>Авторизація</h2>
+        <label for="username">Логін:</label>
+        <input type="text" id="username" placeholder="Введіть логін">
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" placeholder="Введіть пароль">
+        <button onclick="login()">Увійти</button>
+        <p id="errorMessage" class="error-message"></p>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
