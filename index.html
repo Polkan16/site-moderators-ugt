@@ -3,51 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Головна Сторінка</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Ваш Сайт</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: flex-end;
+            background-color: transparent;
+            padding: 10px;
+        }
+
+        .nav button {
+            background-color: rgba(211, 211, 211, 0.25);
+            color: gray;
+            border: none;
+            padding: 10px 20px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .nav button:hover {
+            color: white;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(211, 211, 211, 0.3);
+            padding: 60px;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px;
+        }
+
+        .moderator-list {
+            margin: 20px;
+            display: none;
+        }
+
+        .moderator {
+            margin-bottom: 10px;
+        }
+
+        .admin-panel {
+            display: none;
+        }
+
+        .orange {
+            color: orange;
+        }
+    </style>
 </head>
 <body>
     <div class="header">
-        <h1>Про нашу діяльність</h1>
-        <div class="nav-buttons">
-            <button onclick="showLogin('stats')">Вхід</button>
-            <button onclick="showContact()">Зв'язок</button>
-            <button onclick="showModeratorForm()">Подати заявку на модератора</button>
-            <button onclick="showLogin('admin')">Адмін панель</button>
-            <button onclick="showLogin('guide')">Посібник</button>
-        </div>
+        <h1>Ласкаво просимо до нашого сайту!</h1>
+        <p>Тут ви знайдете всю інформацію про нашу діяльність.</p>
+    </div>
+    
+    <div class="nav">
+        <button onclick="openModal('loginModal')">Вхід</button>
+        <button onclick="openModal('adminModal')">Admin Panel</button>
+        <button onclick="openGuide()">Посібник</button>
     </div>
 
     <div id="loginModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Авторизація</h2>
-            <input type="text" placeholder="Логін" id="login"><br>
-            <input type="password" placeholder="Пароль" id="password"><br>
-            <button id="authButton" onclick="authenticate()">Увійти</button>
+            <span onclick="closeModal('loginModal')" style="cursor:pointer;">&times;</span>
+            <h2>Вхід</h2>
+            <input type="text" id="loginUser" placeholder="Логін" />
+            <input type="password" id="loginPass" placeholder="Пароль" />
+            <button onclick="login()">Увійти</button>
         </div>
     </div>
 
-    <div id="adminPanel" class="hidden">
-        <h2>Адмін панель</h2>
-        <div id="moderatorsList"></div>
-        <button onclick="showStatistics('moderator1')">Статистика Модератора 1</button>
-        <button onclick="showStatistics('moderator2')">Статистика Модератора 2</button>
-        <!-- Додайте більше кнопок за потреби -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <span onclick="closeModal('adminModal')" style="cursor:pointer;">&times;</span>
+            <h2>Admin Вхід</h2>
+            <input type="text" id="adminUser" placeholder="Логін" />
+            <input type="password" id="adminPass" placeholder="Пароль" />
+            <button onclick="adminLogin()">Увійти</button>
+        </div>
     </div>
 
-    <div id="statisticsModal" class="hidden">
-        <h2 id="statTitle"></h2>
-        <p>Статистика: <span id="statData"></span></p>
-        <button onclick="closeStatistics()">Закрити</button>
+    <div class="moderator-list" id="moderatorList">
+        <h2>Список Модераторів</h2>
+        <div class="moderator">
+            <img src="moderator1.jpg" alt="Модератор 1" style="width:50px; height:50px;">
+            <span>Модератор 1</span>
+            <button onclick="showStats('moderator1')">Статистика</button>
+        </div>
+        <div class="moderator">
+            <img src="moderator2.jpg" alt="Модератор 2" style="width:50px; height:50px;">
+            <span>Модератор 2</span>
+            <button onclick="showStats('moderator2')">Статистика</button>
+        </div>
     </div>
 
-    <div id="guideModal" class="hidden">
-        <h2>Посібник</h2>
-        <p>Тут буде інформація для посібника.</p>
-        <button onclick="closeGuide()">Закрити</button>
-    </div>
+    <script>
+        const correctLogin = { username: 'user', password: 'password' };
+        const correctAdmin = { username: 'Daniil', password: 'QAZ7845' };
 
-    <script src="script.js"></script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function login() {
+            const username = document.getElementById('loginUser').value;
+            const password = document.getElementById('loginPass').value;
+
+            if (username === correctLogin.username && password === correctLogin.password) {
+                closeModal('loginModal');
+                document.getElementById('moderatorList').style.display = 'block';
+            } else {
+                alert('Неправильний логін або пароль!');
+            }
+        }
+
+        function adminLogin() {
+            const username = document.getElementById('adminUser').value;
+            const password = document.getElementById('adminPass').value;
+
+            if (username === correctAdmin.username && password === correctAdmin.password) {
+                closeModal('adminModal');
+                alert('Ласкаво просимо до адмін панелі!');
+                // Тут ви можете додати код для відображення адмін панелі
+            } else {
+                alert('Неправильний логін або пароль!');
+            }
+        }
+
+        function showStats(moderator) {
+            alert(`Статистика для ${moderator}`);
+            // Тут ви можете додати код для відображення статистики модератора
+        }
+
+        function openGuide() {
+            const username = prompt("Введіть логін:");
+            const password = prompt("Введіть пароль:");
+
+            if (username === correctLogin.username && password === correctLogin.password) {
+                alert('Відкриваємо посібник...');
+                // Тут ви можете перенаправити на сторінку посібника
+            } else {
+                alert('Неправильний логін або пароль!');
+            }
+        }
+    </script>
 </body>
 </html>
