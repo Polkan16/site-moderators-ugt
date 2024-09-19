@@ -1,7 +1,7 @@
 body {
     font-family: 'Comfortaa', sans-serif;
-    background-color: black;
-    color: lightgray;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
     margin: 0;
     padding: 0;
 }
@@ -10,13 +10,20 @@ header {
     padding: 20px;
     text-align: center;
     border-bottom: 1px solid rgba(255, 165, 0, 0.5);
-    position: relative;
 }
 
-#login-btn {
-    position: absolute;
-    right: 20px;
-    top: 20px;
+nav {
+    margin-top: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav li {
+    display: inline;
+    margin: 0 10px;
 }
 
 button {
@@ -36,6 +43,7 @@ footer {
     padding: 20px;
     text-align: center;
     border-top: 1px solid rgba(255, 165, 0, 0.5);
+    background-color: #333;
 }
 
 footer button {
