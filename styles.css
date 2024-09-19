@@ -10,7 +10,7 @@ body {
 
 .nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end; /* Вирівняти кнопки вправо */
     align-items: center;
     background-color: rgba(30, 30, 30, 0.8); /* Напівпрозорий фон */
     padding: 10px 20px;
@@ -20,6 +20,7 @@ body {
 .title {
     font-size: 2.5em; /* Збільшити заголовок */
     font-weight: bold; /* Жирний шрифт */
+    margin-right: auto; /* Вирівняти заголовок вліво */
 }
 
 .container, .login-container, .info-container {
@@ -27,7 +28,7 @@ body {
     margin: auto;
     padding: 20px;
     text-align: center;
-    background-color: rgba(30, 30, 30, 0.8); /* Напівпрозорий фон */
+    background-color: rgba(30, 30, 30, 0.9); /* Темніший напівпрозорий фон */
     border-radius: 10px;
 }
 
@@ -36,17 +37,22 @@ body {
     justify-content: center;
     align-items: center;
     height: 80vh; /* Центруємо по вертикалі */
-    border: 2px solid #ff9800; /* Світло оранжева обводка */
 }
 
 form {
     display: flex;
     flex-direction: column;
-    width: 300px; /* Ширина форми */
+    width: 100%; /* Ширина форми */
+    max-width: 300px; /* Максимальна ширина форми */
+    border: 2px solid #ff9800; /* Світло оранжева обводка */
+    border-radius: 10px;
+    padding: 20px; /* Внутрішнє відступлення */
+    background-color: rgba(40, 40, 40, 0.8); /* Напівпрозорий фон для форми */
 }
 
-h1 {
-    font-size: 2.5em;
+h1, h2 {
+    font-size: 2em; /* Збільшити заголовки */
+    margin-bottom: 10px;
 }
 
 p {
@@ -68,11 +74,12 @@ p {
 }
 
 input {
-    margin: 10px auto;
+    margin: 10px 0;
     padding: 10px;
     width: 100%;
     border: 1px solid #555;
     border-radius: 5px;
     background-color: #333;
     color: white;
+    font-size: 1em;
 }
