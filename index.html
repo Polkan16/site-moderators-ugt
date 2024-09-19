@@ -3,108 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Головна сторінка</title>
-    <style>
-        body {
-            background-image: url('https://i.imgur.com/ta8VMVU.jpeg');
-            background-size: cover;
-            font-family: Arial, sans-serif;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        .navbar {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-        }
-
-        .navbar a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 20px;
-            border: 2px solid #ffcc00;
-            border-radius: 5px;
-            margin-right: 10px;
-            transition: background-color 0.3s;
-        }
-
-        .navbar a:hover {
-            background-color: rgba(255, 204, 0, 0.7);
-        }
-
-        .login-form {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            display: none; /* Сховати форму за замовчуванням */
-            flex-direction: column;
-            align-items: center;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .login-form input {
-            padding: 10px;
-            margin: 10px 0;
-            border: 2px solid #ffcc00;
-            border-radius: 5px;
-            width: 100%;
-            color: #fff;
-            background-color: transparent;
-        }
-
-        .login-form input[type="submit"] {
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .login-form input[type="submit"]:hover {
-            background-color: #ffcc00;
-        }
-    </style>
+    <title>Модератори</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <header>
+        <h1>Вхід</h1>
+        <form id="login-form">
+            <input type="text" placeholder="Логін" required>
+            <input type="password" placeholder="Пароль" required>
+            <button type="submit">Увійти</button>
+        </form>
+    </header>
 
-    <div class="navbar">
-        <a href="#" id="open-login">Вхід</a>
-    </div>
+    <main>
+        <h2>Про роботу модератора</h2>
+        <p>Модератори забезпечують дотримання правил спільноти, взаємодіють з учасниками та вирішують конфлікти.</p>
+    </main>
 
-    <div class="login-form" id="login-form">
-        <h2>Вхід до системи</h2>
-        <input type="text" id="username" placeholder="Логін" required>
-        <input type="password" id="password" placeholder="Пароль" required>
-        <input type="submit" value="Увійти" id="submit">
-    </div>
-
-    <script>
-        const validUsername = 'admin';
-        const validPassword = 'password';
-
-        document.getElementById('open-login').addEventListener('click', function() {
-            document.getElementById('login-form').style.display = 'flex';
-        });
-
-        document.getElementById('submit').addEventListener('click', function() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            if (username === validUsername && password === validPassword) {
-                window.location.href = 'success.html'; // Новий URL для успішного входу
-            } else {
-                alert('Неправильний логін або пароль!');
-            }
-        });
-    </script>
-
+    <footer>
+        <button onclick="location.href='#'">Подати за'явку на модератора</button>
+        <button onclick="location.href='#'">Зв'язок з Senior Moderator</button>
+        <p>Усі права захищені 2024 Moderator Discord. Усі права захищені</p>
+    </footer>
 </body>
 </html>
