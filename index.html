@@ -10,12 +10,26 @@
 <body>
     <header>
         <h1>Модератори</h1>
-        <button id="login-btn" onclick="openLogin()">Вхід</button>
+        <nav>
+            <ul>
+                <li><button onclick="openLogin()">Вхід</button></li>
+                <li><button onclick="location.href='#'">Про нас</button></li>
+                <li><button onclick="location.href='#'">Контакти</button></li>
+            </ul>
+        </nav>
     </header>
 
     <main id="main-content" style="display:none;">
-        <h2>Про роботу модератора</h2>
-        <p id="moderator-info"></p>
+        <section>
+            <h2>Про роботу модератора</h2>
+            <p>Модератори забезпечують дотримання правил спільноти, взаємодіють з учасниками та вирішують конфлікти. Вони відповідають за підтримку порядку в чатах та допомогу користувачам.</p>
+            <p>Додаткові обов'язки включають:</p>
+            <ul>
+                <li>Моніторинг активності учасників</li>
+                <li>Вирішення конфліктів</li>
+                <li>Організація подій та акцій</li>
+            </ul>
+        </section>
     </main>
 
     <footer id="footer" style="display:none;">
