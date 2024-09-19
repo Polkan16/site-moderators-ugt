@@ -3,35 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet">
-    <link rel="icon" href="https://i.imgur.com/M4B1hVe.png" type="image/png">
-    <title>moderators.site</title>
+    <title>Головна Сторінка</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="nav">
-        <h1 class="title">Робота Модераторів</h1>
-        <a href="login.html" class="btn">Увійти</a>
-    </div>
-    <div class="container">
-        <h2>Роль модераторів на Discord-сервері</h2>
-        <p>Модератори Discord-сервера виконують важливу роль, яка полягає в забезпеченні комфортного та безпечного середовища для всіх учасників. Основні завдання модераторів можна підсумувати наступним чином:</p>
-
-        <ol>
-            <li><strong>Дотримання онлайн-норм:</strong> Основна задача модераторів — контролювати виконання норм і правил, встановлених тім лідером. Вони регулярно слідкують за активністю учасників, щоб забезпечити дотримання встановлених стандартів поведінки.</li>
-            <li><strong>Видача покарань:</strong> Модератори мають право вживати заходів у випадках порушень. Це може включати попередження, тимчасове або постійне видалення користувача з сервера. Важливо, щоб ці заходи були справедливими і відповідали ступеню порушення.</li>
-            <li><strong>Моніторинг чатів:</strong> Вони постійно стежать за чатами, щоб виявити можливі конфлікти або неналежну поведінку. Модератори можуть втручатися в дискусії, щоб запобігти ескалації ситуацій, зберігаючи дружню атмосферу.</li>
-            <li><strong>Видача попереджень:</strong> У разі порушення правил модератори надають попередження. Це дозволяє учасникам усвідомити свої дії і виправити їх, перш ніж вжити більш серйозних заходів.</li>
-            <li><strong>Відповіді на запитання:</strong> Модератори також відповідають на запитання учасників, надаючи інформацію про правила, функції сервера та допомагаючи новачкам адаптуватися. Вони виступають у ролі контактної особи між адміністрацією та учасниками.</li>
-            <li><strong>Створення комфортного середовища:</strong> Найважливішою метою модераторів є не лише карати порушників, а й створити комфортне і приємне середовище для спілкування. Вони прагнуть забезпечити дружню атмосферу, де учасники можуть вільно обмінюватися думками, ідеями та досвідом.</li>
-        </ol>
-
-        <p>Модератори — це не тільки охоронці порядку, але й люди, які сприяють розвитку спільноти, допомагають учасникам почуватися комфортно та безпечно. Їхня робота є важливою для підтримання позитивного іміджу сервера та залучення нових учасників.</p>
-
-        <div class="image-gallery">
-            <img src="https://i.imgur.com/g51O6iF.png" alt="Модератори" class="gallery-image">
-            <img src="https://i.imgur.com/dcJumF6.png" alt="Команда модераторів" class="gallery-image">
+    <div class="header">
+        <h1>Про нашу діяльність</h1>
+        <div class="nav-buttons">
+            <button onclick="showLogin()">Вхід</button>
+            <button onclick="showContact()">Зв'язок</button>
+            <button onclick="showModeratorForm()">Подати заявку на модератора</button>
+            <button onclick="showAdminPanel()">Адмін панель</button>
+            <button onclick="showGuide()">Посібник</button>
         </div>
     </div>
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Авторизація</h2>
+            <input type="text" placeholder="Логін" id="login"><br>
+            <input type="password" placeholder="Пароль" id="password"><br>
+            <button onclick="authenticate()">Увійти</button>
+        </div>
+    </div>
+    <!-- Додаткові модальні вікна для статистики та адмін панелі тут -->
+    <script src="script.js"></script>
 </body>
 </html>
