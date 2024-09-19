@@ -1,15 +1,22 @@
+/* Загальні стилі */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    background-color: #f4f4f9;
+    color: #333;
 }
 
 header {
-    background: #333;
-    color: #fff;
-    padding: 10px 0;
+    background-color: #7289DA;
+    color: white;
+    padding: 20px;
     text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
 }
 
 nav ul {
@@ -18,38 +25,87 @@ nav ul {
 }
 
 nav ul li {
-    display: inline;
-    margin: 0 15px;
+    display: inline-block;
+    margin-right: 20px;
 }
 
 nav ul li a {
-    color: #fff;
+    color: white;
     text-decoration: none;
+    font-weight: bold;
 }
 
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Основний контент */
 main {
     padding: 20px;
 }
 
-.posts, .admin-panel {
-    background: #fff;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+section {
+    margin-bottom: 40px;
 }
 
-.author {
-    display: block;
-    margin-top: 10px;
-    font-size: 0.9em;
-    color: #666;
+h2 {
+    color: #7289DA;
+    font-size: 2em;
+    border-bottom: 2px solid #7289DA;
+    padding-bottom: 10px;
 }
 
-.admin-panel h2 {
-    margin-top: 0;
+p, ul, details {
+    font-size: 1.2em;
+    line-height: 1.6;
 }
 
-.admin-actions button {
-    margin: 5px 0;
+ul {
+    margin-left: 20px;
+    list-style: disc;
+}
+
+.tool {
+    background-color: #e3e6f3;
+    padding: 10px;
+    margin-top: 20px;
+    border-left: 5px solid #7289DA;
+}
+
+/* FAQ секція */
+details summary {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+details summary:hover {
+    color: #7289DA;
+}
+
+details p {
+    padding: 10px;
+    background-color: #e3e6f3;
+    margin-top: 5px;
+}
+
+/* Контакти */
+a {
+    color: #7289DA;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Футер */
+footer {
+    background-color: #7289DA;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
 }
