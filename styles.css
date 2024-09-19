@@ -1,26 +1,24 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #000; /* Чорний фон */
+    background-color: #000;
     color: #ffffff;
-    background-image: url('https://i.imgur.com/2IUsv4r.png'); /* Зображення фону */
-    background-size: cover; /* Заповнити весь фон */
-    background-position: center; /* Центрувати зображення */
+    background-image: url('https://i.imgur.com/2IUsv4r.png');
+    background-size: cover;
+    background-position: center;
 }
 
 .nav {
     display: flex;
-    justify-content: flex-end; /* Вирівняти кнопки вправо */
+    justify-content: space-between;
     align-items: center;
-    background-color: rgba(30, 30, 30, 0.8); /* Напівпрозорий фон */
-    padding: 10px 20px;
-    border-bottom: 2px solid #ff9800; /* Оранжева обводка */
+    background-color: rgba(30, 30, 30, 0.8);
+    padding: 15px;
+    border-bottom: 2px solid #ff9800;
 }
 
 .title {
-    font-size: 2.5em; /* Збільшити заголовок */
-    font-weight: bold; /* Жирний шрифт */
-    margin-right: auto; /* Вирівняти заголовок вліво */
+    font-size: 2.5em;
 }
 
 .container, .login-container, .info-container {
@@ -28,7 +26,7 @@ body {
     margin: auto;
     padding: 20px;
     text-align: center;
-    background-color: rgba(30, 30, 30, 0.9); /* Темніший напівпрозорий фон */
+    background-color: rgba(30, 30, 30, 0.9);
     border-radius: 10px;
 }
 
@@ -36,27 +34,27 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh; /* Центруємо по вертикалі */
+    height: 80vh;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    width: 100%; /* Ширина форми */
-    max-width: 300px; /* Максимальна ширина форми */
-    border: 2px solid #ff9800; /* Світло оранжева обводка */
+    width: 100%;
+    max-width: 300px;
+    border: 2px solid #ff9800;
     border-radius: 10px;
-    padding: 20px; /* Внутрішнє відступлення */
-    background-color: rgba(40, 40, 40, 0.8); /* Напівпрозорий фон для форми */
+    padding: 20px;
+    background-color: rgba(40, 40, 40, 0.8);
 }
 
-h1, h2 {
-    font-size: 2em; /* Збільшити заголовки */
-    margin-bottom: 10px;
-}
-
-p {
-    font-size: 1.2em;
+input {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #333;
+    color: white;
 }
 
 .btn {
@@ -71,15 +69,4 @@ p {
 
 .btn:hover {
     background-color: #1565c0;
-}
-
-input {
-    margin: 10px 0;
-    padding: 10px;
-    width: 100%;
-    border: 1px solid #555;
-    border-radius: 5px;
-    background-color: #333;
-    color: white;
-    font-size: 1em;
 }
