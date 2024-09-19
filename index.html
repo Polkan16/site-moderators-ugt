@@ -8,13 +8,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header id="login-header">
-        <h1>Вхід</h1>
-        <form id="login-form" onsubmit="return login()">
-            <input type="text" id="username" placeholder="Логін" required>
-            <input type="password" id="password" placeholder="Пароль" required>
-            <button type="submit">Увійти</button>
-        </form>
+    <header>
+        <h1>Модератори</h1>
+        <button id="login-btn" onclick="openLogin()">Вхід</button>
     </header>
 
     <main id="main-content" style="display:none;">
@@ -28,19 +24,47 @@
         <p>Усі права захищені 2024 Moderator Discord. Усі права захищені</p>
     </footer>
 
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLogin()">&times;</span>
+            <h2>Вхід</h2>
+            <form id="login-form" onsubmit="return login()">
+                <input type="text" id="username" placeholder="Логін" required>
+                <input type="password" id="password" placeholder="Пароль" required>
+                <button type="submit">Увійти</button>
+            </form>
+        </div>
+    </div>
+
     <script>
+        function openLogin() {
+            document.getElementById('login-modal').style.display = 'block';
+        }
+
+        function closeLogin() {
+            document.getElementById('login-modal').style.display = 'none';
+        }
+
         function login() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
             if (username === "moderator" && password === "QAZ7845") {
-                document.getElementById('login-header').style.display = 'none';
+                closeLogin();
                 document.getElementById('main-content').style.display = 'block';
                 document.getElementById('footer').style.display = 'block';
             } else {
                 alert('Неправильний логін або пароль!');
             }
             return false; // Зупиняємо перезавантаження сторінки
+        }
+
+        // Закриття модального вікна при натисканні на область поза ним
+        window.onclick = function(event) {
+            const modal = document.getElementById('login-modal');
+            if (event.target === modal) {
+                closeLogin();
+            }
         }
     </script>
 </body>
