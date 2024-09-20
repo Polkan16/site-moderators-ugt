@@ -11,7 +11,6 @@
             color: white;
             margin: 0;
             padding: 20px;
-            text-align: center;
         }
 
         .logout-btn {
@@ -39,34 +38,45 @@
             background-color: darkred;
         }
 
+        /* Фото модератора */
         .moderator-photo {
             margin-top: 20px;
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
+            width: 250px; /* Збільшений розмір */
+            height: 250px; /* Квадратне фото */
+            border-radius: 20px; /* Заокруглені кути */
             border: 2px solid red;
+            object-fit: cover; /* Щоб фото виглядало гармонійно */
+            float: left; /* Вирівнювання по лівому краю */
+            margin-right: 20px; /* Відступ справа */
         }
 
         .buttons-container {
             margin-top: 20px;
+            text-align: left; /* Вирівнювання кнопок по лівому краю */
         }
 
+        /* Кнопки під фото */
         .dashboard-btn {
             display: inline-block;
             background-color: rgba(255, 0, 0, 0.25); /* Червоний фон на 25% прозорості */
             color: red; /* Червоний текст */
-            padding: 10px 20px;
+            padding: 12px 25px;
             font-size: 18px;
             border: 1px solid rgba(255, 0, 0, 0.75); /* Світло-червона обводка */
             cursor: pointer;
-            border-radius: 5px;
-            margin: 10px;
+            border-radius: 20px; /* Більш заокруглені кнопки */
+            margin-bottom: 15px;
+            width: 250px; /* Ширина кнопок */
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .dashboard-btn:hover {
             background-color: rgba(255, 0, 0, 0.75); /* Темніший при наведенні */
             color: white; /* Білий текст при наведенні */
+        }
+
+        .clear {
+            clear: both; /* Очищення обтікання після фото */
         }
     </style>
 </head>
@@ -82,11 +92,14 @@
     <!-- Фото модератора -->
     <img src="https://i.imgur.com/lIEQ78A.png" alt="Moderator Photo" class="moderator-photo">
 
-    <!-- Кнопки -->
+    <!-- Кнопки під фото -->
     <div class="buttons-container">
         <button class="dashboard-btn" onclick="window.location.href='info.html'">INFO M.D</button>
+        <br>
         <button class="dashboard-btn" onclick="window.location.href='guide.html'">Посібник</button>
     </div>
+
+    <div class="clear"></div> <!-- Очищення обтікання -->
 
 </body>
 </html>
