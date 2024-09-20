@@ -9,10 +9,11 @@
 </head>
 <body>
     <div class="header">
-        <h1>Контитул</h1>
-        <button id="loginButton" onclick="showLoginForm()">Вхід</button>
+        <!-- Кнопка для входу -->
+        <button id="loginButton" class="login-btn" onclick="showLoginForm()">Вхід</button>
     </div>
     
+    <!-- Спливаюче вікно авторизації -->
     <div id="loginForm" class="login-form hidden">
         <h2>Авторизація</h2>
         <label for="username">Логін:</label>
@@ -21,79 +22,7 @@
         <input type="password" id="password" placeholder="Введіть пароль">
         <button onclick="login()">Увійти</button>
         <p id="errorMessage" class="error-message"></p>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
-
-
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Панель користувача</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap">
-</head>
-<body>
-    <div class="container">
-        <!-- Ліва панель навігації -->
-        <div class="sidebar">
-            <div class="logo">UKRAINE GTAL</div>
-            <div class="menu-item active">Основна інформація</div>
-            <div class="menu-item">Ваше майно</div>
-            <div class="menu-item">Рейтинг</div>
-            <div class="menu-item">Ігрова рулетка</div>
-            <div class="menu-item logout" onclick="logout()">Вийти з кабінету</div>
-        </div>
-
-        <!-- Основний контент -->
-        <div class="main-content">
-            <div class="user-info">
-                <h2>Привіт, це твоя основна інформація!</h2>
-                <div class="user-details">
-                    <div class="avatar">
-                        <img src="https://i.imgur.com/your-avatar-image.png" alt="Аватар">
-                    </div>
-                    <div class="user-name">
-                        <h3>Данило Шульга</h3>
-                        <p>Ігровий ID: 6826379</p>
-                        <p>Останній вхід: 19.09.2024 21:07:31</p>
-                        <p>Статус: <span class="premium">PREMIUM</span> (17 днів залишилось)</p>
-                    </div>
-                </div>
-
-                <!-- Інформація про ресурси користувача -->
-                <div class="user-stats">
-                    <div class="stat-box">
-                        <p>Кількість карбованців</p>
-                        <h3>777</h3>
-                    </div>
-                    <div class="stat-box">
-                        <p>Моя готівка</p>
-                        <h3>₴2,508,420</h3>
-                    </div>
-                    <div class="stat-box">
-                        <p>Грошей на рахунках</p>
-                        <h3>₴23,942,114</h3>
-                    </div>
-                    <div class="stat-box">
-                        <p>Ігровий рівень</p>
-                        <h3>27 LVL</h3>
-                    </div>
-                    <div class="stat-box">
-                        <p>Відіграно всього</p>
-                        <h3>3 місяці, 17 днів</h3>
-                    </div>
-                    <div class="stat-box">
-                        <p>Організація</p>
-                        <h3>Відсутня</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <button class="close-btn" onclick="hideLoginForm()">Закрити</button>
     </div>
 
     <script src="script.js"></script>
