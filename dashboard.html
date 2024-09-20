@@ -3,16 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Панель користувача</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap">
+    <title>Кабінет користувача</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .logout-btn {
+            display: inline-block;
+            background-color: red;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-btn img {
+            vertical-align: middle;
+            margin-right: 8px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .logout-btn:hover {
+            background-color: darkred;
+        }
+    </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Ласкаво просимо на панель користувача!</h1>
-        <button id="logoutButton" onclick="logout()">Вихід</button>
-    </div>
-    <p>Тут буде ваш контент після авторизації.</p>
-    <p1>Шановний модератор</p1>
+    <h1>Вітаємо в кабінеті користувача!</h1>
+    <button class="logout-btn" onclick="window.location.href='index.html'">
+        <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
+    </button>
 </body>
 </html>
