@@ -8,16 +8,16 @@
     <style>
         body {
             font-family: 'Comfortaa', sans-serif;
-            background-color: rgba(0, 0, 9, 9.9); /* Чорний фон з прозорістю */
-            background-image: url('https://i.imgur.com/gxpN7VC.png'); /* Фонове зображення */
-            background-size: cover; /* Масштабування зображення на весь екран */
-            background-position: center; /* Центрування фону */
+            background-color: rgba(0, 0, 9, 9.9);
+            background-image: url('https://i.imgur.com/gxpN7VC.png');
+            background-size: cover;
+            background-position: center;
             color: white;
             margin: 0;
             padding: 20px;
         }
 
-        .logout-btn {
+        .logout-btn, .admin-btn {
             display: inline-block;
             background-color: red;
             color: white;
@@ -25,21 +25,11 @@
             border: none;
             cursor: pointer;
             border-radius: 5px;
-            position: absolute;
-            top: 20px;
-            right: 20px;
             transition: background-color 0.3s ease;
         }
 
-        .logout-btn img {
-            vertical-align: middle;
-            margin-right: 8px;
-            width: 20px;
-            height: 20px;
-        }
-
-        .logout-btn:hover {
-            background-color: rgba(255, 0, 0, 0.2); /* Прозорість 20% при наведенні */
+        .logout-btn:hover, .admin-btn:hover {
+            background-color: rgba(255, 0, 0, 0.2);
         }
 
         h1 {
@@ -60,8 +50,8 @@
         .container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between; /* Рівномірний простір між блоками */
-            max-width: 1000px; /* Встановимо ширину для контейнера */
+            justify-content: space-between;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
@@ -76,25 +66,23 @@
             color: white;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Вирівнюємо по вертикалі */
-            align-items: center; /* Вирівнюємо по горизонталі */
+            justify-content: center;
+            align-items: center;
         }
 
         .counter-box:hover {
-            background-color: rgba(255, 255, 255, 0.35); /* Прозорість 35% при наведенні */
+            background-color: rgba(255, 255, 255, 0.35);
         }
 
-        /* Кольори для різних блоків */
-        .yellow { background-color: rgba(255, 255, 0, 0.1); border: 1px solid rgba(255, 255, 0, 0.75); }
-        .cyan { background-color: rgba(0, 255, 255, 0.1); border: 1px solid rgba(0, 255, 255, 0.75); }
-        .purple { background-color: rgba(255, 0, 255, 0.1); border: 1px solid rgba(255, 0, 255, 0.75); }
-        .red { background-color: rgba(255, 0, 0, 0.1); border: 1px solid rgba(255, 0, 0, 0.75); }
-        .green { background-color: rgba(0, 255, 0, 0.1); border: 1px solid rgba(0, 255, 0, 0.75); }
-        .blue { background-color: rgba(0, 0, 255, 0.1); border: 1px solid rgba(0, 0, 255, 0.75); }
-        .orange { background-color: rgba(255, 165, 0, 0.1); border: 1px solid rgba(255, 165, 0, 0.75); }
-        .pink { background-color: rgba(255, 192, 203, 0.1); border: 1px solid rgba(255, 192, 203, 0.75); }
-        .teal { background-color: rgba(0, 128, 128, 0.1); border: 1px solid rgba(0, 128, 128, 0.75); }
-        .gold { background-color: rgba(255, 215, 0, 0.1); border: 1px solid rgba(255, 215, 0, 0.75); }
+        .yellow { background-color: rgba(255, 255, 0, 0.1); }
+        .cyan { background-color: rgba(0, 255, 255, 0.1); }
+        .purple { background-color: rgba(255, 0, 255, 0.1); }
+        .red { background-color: rgba(255, 0, 0, 0.1); }
+        .green { background-color: rgba(0, 255, 0, 0.1); }
+        .blue { background-color: rgba(0, 0, 255, 0.1); }
+        .orange { background-color: rgba(255, 165, 0, 0.1); }
+        .pink { background-color: rgba(255, 192, 203, 0.1); }
+        .teal { background-color: rgba(0, 128, 128, 0.1); }
 
         .counter-title {
             font-size: 14px;
@@ -103,7 +91,7 @@
         .counter-value {
             font-size: 28px;
             font-weight: bold;
-            color: #FFA500; /* Світло-оранжевий колір */
+            color: #FFA500;
         }
     </style>
 </head>
@@ -111,65 +99,59 @@
 
     <h1>👋 Привіт, це твоя основна інформація!</h1>
 
-    <!-- Фото модератора -->
     <img src="https://i.imgur.com/g51O6iF.png" alt="Moderator Photo" class="moderator-photo">
 
-    <!-- Контейнер для блоків -->
     <div class="container">
-        <!-- Лічильник днів -->
         <div class="counter-box yellow">
             <div class="counter-title">Кількість днів на посаді</div>
             <div class="counter-value" id="daysCounter">0</div>
         </div>
-
-        <!-- Лічильник доган -->
         <div class="counter-box cyan">
             <div class="counter-title">Кількість доган</div>
             <div class="counter-value" id="reprimandCounter">0/2</div>
         </div>
-
-        <!-- Лічильник попереджень -->
         <div class="counter-box purple">
             <div class="counter-title">Кількість попереджень</div>
             <div class="counter-value" id="warningCounter">0/3</div>
         </div>
-
-        <!-- Нові блоки -->
         <div class="counter-box red">
             <div class="counter-title">Кількість онлайн змін</div>
             <div class="counter-value">0</div>
         </div>
-
         <div class="counter-box green">
             <div class="counter-title">Кількість покарань</div>
             <div class="counter-value">0</div>
         </div>
-
         <div class="counter-box blue">
             <div class="counter-title">Кількість попереджень</div>
             <div class="counter-value">0</div>
         </div>
-
         <div class="counter-box orange">
             <div class="counter-title">Кількість відповідей у "питання до тех-підтримки"</div>
             <div class="counter-value">0</div>
         </div>
-
         <div class="counter-box pink">
             <div class="counter-title">Кількість премії</div>
             <div class="counter-value">0</div>
         </div>
-
-        <!-- Додані блоки для третього рядка -->
         <div class="counter-box teal">
             <div class="counter-title">Кількість штрафів</div>
             <div class="counter-value">0</div>
         </div>
+    </div>
 
-    <!-- Кнопка "Вийти з кабінету" -->
+    <button class="admin-btn" onclick="window.location.href='admin.html'">Відкрити адмін панель</button>
     <button class="logout-btn" onclick="window.location.href='index.html'">
         <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
     </button>
 
+    <script>
+        function startDaysCounter(days) {
+            setInterval(() => {
+                days++;
+                document.getElementById('daysCounter').textContent = days;
+            }, 86400000); // 1 день в мілісекундах
+        }
+    </script>
 </body>
 </html>
