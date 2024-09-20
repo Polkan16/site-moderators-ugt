@@ -39,9 +39,9 @@
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            max-width: 300px; /* Ще вужче */
-            margin: 50px 0 0 0; /* Центрування до лівого краю */
-            float: left; /* Вирівнювання до лівого краю */
+            max-width: 300px;
+            margin: 20px;
+            float: left;
         }
 
         h2 {
@@ -85,89 +85,204 @@
     <button class="logout-btn" onclick="window.location.href='index.html'">Вийти</button>
 
     <div class="admin-panel">
-        <h2>Адмін панель</h2>
-        
-        <label for="daysInput">Дні:</label>
-        <input type="number" id="daysInput" value="0">
-        <button onclick="updateDays()">Оновити</button>
+        <h2>Адмін панель 1</h2>
+        <label for="daysInput1">Дні:</label>
+        <input type="number" id="daysInput1" value="0">
+        <button onclick="update('daysInput1', 'daysCounter1')">Оновити</button>
 
-        <label for="reprimandsInput">Доган:</label>
-        <input type="number" id="reprimandsInput" value="0">
-        <button onclick="updateReprimands()">Оновити</button>
+        <label for="reprimandsInput1">Доган:</label>
+        <input type="number" id="reprimandsInput1" value="0">
+        <button onclick="update('reprimandsInput1', 'reprimandCounter1')">Оновити</button>
 
-        <label for="warningsInput">Попереджень:</label>
-        <input type="number" id="warningsInput" value="0">
-        <button onclick="updateWarnings()">Оновити</button>
+        <label for="warningsInput1">Попереджень:</label>
+        <input type="number" id="warningsInput1" value="0">
+        <button onclick="update('warningsInput1', 'warningCounter1')">Оновити</button>
 
-        <label for="onlineChangesInput">Онлайн змін:</label>
-        <input type="number" id="onlineChangesInput" value="0">
-        <button onclick="updateOnlineChanges()">Оновити</button>
+        <label for="onlineChangesInput1">Онлайн змін:</label>
+        <input type="number" id="onlineChangesInput1" value="0">
+        <button onclick="update('onlineChangesInput1', 'onlineChangesCounter1')">Оновити</button>
 
-        <label for="punishmentsInput">Покарань:</label>
-        <input type="number" id="punishmentsInput" value="0">
-        <button onclick="updatePunishments()">Оновити</button>
+        <label for="punishmentsInput1">Покарань:</label>
+        <input type="number" id="punishmentsInput1" value="0">
+        <button onclick="update('punishmentsInput1', 'punishmentsCounter1')">Оновити</button>
 
-        <label for="warningsCountInput">Попереджень:</label>
-        <input type="number" id="warningsCountInput" value="0">
-        <button onclick="updateWarningsCount()">Оновити</button>
+        <label for="warningsCountInput1">Попереджень:</label>
+        <input type="number" id="warningsCountInput1" value="0">
+        <button onclick="update('warningsCountInput1', 'warningsCountCounter1')">Оновити</button>
 
-        <label for="techSupportInput">Відповідей тех-підтримки:</label>
-        <input type="number" id="techSupportInput" value="0">
-        <button onclick="updateTechSupport()">Оновити</button>
+        <label for="techSupportInput1">Відповідей тех-підтримки:</label>
+        <input type="number" id="techSupportInput1" value="0">
+        <button onclick="update('techSupportInput1', 'techSupportCounter1')">Оновити</button>
 
-        <label for="bonusInput">Премії:</label>
-        <input type="number" id="bonusInput" value="0">
-        <button onclick="updateBonus()">Оновити</button>
+        <label for="bonusInput1">Премії:</label>
+        <input type="number" id="bonusInput1" value="0">
+        <button onclick="update('bonusInput1', 'bonusCounter1')">Оновити</button>
 
-        <label for="finesInput">Штрафів:</label>
-        <input type="number" id="finesInput" value="0">
-        <button onclick="updateFines()">Оновити</button>
+        <label for="finesInput1">Штрафів:</label>
+        <input type="number" id="finesInput1" value="0">
+        <button onclick="update('finesInput1', 'finesCounter1')">Оновити</button>
+    </div>
+
+    <div class="admin-panel">
+        <h2>Адмін панель 2</h2>
+        <label for="daysInput2">Дні:</label>
+        <input type="number" id="daysInput2" value="0">
+        <button onclick="update('daysInput2', 'daysCounter2')">Оновити</button>
+
+        <label for="reprimandsInput2">Доган:</label>
+        <input type="number" id="reprimandsInput2" value="0">
+        <button onclick="update('reprimandsInput2', 'reprimandCounter2')">Оновити</button>
+
+        <label for="warningsInput2">Попереджень:</label>
+        <input type="number" id="warningsInput2" value="0">
+        <button onclick="update('warningsInput2', 'warningCounter2')">Оновити</button>
+
+        <label for="onlineChangesInput2">Онлайн змін:</label>
+        <input type="number" id="onlineChangesInput2" value="0">
+        <button onclick="update('onlineChangesInput2', 'onlineChangesCounter2')">Оновити</button>
+
+        <label for="punishmentsInput2">Покарань:</label>
+        <input type="number" id="punishmentsInput2" value="0">
+        <button onclick="update('punishmentsInput2', 'punishmentsCounter2')">Оновити</button>
+
+        <label for="warningsCountInput2">Попереджень:</label>
+        <input type="number" id="warningsCountInput2" value="0">
+        <button onclick="update('warningsCountInput2', 'warningsCountCounter2')">Оновити</button>
+
+        <label for="techSupportInput2">Відповідей тех-підтримки:</label>
+        <input type="number" id="techSupportInput2" value="0">
+        <button onclick="update('techSupportInput2', 'techSupportCounter2')">Оновити</button>
+
+        <label for="bonusInput2">Премії:</label>
+        <input type="number" id="bonusInput2" value="0">
+        <button onclick="update('bonusInput2', 'bonusCounter2')">Оновити</button>
+
+        <label for="finesInput2">Штрафів:</label>
+        <input type="number" id="finesInput2" value="0">
+        <button onclick="update('finesInput2', 'finesCounter2')">Оновити</button>
+    </div>
+
+    <div class="admin-panel">
+        <h2>Адмін панель 3</h2>
+        <label for="daysInput3">Дні:</label>
+        <input type="number" id="daysInput3" value="0">
+        <button onclick="update('daysInput3', 'daysCounter3')">Оновити</button>
+
+        <label for="reprimandsInput3">Доган:</label>
+        <input type="number" id="reprimandsInput3" value="0">
+        <button onclick="update('reprimandsInput3', 'reprimandCounter3')">Оновити</button>
+
+        <label for="warningsInput3">Попереджень:</label>
+        <input type="number" id="warningsInput3" value="0">
+        <button onclick="update('warningsInput3', 'warningCounter3')">Оновити</button>
+
+        <label for="onlineChangesInput3">Онлайн змін:</label>
+        <input type="number" id="onlineChangesInput3" value="0">
+        <button onclick="update('onlineChangesInput3', 'onlineChangesCounter3')">Оновити</button>
+
+        <label for="punishmentsInput3">Покарань:</label>
+        <input type="number" id="punishmentsInput3" value="0">
+        <button onclick="update('punishmentsInput3', 'punishmentsCounter3')">Оновити</button>
+
+        <label for="warningsCountInput3">Попереджень:</label>
+        <input type="number" id="warningsCountInput3" value="0">
+        <button onclick="update('warningsCountInput3', 'warningsCountCounter3')">Оновити</button>
+
+        <label for="techSupportInput3">Відповідей тех-підтримки:</label>
+        <input type="number" id="techSupportInput3" value="0">
+        <button onclick="update('techSupportInput3', 'techSupportCounter3')">Оновити</button>
+
+        <label for="bonusInput3">Премії:</label>
+        <input type="number" id="bonusInput3" value="0">
+        <button onclick="update('bonusInput3', 'bonusCounter3')">Оновити</button>
+
+        <label for="finesInput3">Штрафів:</label>
+        <input type="number" id="finesInput3" value="0">
+        <button onclick="update('finesInput3', 'finesCounter3')">Оновити</button>
+    </div>
+
+    <div class="admin-panel">
+        <h2>Адмін панель 4</h2>
+        <label for="daysInput4">Дні:</label>
+        <input type="number" id="daysInput4" value="0">
+        <button onclick="update('daysInput4', 'daysCounter4')">Оновити</button>
+
+        <label for="reprimandsInput4">Доган:</label>
+        <input type="number" id="reprimandsInput4" value="0">
+        <button onclick="update('reprimandsInput4', 'reprimandCounter4')">Оновити</button>
+
+        <label for="warningsInput4">Попереджень:</label>
+        <input type="number" id="warningsInput4" value="0">
+        <button onclick="update('warningsInput4', 'warningCounter4')">Оновити</button>
+
+        <label for="onlineChangesInput4">Онлайн змін:</label>
+        <input type="number" id="onlineChangesInput4" value="0">
+        <button onclick="update('onlineChangesInput4', 'onlineChangesCounter4')">Оновити</button>
+
+        <label for="punishmentsInput4">Покарань:</label>
+        <input type="number" id="punishmentsInput4" value="0">
+        <button onclick="update('punishmentsInput4', 'punishmentsCounter4')">Оновити</button>
+
+        <label for="warningsCountInput4">Попереджень:</label>
+        <input type="number" id="warningsCountInput4" value="0">
+        <button onclick="update('warningsCountInput4', 'warningsCountCounter4')">Оновити</button>
+
+        <label for="techSupportInput4">Відповідей тех-підтримки:</label>
+        <input type="number" id="techSupportInput4" value="0">
+        <button onclick="update('techSupportInput4', 'techSupportCounter4')">Оновити</button>
+
+        <label for="bonusInput4">Премії:</label>
+        <input type="number" id="bonusInput4" value="0">
+        <button onclick="update('bonusInput4', 'bonusCounter4')">Оновити</button>
+
+        <label for="finesInput4">Штрафів:</label>
+        <input type="number" id="finesInput4" value="0">
+        <button onclick="update('finesInput4', 'finesCounter4')">Оновити</button>
+    </div>
+
+    <div class="admin-panel">
+        <h2>Адмін панель 5</h2>
+        <label for="daysInput5">Дні:</label>
+        <input type="number" id="daysInput5" value="0">
+        <button onclick="update('daysInput5', 'daysCounter5')">Оновити</button>
+
+        <label for="reprimandsInput5">Доган:</label>
+        <input type="number" id="reprimandsInput5" value="0">
+        <button onclick="update('reprimandsInput5', 'reprimandCounter5')">Оновити</button>
+
+        <label for="warningsInput5">Попереджень:</label>
+        <input type="number" id="warningsInput5" value="0">
+        <button onclick="update('warningsInput5', 'warningCounter5')">Оновити</button>
+
+        <label for="onlineChangesInput5">Онлайн змін:</label>
+        <input type="number" id="onlineChangesInput5" value="0">
+        <button onclick="update('onlineChangesInput5', 'onlineChangesCounter5')">Оновити</button>
+
+        <label for="punishmentsInput5">Покарань:</label>
+        <input type="number" id="punishmentsInput5" value="0">
+        <button onclick="update('punishmentsInput5', 'punishmentsCounter5')">Оновити</button>
+
+        <label for="warningsCountInput5">Попереджень:</label>
+        <input type="number" id="warningsCountInput5" value="0">
+        <button onclick="update('warningsCountInput5', 'warningsCountCounter5')">Оновити</button>
+
+        <label for="techSupportInput5">Відповідей тех-підтримки:</label>
+        <input type="number" id="techSupportInput5" value="0">
+        <button onclick="update('techSupportInput5', 'techSupportCounter5')">Оновити</button>
+
+        <label for="bonusInput5">Премії:</label>
+        <input type="number" id="bonusInput5" value="0">
+        <button onclick="update('bonusInput5', 'bonusCounter5')">Оновити</button>
+
+        <label for="finesInput5">Штрафів:</label>
+        <input type="number" id="finesInput5" value="0">
+        <button onclick="update('finesInput5', 'finesCounter5')">Оновити</button>
     </div>
 
     <script>
-        function updateDays() {
-            const days = document.getElementById('daysInput').value;
-            localStorage.setItem('daysCounter', days);
-        }
-
-        function updateReprimands() {
-            const reprimands = document.getElementById('reprimandsInput').value;
-            localStorage.setItem('reprimandCounter', reprimands + '/2');
-        }
-
-        function updateWarnings() {
-            const warnings = document.getElementById('warningsInput').value;
-            localStorage.setItem('warningCounter', warnings + '/3');
-        }
-
-        function updateOnlineChanges() {
-            const onlineChanges = document.getElementById('onlineChangesInput').value;
-            localStorage.setItem('onlineChangesCounter', onlineChanges);
-        }
-
-        function updatePunishments() {
-            const punishments = document.getElementById('punishmentsInput').value;
-            localStorage.setItem('punishmentsCounter', punishments);
-        }
-
-        function updateWarningsCount() {
-            const warningsCount = document.getElementById('warningsCountInput').value;
-            localStorage.setItem('warningsCounter', warningsCount);
-        }
-
-        function updateTechSupport() {
-            const techSupport = document.getElementById('techSupportInput').value;
-            localStorage.setItem('techSupportCounter', techSupport);
-        }
-
-        function updateBonus() {
-            const bonus = document.getElementById('bonusInput').value;
-            localStorage.setItem('bonusCounter', bonus);
-        }
-
-        function updateFines() {
-            const fines = document.getElementById('finesInput').value;
-            localStorage.setItem('finesCounter', fines);
+        function update(inputId, counterKey) {
+            const value = document.getElementById(inputId).value;
+            localStorage.setItem(counterKey, value);
         }
     </script>
 </body>
