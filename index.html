@@ -17,7 +17,8 @@
         }
 
         .login-btn {
-            display: inline-block;
+            display: flex;
+            align-items: center;
             background-color: rgba(255, 0, 0, 0.25); /* Червоний фон на 25% прозорості */
             color: red; /* Червоний текст */
             padding: 10px 20px;
@@ -33,6 +34,12 @@
 
         .login-btn:hover {
             background-color: rgba(255, 0, 0, 0.75); /* Темніший при наведенні */
+        }
+
+        .login-btn img {
+            margin-right: 10px; /* Відступ між зображенням і текстом */
+            width: 20px;
+            height: 20px;
         }
 
         h1 {
@@ -54,11 +61,13 @@
     </style>
 </head>
 <body>
-    <button class="login-btn" onclick="window.location.href='login.html'">Вхід</button>
+    <button class="login-btn" onclick="window.location.href='login.html'">
+        <img src="https://i.imgur.com/dtvfULB.png" alt="Login Icon"> Вхід
+    </button>
     <h1>Ласкаво просимо на наш сайт!</h1>
 
     <footer>
-        &copy;  2024 M.D 04 | UKRAINE GTA | Всі права захищені.
+        &copy; 2024 M.D 04 | UKRAINE GTA | Всі права захищені.
     </footer>
 </body>
 </html>
