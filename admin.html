@@ -3,214 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Адмін-панель</title>
+    <title>Адмін Панель</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Comfortaa', sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            margin: 0;
+            background-color: black;
+            color: white;
             padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
+        input {
+            width: 200px;
+            margin-bottom: 10px;
         }
-
-        .input-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-            width: 100%;
-            max-width: 500px;
-        }
-
-        input[type="number"] {
-            padding: 10px;
-            font-size: 16px;
-            margin-right: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 60%;
-        }
-
         button {
-            padding: 10px 15px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        .logout-btn {
-            display: inline-block;
-            background-color: red;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            transition: background-color 0.3s ease;
-        }
-
-        .logout-btn img {
-            vertical-align: middle;
-            margin-right: 8px;
-            width: 20px;
-            height: 20px;
-        }
-
-        .logout-btn:hover {
-            background-color: darkred;
-        }
-
-        .counter-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: flex-start;
-            margin-top: 40px;
-        }
-
-        .counter-box {
-            width: 180px;
-            height: 100px;
-            background-color: rgba(255, 255, 0, 0.25);
-            border: 1px solid rgba(255, 255, 0, 0.75);
-            border-radius: 10px;
-            text-align: center;
-            padding: 10px;
-            margin: 15px 10px;
-            position: relative;
-        }
-
-        .counter-box.reprimand {
-            background-color: rgba(0, 255, 255, 0.25);
-            border: 1px solid rgba(0, 255, 255, 0.75);
-        }
-
-        .counter-box.warning {
-            background-color: rgba(255, 0, 255, 0.25);
-            border: 1px solid rgba(255, 0, 255, 0.75);
-        }
-
-        .counter-value {
-            font-size: 28px;
-            font-weight: bold;
-            color: orange;
             margin-top: 10px;
+            padding: 10px;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darkgreen;
         }
     </style>
 </head>
 <body>
 
-    <h1>Адмін-панель</h1>
+    <h1>Адмін Панель</h1>
 
-    <div class="input-container">
-        <input type="number" id="daysInput" placeholder="Кількість днів на посаді" min="0">
-        <button onclick="updateDays()">Оновити дні</button>
+    <div>
+        <h3>Оновити кількість днів:</h3>
+        <input type="number" id="daysInput" placeholder="Введіть кількість днів" />
+        <button onclick="updateDays()">Оновити</button>
     </div>
 
-    <div class="input-container">
-        <input type="number" id="reprimandsInput" placeholder="Кількість доган" min="0">
-        <button onclick="updateReprimands()">Оновити догани</button>
+    <div>
+        <h3>Скинути до 0:</h3>
+        <button onclick="resetDays()">Скинути дні</button>
     </div>
-
-    <div class="input-container">
-        <input type="number" id="warningsInput" placeholder="Кількість попереджень" min="0">
-        <button onclick="updateWarnings()">Оновити попередження</button>
-    </div>
-
-    <div class="counter-container">
-        <div class="counter-box" id="daysCounterBox">
-            <div class="counter-title">Кількість днів на посаді</div>
-            <div class="counter-value" id="daysCounter">0</div>
-        </div>
-
-        <div class="counter-box reprimand" id="reprimandCounterBox">
-            <div class="counter-title">Кількість доган</div>
-            <div class="counter-value" id="reprimandCounter">0/2</div>
-        </div>
-
-        <div class="counter-box warning" id="warningCounterBox">
-            <div class="counter-title">Кількість попереджень</div>
-            <div class="counter-value" id="warningCounter">0/3</div>
-        </div>
-
-        <div class="counter-box" id="extra1CounterBox">
-            <div class="counter-title">Проєкт виконано</div>
-            <div class="counter-value" id="extra1Counter">50%</div>
-        </div>
-
-        <div class="counter-box" id="extra2CounterBox">
-            <div class="counter-title">Продуктивність</div>
-            <div class="counter-value" id="extra2Counter">80%</div>
-        </div>
-
-        <div class="counter-box" id="extra3CounterBox">
-            <div class="counter-title">Оцінка ризиків</div>
-            <div class="counter-value" id="extra3Counter">20%</div>
-        </div>
-
-        <div class="counter-box" id="extra4CounterBox">
-            <div class="counter-title">Виконано задач</div>
-            <div class="counter-value" id="extra4Counter">60%</div>
-        </div>
-
-        <div class="counter-box" id="extra5CounterBox">
-            <div class="counter-title">Прогрес</div>
-            <div class="counter-value" id="extra5Counter">90%</div>
-        </div>
-
-        <div class="counter-box" id="extra6CounterBox">
-            <div class="counter-title">Точність</div>
-            <div class="counter-value" id="extra6Counter">75%</div>
-        </div>
-    </div>
-
-    <button class="logout-btn" onclick="window.location.href='index.html'">
-        <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти
-    </button>
 
     <script>
         function updateDays() {
-            const days = document.getElementById('daysInput').value;
+            let days = parseInt(document.getElementById('daysInput').value);
             localStorage.setItem('days', days);
-            alert(`Кількість днів оновлено до: ${days}`);
+            alert('Кількість днів оновлено!');
         }
 
-        function updateReprimands() {
-            const reprimands = document.getElementById('reprimandsInput').value;
-            localStorage.setItem('reprimands', reprimands);
-            alert(`Кількість доган оновлено до: ${reprimands}`);
-        }
-
-        function updateWarnings() {
-            const warnings = document.getElementById('warningsInput').value;
-            localStorage.setItem('warnings', warnings);
-            alert(`Кількість попереджень оновлено до: ${warnings}`);
-        }
-
-        // Оновлення лічильників при завантаженні сторінки
-        window.onload = function() {
-            document.getElementById('daysCounter').innerText = localStorage.getItem('days') || 0;
-            document.getElementById('reprimandCounter').innerText = `${localStorage.getItem('reprimands') || 0}/2`;
-            document.getElementById('warningCounter').innerText = `${localStorage.getItem('warnings') || 0}/3`;
+        function resetDays() {
+            localStorage.setItem('days', 0);
+            alert('Кількість днів скинуто до 0!');
         }
     </script>
 
