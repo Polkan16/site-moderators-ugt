@@ -57,7 +57,7 @@
             height: 300px; /* Висота фото */
             object-fit: cover; /* Щоб фото виглядало гармонійно */
             border-radius: 15px; /* Заокруглені кути */
-            margin-bottom: 25px; /* Відступ знизу фото */
+            margin: 0 0 25px 0; /* Відступ знизу фото */
         }
 
         .buttons-container {
@@ -89,13 +89,13 @@
     <h1>Вітаємо в кабінеті користувача!</h1>
 
     <div class="container">
-        <!-- Фото модератора -->
-        <img src="https://i.imgur.com/g51O6iF.png" alt="Moderator Photo" class="moderator-photo">
-
         <!-- Кнопка "Вийти з кабінету" -->
         <button class="logout-btn" onclick="window.location.href='index.html'">
             <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
         </button>
+
+        <!-- Фото модератора -->
+        <img src="https://i.imgur.com/g51O6iF.png" alt="Moderator Photo" class="moderator-photo">
 
         <!-- Контейнер для кнопок -->
         <div class="buttons-container">
