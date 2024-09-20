@@ -4,137 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Адмін Панель</title>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Comfortaa', sans-serif;
-            background-color: black;
+            font-family: Arial, sans-serif;
+            background-color: #282c34;
             color: white;
             padding: 20px;
         }
-        input {
-            width: 200px;
-            margin-bottom: 10px;
-        }
-        button {
-            margin-top: 10px;
-            padding: 10px;
-            background-color: green;
-            color: white;
-            border: none;
+        .counter-box {
+            margin: 10px;
+            padding: 20px;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
         }
-        button:hover {
-            background-color: darkgreen;
+        .admin-panel {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        input {
+            margin: 5px;
         }
     </style>
 </head>
 <body>
 
-    <h1>Адмін Панель</h1>
+    <h1>👋 Привіт, це твоя основна інформація!</h1>
 
-    <div>
-        <h3>Оновити кількість днів:</h3>
-        <input type="number" id="daysInput" placeholder="Введіть кількість днів" />
-        <button onclick="updateDays()">Оновити</button>
+    <div class="counter-box">
+        <div>Кількість днів на посаді: <span id="daysCounter">0</span></div>
+    </div>
+    <div class="counter-box">
+        <div>Кількість доган: <span id="reprimandCounter">0/2</span></div>
+    </div>
+    <div class="counter-box">
+        <div>Кількість попереджень: <span id="warningCounter">0/3</span></div>
+    </div>
+    <div class="counter-box">
+        <div>Кількість онлайн змін: <span id="onlineChanges">0</span></div>
+    </div>
+    <div class="counter-box">
+        <div>Кількість покарань: <span id="punishments">0</span></div>
+    </div>
+    <div class="counter-box">
+        <div>Кількість відповідей у "питання до тех-підтримки": <span id="techSupportResponses">0</span></div>
+    </div>
+    <div class="counter-box">
+        <div>Кількість премії: <span id="bonus">0</span></div>
+    </div>
+    <div class="counter-box">
+        <div>Кількість штрафів: <span id="fines">0</span></div>
     </div>
 
-    <div>
-        <h3>Оновити догани:</h3>
-        <input type="number" id="reprimandsInput" placeholder="Введіть кількість доган" />
-        <button onclick="updateReprimands()">Оновити</button>
-    </div>
-
-    <div>
-        <h3>Оновити попередження:</h3>
-        <input type="number" id="warningsInput" placeholder="Введіть кількість попереджень" />
-        <button onclick="updateWarnings()">Оновити</button>
-    </div>
-
-    <!-- Оновлення для додаткових блоків -->
-    <div>
-        <h3>Оновити додатковий блок 1:</h3>
-        <input type="number" id="extraCounter1Input" placeholder="Введіть значення" />
-        <button onclick="updateExtraCounter(1)">Оновити</button>
-    </div>
-    
-    <div>
-        <h3>Оновити додатковий блок 2:</h3>
-        <input type="number" id="extraCounter2Input" placeholder="Введіть значення" />
-        <button onclick="updateExtraCounter(2)">Оновити</button>
-    </div>
-
-    <div>
-        <h3>Оновити додатковий блок 3:</h3>
-        <input type="number" id="extraCounter3Input" placeholder="Введіть значення" />
-        <button onclick="updateExtraCounter(3)">Оновити</button>
-    </div>
-
-    <div>
-        <h3>Оновити додатковий блок 4:</h3>
-        <input type="number" id="extraCounter4Input" placeholder="Введіть значення" />
-        <button onclick="updateExtraCounter(4)">Оновити</button>
-    </div>
-
-    <div>
-        <h3>Оновити додатковий блок 5:</h3>
-        <input type="number" id="extraCounter5Input" placeholder="Введіть значення" />
-        <button onclick="updateExtraCounter(5)">Оновити</button>
-    </div>
-
-    <div>
-        <h3>Оновити додатковий блок 6:</h3>
-        <input type="number" id="extraCounter6Input" placeholder="Введіть значення" />
-        <button onclick="updateExtraCounter(6)">Оновити</button>
-    </div>
-
-    <div>
-        <h3>Оновити додатковий блок 7:</h3>
-        <input type="number" id="extraCounter7Input" placeholder="Введіть значення" />
-        <button onclick="updateExtraCounter(7)">Оновити</button>
-    </div>
-
-    <div>
-        <h3>Оновити додатковий блок 8:</h3>
-        <input type="number" id="extraCounter8Input" placeholder="Введіть значення" />
-        <button onclick="updateExtraCounter(8)">Оновити</button>
-    </div>
-
-    <div>
-        <h3>Скинути до 0:</h3>
-        <button onclick="resetDays()">Скинути дні</button>
+    <div class="admin-panel">
+        <h2>Адмін панель</h2>
+        <input type="text" id="key" placeholder="Ключ (наприклад: daysCounter)">
+        <input type="text" id="value" placeholder="Нове значення">
+        <button onclick="updateCounter()">Змінити значення</button>
     </div>
 
     <script>
-        function updateDays() {
-            let days = parseInt(document.getElementById('daysInput').value);
-            localStorage.setItem('days', days);
-            alert('Кількість днів оновлено!');
+        // Завантажити значення з Local Storage
+        function fetchCounters() {
+            document.getElementById('daysCounter').innerText = localStorage.getItem('daysCounter') || 0;
+            document.getElementById('reprimandCounter').innerText = localStorage.getItem('reprimandCounter') || '0/2';
+            document.getElementById('warningCounter').innerText = localStorage.getItem('warningCounter') || '0/3';
+            document.getElementById('onlineChanges').innerText = localStorage.getItem('onlineChanges') || 0;
+            document.getElementById('punishments').innerText = localStorage.getItem('punishments') || 0;
+            document.getElementById('techSupportResponses').innerText = localStorage.getItem('techSupportResponses') || 0;
+            document.getElementById('bonus').innerText = localStorage.getItem('bonus') || 0;
+            document.getElementById('fines').innerText = localStorage.getItem('fines') || 0;
         }
 
-        function updateReprimands() {
-            let reprimands = parseInt(document.getElementById('reprimandsInput').value);
-            localStorage.setItem('reprimands', reprimands);
-            alert('Кількість доган оновлено!');
+        // Оновити значення в Local Storage
+        function updateCounter() {
+            const key = document.getElementById('key').value;
+            const value = document.getElementById('value').value;
+
+            if (key) {
+                localStorage.setItem(key, value);
+                alert('Значення оновлено');
+                fetchCounters(); // Оновлюємо відображення
+            } else {
+                alert('Введіть ключ');
+            }
         }
 
-        function updateWarnings() {
-            let warnings = parseInt(document.getElementById('warningsInput').value);
-            localStorage.setItem('warnings', warnings);
-            alert('Кількість попереджень оновлено!');
-        }
-
-        function updateExtraCounter(counter) {
-            let value = parseInt(document.getElementById(`extraCounter${counter}Input`).value);
-            localStorage.setItem(`extraCounter${counter}`, value);
-            alert(`Додатковий блок ${counter} оновлено!`);
-        }
-
-        function resetDays() {
-            localStorage.setItem('days', 0);
-            alert('Кількість днів скинуто до 0!');
-        }
+        // Викликати функцію для отримання значень при завантаженні
+        window.onload = fetchCounters;
     </script>
 
 </body>
