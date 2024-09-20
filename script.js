@@ -26,3 +26,10 @@ function logout() {
     // Перенаправлення на головну сторінку
     window.location.href = 'index.html';
 }
+
+
+
+// Функція для виходу
+function logout() {
+    window.location.href = 'index.html'; // Перенаправлення на головну сторінку
+}
