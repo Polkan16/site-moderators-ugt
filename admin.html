@@ -27,6 +27,12 @@
         }
         input {
             margin: 5px;
+            padding: 5px;
+            width: 80px;
+        }
+        button {
+            margin: 5px;
+            padding: 5px 10px;
         }
     </style>
 </head>
@@ -61,9 +67,39 @@
 
     <div class="admin-panel">
         <h2>Адмін панель</h2>
-        <input type="text" id="key" placeholder="Ключ (наприклад: daysCounter)">
-        <input type="text" id="value" placeholder="Нове значення">
-        <button onclick="updateCounter()">Змінити значення</button>
+        <div>
+            <label>Дні на посаді:</label>
+            <input type="number" id="inputDaysCounter">
+        </div>
+        <div>
+            <label>Догани:</label>
+            <input type="text" id="inputReprimandCounter">
+        </div>
+        <div>
+            <label>Попередження:</label>
+            <input type="text" id="inputWarningCounter">
+        </div>
+        <div>
+            <label>Онлайн зміни:</label>
+            <input type="number" id="inputOnlineChanges">
+        </div>
+        <div>
+            <label>Покарання:</label>
+            <input type="number" id="inputPunishments">
+        </div>
+        <div>
+            <label>Відповіді в тех-підтримці:</label>
+            <input type="number" id="inputTechSupportResponses">
+        </div>
+        <div>
+            <label>Премія:</label>
+            <input type="number" id="inputBonus">
+        </div>
+        <div>
+            <label>Штрафи:</label>
+            <input type="number" id="inputFines">
+        </div>
+        <button onclick="updateAllCounters()">Змінити всі значення</button>
     </div>
 
     <script>
@@ -79,18 +115,19 @@
             document.getElementById('fines').innerText = localStorage.getItem('fines') || 0;
         }
 
-        // Оновити значення в Local Storage
-        function updateCounter() {
-            const key = document.getElementById('key').value;
-            const value = document.getElementById('value').value;
+        // Оновити всі значення в Local Storage
+        function updateAllCounters() {
+            localStorage.setItem('daysCounter', document.getElementById('inputDaysCounter').value);
+            localStorage.setItem('reprimandCounter', document.getElementById('inputReprimandCounter').value);
+            localStorage.setItem('warningCounter', document.getElementById('inputWarningCounter').value);
+            localStorage.setItem('onlineChanges', document.getElementById('inputOnlineChanges').value);
+            localStorage.setItem('punishments', document.getElementById('inputPunishments').value);
+            localStorage.setItem('techSupportResponses', document.getElementById('inputTechSupportResponses').value);
+            localStorage.setItem('bonus', document.getElementById('inputBonus').value);
+            localStorage.setItem('fines', document.getElementById('inputFines').value);
 
-            if (key) {
-                localStorage.setItem(key, value);
-                alert('Значення оновлено');
-                fetchCounters(); // Оновлюємо відображення
-            } else {
-                alert('Введіть ключ');
-            }
+            alert('Значення оновлено');
+            fetchCounters(); // Оновлюємо відображення
         }
 
         // Викликати функцію для отримання значень при завантаженні
