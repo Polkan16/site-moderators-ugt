@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кабінет користувача</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet"> <!-- Підключення шрифту Comfortaa -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -39,7 +40,18 @@
         }
 
         h1 {
+            font-family: 'Comfortaa', sans-serif; /* Використання шрифту Comfortaa */
             margin-top: 5px; /* Підняття заголовка на 15 пікселів */
+        }
+
+        .container {
+            width: 350px; /* Ширина контейнера */
+            background-color: rgba(50, 50, 50, 0.8); /* Світліший чорний фон */
+            border: 1px solid rgba(200, 200, 200, 0.5); /* Світло-сіра обводка */
+            border-radius: 10px; /* Заокруглені кути */
+            padding: 25px; /* Відступ всередині контейнера */
+            margin-top: 20px; /* Відступ зверху */
+            position: relative; /* Для абсолютного позиціонування кнопки */
         }
 
         .moderator-photo {
@@ -47,13 +59,10 @@
             height: 300px; /* Висота фото */
             object-fit: cover; /* Щоб фото виглядало гармонійно */
             border-radius: 15px; /* Заокруглені кути */
-            margin-top: 40px; /* Відступ від верху */
-            float: left; /* Вирівнювання по лівому краю */
-            margin-right: 20px; /* Відступ справа */
+            margin: 0 0 25px 0; /* Відступ знизу фото */
         }
 
         .buttons-container {
-            margin-top: 40px; /* Відступ між фото та кнопками */
             clear: both; /* Очищення обтікання */
         }
 
@@ -79,21 +88,23 @@
 </head>
 <body>
 
-    <h1>Вітаємо в кабінеті користувача!</h1>
+    <h1>👋 Привіт, це твоя основна інформація!</h1>
 
-    <!-- Фото модератора -->
-    <img src="https://i.imgur.com/g51O6iF.png" alt="Moderator Photo" class="moderator-photo">
+    <div class="container">
+        <!-- Кнопка "Вийти з кабінету" -->
+        <button class="logout-btn" onclick="window.location.href='index.html'">
+            <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
+        </button>
 
-    <!-- Кнопка "Вийти з кабінету" -->
-    <button class="logout-btn" onclick="window.location.href='index.html'">
-        <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
-    </button>
+        <!-- Фото модератора -->
+        <img src="https://i.imgur.com/g51O6iF.png" alt="Moderator Photo" class="moderator-photo">
 
-    <!-- Контейнер для кнопок -->
-    <div class="buttons-container">
-        <button class="dashboard-btn" onclick="window.location.href='info.html'">INFO M.D</button>
-        <br>
-        <button class="dashboard-btn" onclick="window.location.href='guide.html'">Посібник</button>
+        <!-- Контейнер для кнопок -->
+        <div class="buttons-container">
+            <button class="dashboard-btn" onclick="window.location.href='info.html'">INFO M.D</button>
+            <br>
+            <button class="dashboard-btn" onclick="window.location.href='guide.html'">Посібник</button>
+        </div>
     </div>
 
 </body>
