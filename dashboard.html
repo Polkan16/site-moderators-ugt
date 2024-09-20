@@ -40,7 +40,6 @@
         }
 
         h1 {
-            font-family: 'Comfortaa', sans-serif;
             margin-top: 5px;
         }
 
@@ -55,39 +54,45 @@
         }
 
         .counter-box {
-            width: 180px;
-            height: 100px;
-            background-color: rgba(255, 255, 0, 0.25); /* Жовтий фон */
-            border: 1px solid rgba(255, 255, 0, 0.75); /* Обводка */
+            width: 200px;
+            height: 120px;
             border-radius: 10px;
             text-align: center;
             padding: 10px;
+            margin: 5px;
             float: left;
-            margin-right: 10px;
         }
 
-        .counter-box.reprimand {
-            background-color: rgba(0, 255, 255, 0.25); /* Бірюзовий фон для доган */
-            border: 1px solid rgba(0, 255, 255, 0.75); /* Обводка бірюзова */
-        }
-
-        .counter-box.warning {
-            background-color: rgba(255, 0, 255, 0.25); /* Фіолетовий фон для попереджень */
-            border: 1px solid rgba(255, 0, 255, 0.75); /* Фіолетова обводка */
-        }
+        /* Кольори для лічильників */
+        .counter-box:nth-child(1) { background-color: rgba(255, 0, 0, 0.25); }
+        .counter-box:nth-child(2) { background-color: rgba(0, 255, 0, 0.25); }
+        .counter-box:nth-child(3) { background-color: rgba(0, 0, 255, 0.25); }
+        .counter-box:nth-child(4) { background-color: rgba(255, 255, 0, 0.25); }
+        .counter-box:nth-child(5) { background-color: rgba(255, 165, 0, 0.25); }
+        .counter-box:nth-child(6) { background-color: rgba(0, 255, 255, 0.25); }
+        .counter-box:nth-child(7) { background-color: rgba(255, 0, 255, 0.25); }
+        .counter-box:nth-child(8) { background-color: rgba(128, 0, 128, 0.25); }
+        .counter-box:nth-child(9) { background-color: rgba(255, 192, 203, 0.25); }
+        .counter-box:nth-child(10) { background-color: rgba(128, 128, 0, 0.25); }
 
         .counter-title {
-            font-size: 14px;
+            font-size: 16px;
             color: white;
         }
 
         .counter-value {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
-            color: orange; /* Червоний відтінок */
+            color: orange;
             margin-top: 10px;
         }
 
+        .counter-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: start;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -95,24 +100,58 @@
     <h1>👋 Привіт, це твоя основна інформація!</h1>
 
     <!-- Фото модератора -->
-    <img src="https://i.imgur.com/g51O6iF.png" alt="Moderator Photo" class="moderator-photo">
+    <img src="https://i.imgur.com/g51O6iF.png" alt="Фото модератора" class="moderator-photo">
 
-    <!-- Лічильник днів -->
-    <div class="counter-box" id="daysCounterBox">
-        <div class="counter-title">Кількість днів на посаді</div>
-        <div class="counter-value" id="daysCounter">0</div>
-    </div>
+    <div class="counter-container">
+        <!-- Лічильники -->
+        <div class="counter-box" id="daysCounterBox">
+            <div class="counter-title">Кількість днів на посаді</div>
+            <div class="counter-value" id="daysCounter">0</div>
+        </div>
 
-    <!-- Лічильник доган -->
-    <div class="counter-box reprimand" id="reprimandCounterBox">
-        <div class="counter-title">Кількість доган</div>
-        <div class="counter-value" id="reprimandCounter">0/2</div>
-    </div>
+        <div class="counter-box reprimand" id="reprimandCounterBox">
+            <div class="counter-title">Кількість доган</div>
+            <div class="counter-value" id="reprimandCounter">0/2</div>
+        </div>
 
-    <!-- Лічильник попереджень -->
-    <div class="counter-box warning" id="warningCounterBox">
-        <div class="counter-title">Кількість попереджень</div>
-        <div class="counter-value" id="warningCounter">0/3</div>
+        <div class="counter-box warning" id="warningCounterBox">
+            <div class="counter-title">Кількість попереджень</div>
+            <div class="counter-value" id="warningCounter">0/3</div>
+        </div>
+
+        <!-- Додаткові лічильники -->
+        <div class="counter-box" id="extraCounter1">
+            <div class="counter-title">Додатковий 1</div>
+            <div class="counter-value">0</div>
+        </div>
+        <div class="counter-box" id="extraCounter2">
+            <div class="counter-title">Додатковий 2</div>
+            <div class="counter-value">0</div>
+        </div>
+        <div class="counter-box" id="extraCounter3">
+            <div class="counter-title">Додатковий 3</div>
+            <div class="counter-value">0</div>
+        </div>
+        <div class="counter-box" id="extraCounter4">
+            <div class="counter-title">Додатковий 4</div>
+            <div class="counter-value">0</div>
+        </div>
+        <div class="counter-box" id="extraCounter5">
+            <div class="counter-title">Додатковий 5</div>
+            <div class="counter-value">0</div>
+        </div>
+        <div class="counter-box" id="extraCounter6">
+            <div class="counter-title">Додатковий 6</div>
+            <div class="counter-value">0</div>
+        </div>
+        <div class="counter-box" id="extraCounter7">
+            <div class="counter-title">Додатковий 7</div>
+            <div class="counter-value">0</div>
+        </div>
+        <div class="counter-box" id="extraCounter8">
+            <div class="counter-title">Додатковий 8</div>
+            <div class="counter-value">0</div>
+        </div>
     </div>
 
     <!-- Кнопка "Вийти з кабінету" -->
