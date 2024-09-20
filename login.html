@@ -7,19 +7,20 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: black; /* Чорний фон */
+            color: white;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f4f4f4;
         }
 
         .login-box {
             background-color: white;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
         .login-box input[type="text"], .login-box input[type="password"] {
@@ -39,10 +40,19 @@
             cursor: pointer;
             border-radius: 5px;
             transition: background-color 0.3s ease;
+            margin-right: 10px;
         }
 
         .login-box button:hover {
             background-color: darkred;
+        }
+
+        .cancel-btn {
+            background-color: gray;
+        }
+
+        .cancel-btn:hover {
+            background-color: darkgray;
         }
 
         .error {
@@ -59,6 +69,7 @@
             <input type="text" id="username" placeholder="Логін">
             <input type="password" id="password" placeholder="Пароль">
             <button type="button" onclick="login()">Увійти</button>
+            <button type="button" class="cancel-btn" onclick="cancel()">Скасувати</button>
             <p class="error" id="error">Невірний логін або пароль!</p>
         </form>
     </div>
@@ -77,6 +88,10 @@
             } else {
                 document.getElementById('error').style.display = 'block'; // Вивести помилку
             }
+        }
+
+        function cancel() {
+            window.location.href = 'index.html'; // Повернення на головну сторінку при натисканні "Скасувати"
         }
     </script>
 </body>
