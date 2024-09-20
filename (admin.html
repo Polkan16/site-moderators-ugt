@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Адмін Панель</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .button {
+            background-color: green;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .button:hover {
+            background-color: darkgreen;
+        }
+
+        .counter {
+            margin-top: 20px;
+            font-size: 20px;
+            font-family: 'Comfortaa', sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Адмін Панель</h1>
+
+    <button class="button" onclick="startCounter()">Запустити лічильник</button>
+    <button class="button" onclick="resetCounter()">Скинути лічильник</button>
+
+    <div class="counter" id="counterStatus">Дні: 0</div>
+
+    <script>
+        function startCounter() {
+            let days = localStorage.getItem('days') || 0;
+            localStorage.setItem('days', ++days);
+            updateCounter();
+        }
+
+        function resetCounter() {
+            localStorage.setItem('days', 0);
+            updateCounter();
+        }
+
+        function updateCounter() {
+            const days = localStorage.getItem('days') || 0;
+            document.getElementById('counterStatus').innerText = `Дні: ${days}`;
+        }
+
+        updateCounter(); // Оновлюємо статус при завантаженні
+    </script>
+
+</body>
+</html>
