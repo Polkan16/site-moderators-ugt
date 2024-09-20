@@ -7,6 +7,9 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: black; /* Чорний фон */
+            color: white;
+            margin: 0;
         }
 
         .login-btn {
@@ -19,15 +22,24 @@
             cursor: pointer;
             border-radius: 5px;
             transition: background-color 0.3s ease;
+            position: fixed;
+            top: 20px; /* В самому верху */
+            right: 20px; /* З правого боку */
         }
 
         .login-btn:hover {
             background-color: rgba(255, 0, 0, 0.75); /* Темніший при наведенні */
         }
+
+        h1 {
+            text-align: center;
+            margin-top: 50vh;
+            transform: translateY(-50%);
+        }
     </style>
 </head>
 <body>
-    <h1>Ласкаво просимо!</h1>
     <button class="login-btn" onclick="window.location.href='login.html'">Вхід</button>
+    <h1>Ласкаво просимо на наш сайт!</h1>
 </body>
 </html>
