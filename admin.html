@@ -17,8 +17,8 @@
         .admin-panel {
             width: 300px;
             margin: 0 auto;
-            background-color: rgba(255, 255, 0, 0.25); /* Жовтий фон на 25% прозорості */
-            border: 2px solid rgba(255, 255, 0, 0.75); /* Обводка */
+            background-color: rgba(255, 255, 0, 0.25);
+            border: 2px solid rgba(255, 255, 0, 0.75);
             border-radius: 10px;
             padding: 20px;
         }
@@ -62,18 +62,40 @@
     <div class="admin-panel">
         <h1>Адмін Панель</h1>
 
+        <!-- Поле для зміни днів -->
+        <label for="daysCount">Кількість днів на посаді:</label>
+        <input type="number" id="daysCount" min="0" value="0">
+
+        <button onclick="updateDaysFromAdmin()">Зберегти дні</button>
+        <button onclick="resetDays()" style="margin-top: 20px;">Скинути дні</button>
+
         <!-- Поле для зміни доган -->
         <label for="reprimandCount">Кількість доган (0/2):</label>
         <input type="number" id="reprimandCount" min="0" max="2" value="0">
 
-        <!-- Кнопка збереження змін -->
-        <button onclick="updateReprimandsFromAdmin()">Зберегти</button>
+        <button onclick="updateReprimandsFromAdmin()">Зберегти догани</button>
 
-        <!-- Кнопка для скидання днів -->
-        <button style="margin-top: 20px;" onclick="resetDays()">Скинути дні</button>
+        <!-- Поле для зміни попереджень -->
+        <label for="warningCount">Кількість попереджень (0/3):</label>
+        <input type="number" id="warningCount" min="0" max="3" value="0">
+
+        <button onclick="updateWarningsFromAdmin()">Зберегти попередження</button>
     </div>
 
     <script>
+        // Функція для збереження кількості днів
+        function updateDaysFromAdmin() {
+            const daysValue = parseInt(document.getElementById('daysCount').value);
+            localStorage.setItem('days', daysValue);
+            alert('Кількість днів збережено.');
+        }
+
+        // Функція для скидання днів
+        function resetDays() {
+            localStorage.setItem('days', 0);
+            alert('Лічильник днів скинуто.');
+        }
+
         // Функція для збереження кількості доган
         function updateReprimandsFromAdmin() {
             const reprimandValue = parseInt(document.getElementById('reprimandCount').value);
@@ -85,16 +107,22 @@
             }
         }
 
-        // Функція для скидання кількості днів
-        function resetDays() {
-            localStorage.setItem('days', 0);
-            alert('Лічильник днів скинуто.');
+        // Функція для збереження кількості попереджень
+        function updateWarningsFromAdmin() {
+            const warningValue = parseInt(document.getElementById('warningCount').value);
+            if (warningValue >= 0 && warningValue <= 3) {
+                localStorage.setItem('warnings', warningValue);
+                alert('Кількість попереджень збережено.');
+            } else {
+                alert('Будь ласка, введіть значення від 0 до 3.');
+            }
         }
 
-        // При завантаженні заповнюємо поле з доганами
+        // Завантажуємо збережені значення при старті
         window.onload = function() {
-            const savedReprimands = localStorage.getItem('reprimands') ? parseInt(localStorage.getItem('reprimands')) : 0;
-            document.getElementById('reprimandCount').value = savedReprimands;
+            document.getElementById('daysCount').value = localStorage.getItem('days') || 0;
+            document.getElementById('reprimandCount').value = localStorage.getItem('reprimands') || 0;
+            document.getElementById('warningCount').value = localStorage.getItem('warnings') || 0;
         }
     </script>
 
