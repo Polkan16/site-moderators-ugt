@@ -42,8 +42,16 @@
             margin-top: 5px; /* Підняття заголовка на 15 пікселів */
         }
 
+        .container {
+            border: 1px solid rgba(200, 200, 200, 0.5); /* Світло-сіра обводка */
+            border-radius: 10px; /* Заокруглені кути */
+            padding: 20px; /* Відступ всередині контейнера */
+            background-color: rgba(50, 50, 50, 0.8); /* Трохи світліший чорний фон */
+            margin-top: 20px; /* Відступ зверху */
+        }
+
         .moderator-photo {
-            width: 250px; /* Ширина фото */
+            width: 300px; /* Ширина фото */
             height: 300px; /* Висота фото */
             object-fit: cover; /* Щоб фото виглядало гармонійно */
             border-radius: 15px; /* Заокруглені кути */
@@ -53,7 +61,7 @@
         }
 
         .buttons-container {
-            margin-top: 60px; /* Відступ між фото та кнопками */
+            margin-top: 50px; /* Відступ між фото та кнопками */
             clear: both; /* Очищення обтікання */
         }
 
@@ -81,19 +89,21 @@
 
     <h1>Вітаємо в кабінеті користувача!</h1>
 
-    <!-- Фото модератора -->
-    <img src="https://i.imgur.com/g51O6iF.png" alt="Moderator Photo" class="moderator-photo">
+    <div class="container">
+        <!-- Фото модератора -->
+        <img src="https://i.imgur.com/g51O6iF.png" alt="Moderator Photo" class="moderator-photo">
 
-    <!-- Кнопка "Вийти з кабінету" -->
-    <button class="logout-btn" onclick="window.location.href='index.html'">
-        <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
-    </button>
+        <!-- Кнопка "Вийти з кабінету" -->
+        <button class="logout-btn" onclick="window.location.href='index.html'">
+            <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
+        </button>
 
-    <!-- Контейнер для кнопок -->
-    <div class="buttons-container">
-        <button class="dashboard-btn" onclick="window.location.href='info.html'">INFO M.D</button>
-        <br>
-        <button class="dashboard-btn" onclick="window.location.href='guide.html'">Посібник</button>
+        <!-- Контейнер для кнопок -->
+        <div class="buttons-container">
+            <button class="dashboard-btn" onclick="window.location.href='info.html'">INFO M.D</button>
+            <br>
+            <button class="dashboard-btn" onclick="window.location.href='guide.html'">Посібник</button>
+        </div>
     </div>
 
 </body>
