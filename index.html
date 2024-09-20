@@ -10,6 +10,10 @@
             background-color: black; /* Чорний фон */
             color: white;
             margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .login-btn {
@@ -36,10 +40,25 @@
             margin-top: 50vh;
             transform: translateY(-50%);
         }
+
+        footer {
+            background-color: #333; /* Темний фон контитулу */
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 14px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
     <button class="login-btn" onclick="window.location.href='login.html'">Вхід</button>
     <h1>Ласкаво просимо на наш сайт!</h1>
+
+    <footer>
+        &copy; 2024 Усі права захищено
+    </footer>
 </body>
 </html>
