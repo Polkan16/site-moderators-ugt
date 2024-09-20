@@ -54,13 +54,15 @@
         }
 
         .counter {
-            background-color: rgba(100, 100, 100, 0.5); /* Світло-сірий фон */
+            background-color: rgba(255, 255, 0, 0.25); /* Жовтий фон на 25% прозорості */
+            border: 2px solid rgba(255, 255, 224, 0.75); /* Світло-жовта обводка */
             border-radius: 10px;
-            padding: 20px;
-            margin-top: 40px;
-            width: 200px; /* Ширина блока лічильника */
+            padding: 30px; /* Відступи всередині */
+            margin-top: 40px; /* Відступ від верхнього контенту */
+            width: 250px; /* Ширина блока лічильника */
             display: inline-block;
             vertical-align: top; /* Вирівнювання по верху */
+            text-align: center; /* Центрування тексту */
         }
 
         .counter-title {
@@ -71,7 +73,7 @@
         .counter-number {
             color: #FF4500; /* Червоного оранжевого відтінку */
             font-weight: bold; /* Жирний шрифт для цифр */
-            font-size: 24px; /* Розмір шрифту для цифр */
+            font-size: 36px; /* Розмір шрифту для цифр */
         }
 
         .buttons-container {
@@ -107,7 +109,7 @@
     <img src="https://i.imgur.com/g51O6iF.png" alt="Moderator Photo" class="moderator-photo">
 
     <!-- Лічильник днів -->
-    <div class="counter">
+    <div class="counter" style="margin-top: -260px; margin-left: 280px;"> <!-- Вирівнювання по верху з фото -->
         <h2 class="counter-title">Кількість днів на посаді</h2>
         <div class="counter-number" id="dayCounter">0</div>
     </div>
@@ -123,6 +125,38 @@
         <br>
         <button class="dashboard-btn" onclick="window.location.href='guide.html'">Посібник</button>
     </div>
+
+    <script>
+        // Отримуємо збережене значення днів з localStorage
+        let days = localStorage.getItem('days') ? parseInt(localStorage.getItem('days')) : 0;
+        document.getElementById('dayCounter').innerText = days;
+
+        // Функція для оновлення лічильника днів
+        function updateCounter() {
+            days++;
+            localStorage.setItem('days', days);
+            document.getElementById('dayCounter').innerText = days;
+        }
+
+        // Функція для запуску лічильника
+        function startCounter() {
+            const now = new Date();
+            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+            const kyivTime = new Date(utc + (3600000 * 3)); // +3 години для Києва
+
+            // Обчислюємо, скільки часу залишилося до наступного дня
+            const nextDay = new Date(kyivTime);
+            nextDay.setHours(24, 0, 0, 0); // Наступний день о 00:00
+
+            // Запускаємо оновлення через таймер
+            setTimeout(() => {
+                updateCounter(); // Оновлюємо лічильник
+                setInterval(updateCounter, 86400000); // Оновлюємо щодня
+            }, nextDay - kyivTime);
+        }
+
+        startCounter(); // Запускаємо лічильник
+    </script>
 
 </body>
 </html>
