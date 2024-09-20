@@ -41,6 +41,18 @@
     </div>
 
     <div>
+        <h3>Оновити догани:</h3>
+        <input type="number" id="reprimandsInput" placeholder="Введіть кількість доган" />
+        <button onclick="updateReprimands()">Оновити</button>
+    </div>
+
+    <div>
+        <h3>Оновити попередження:</h3>
+        <input type="number" id="warningsInput" placeholder="Введіть кількість попереджень" />
+        <button onclick="updateWarnings()">Оновити</button>
+    </div>
+
+    <div>
         <h3>Скинути до 0:</h3>
         <button onclick="resetDays()">Скинути дні</button>
     </div>
@@ -50,6 +62,18 @@
             let days = parseInt(document.getElementById('daysInput').value);
             localStorage.setItem('days', days);
             alert('Кількість днів оновлено!');
+        }
+
+        function updateReprimands() {
+            let reprimands = parseInt(document.getElementById('reprimandsInput').value);
+            localStorage.setItem('reprimands', reprimands);
+            alert('Кількість доган оновлено!');
+        }
+
+        function updateWarnings() {
+            let warnings = parseInt(document.getElementById('warningsInput').value);
+            localStorage.setItem('warnings', warnings);
+            alert('Кількість попереджень оновлено!');
         }
 
         function resetDays() {
