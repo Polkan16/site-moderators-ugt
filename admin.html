@@ -78,6 +78,43 @@
         .logout-btn:hover {
             background-color: darkred;
         }
+
+        .counter-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            margin-top: 40px;
+        }
+
+        .counter-box {
+            width: 180px;
+            height: 100px;
+            background-color: rgba(255, 255, 0, 0.25);
+            border: 1px solid rgba(255, 255, 0, 0.75);
+            border-radius: 10px;
+            text-align: center;
+            padding: 10px;
+            margin: 15px 10px;
+            position: relative;
+        }
+
+        .counter-box.reprimand {
+            background-color: rgba(0, 255, 255, 0.25);
+            border: 1px solid rgba(0, 255, 255, 0.75);
+        }
+
+        .counter-box.warning {
+            background-color: rgba(255, 0, 255, 0.25);
+            border: 1px solid rgba(255, 0, 255, 0.75);
+        }
+
+        .counter-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: orange;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -97,6 +134,53 @@
     <div class="input-container">
         <input type="number" id="warningsInput" placeholder="Кількість попереджень" min="0">
         <button onclick="updateWarnings()">Оновити попередження</button>
+    </div>
+
+    <div class="counter-container">
+        <div class="counter-box" id="daysCounterBox">
+            <div class="counter-title">Кількість днів на посаді</div>
+            <div class="counter-value" id="daysCounter">0</div>
+        </div>
+
+        <div class="counter-box reprimand" id="reprimandCounterBox">
+            <div class="counter-title">Кількість доган</div>
+            <div class="counter-value" id="reprimandCounter">0/2</div>
+        </div>
+
+        <div class="counter-box warning" id="warningCounterBox">
+            <div class="counter-title">Кількість попереджень</div>
+            <div class="counter-value" id="warningCounter">0/3</div>
+        </div>
+
+        <div class="counter-box" id="extra1CounterBox">
+            <div class="counter-title">Проєкт виконано</div>
+            <div class="counter-value" id="extra1Counter">50%</div>
+        </div>
+
+        <div class="counter-box" id="extra2CounterBox">
+            <div class="counter-title">Продуктивність</div>
+            <div class="counter-value" id="extra2Counter">80%</div>
+        </div>
+
+        <div class="counter-box" id="extra3CounterBox">
+            <div class="counter-title">Оцінка ризиків</div>
+            <div class="counter-value" id="extra3Counter">20%</div>
+        </div>
+
+        <div class="counter-box" id="extra4CounterBox">
+            <div class="counter-title">Виконано задач</div>
+            <div class="counter-value" id="extra4Counter">60%</div>
+        </div>
+
+        <div class="counter-box" id="extra5CounterBox">
+            <div class="counter-title">Прогрес</div>
+            <div class="counter-value" id="extra5Counter">90%</div>
+        </div>
+
+        <div class="counter-box" id="extra6CounterBox">
+            <div class="counter-title">Точність</div>
+            <div class="counter-value" id="extra6Counter">75%</div>
+        </div>
     </div>
 
     <button class="logout-btn" onclick="window.location.href='index.html'">
@@ -120,6 +204,13 @@
             const warnings = document.getElementById('warningsInput').value;
             localStorage.setItem('warnings', warnings);
             alert(`Кількість попереджень оновлено до: ${warnings}`);
+        }
+
+        // Оновлення лічильників при завантаженні сторінки
+        window.onload = function() {
+            document.getElementById('daysCounter').innerText = localStorage.getItem('days') || 0;
+            document.getElementById('reprimandCounter').innerText = `${localStorage.getItem('reprimands') || 0}/2`;
+            document.getElementById('warningCounter').innerText = `${localStorage.getItem('warnings') || 0}/3`;
         }
     </script>
 
