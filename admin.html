@@ -3,126 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Адмін панель</title>
+    <title>Адмін Панель</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Comfortaa', sans-serif;
-            background-color: black;
+            background-color: #2C3E50; /* Темно-синій фон */
             color: white;
             margin: 0;
             padding: 20px;
         }
 
-        .admin-panel {
-            width: 300px;
-            margin: 0 auto;
-            background-color: rgba(255, 255, 0, 0.25);
-            border: 2px solid rgba(255, 255, 0, 0.75);
-            border-radius: 10px;
-            padding: 20px;
-        }
-
         h1 {
             text-align: center;
+            font-size: 36px;
+            color: #E74C3C; /* Яскраво червоний */
+        }
+
+        .admin-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #34495E; /* Темно-сірий фон для панелі */
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
             margin-bottom: 10px;
+            font-size: 18px;
+            color: #ECF0F1; /* Світло-сірий текст */
         }
 
         input[type="number"] {
             width: 100%;
             padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 5px;
+            font-size: 18px;
             border: none;
-            font-size: 16px;
+            border-radius: 5px;
+            background-color: #ECF0F1;
+            color: #2C3E50;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border: 2px solid #E74C3C; /* Червона обводка при фокусі */
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         button {
-            width: 100%;
-            padding: 10px;
-            background-color: red;
+            padding: 12px 20px;
+            font-size: 16px;
             color: white;
+            background-color: #E74C3C; /* Червоні кнопки */
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            transition: background-color 0.3s ease;
         }
 
         button:hover {
-            background-color: darkred;
+            background-color: #C0392B; /* Темніший червоний при наведенні */
         }
+
+        .reset-btn {
+            background-color: #3498DB; /* Синя кнопка для скидання */
+        }
+
+        .reset-btn:hover {
+            background-color: #2980B9;
+        }
+
+        .success-message {
+            text-align: center;
+            font-size: 18px;
+            color: #2ECC71; /* Зелений текст */
+            display: none;
+            margin-top: 10px;
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="admin-panel">
-        <h1>Адмін Панель</h1>
+    <h1>Адмін Панель</h1>
 
-        <!-- Поле для зміни днів -->
-        <label for="daysCount">Кількість днів на посаді:</label>
-        <input type="number" id="daysCount" min="0" value="0">
+    <div class="admin-container">
+        <!-- Лічильник днів на посаді -->
+        <div class="form-group">
+            <label for="daysInput">Кількість днів на посаді:</label>
+            <input type="number" id="daysInput" min="0" placeholder="Введіть кількість днів">
+        </div>
 
-        <button onclick="updateDaysFromAdmin()">Зберегти дні</button>
-        <button onclick="resetDays()" style="margin-top: 20px;">Скинути дні</button>
+        <!-- Лічильник доган -->
+        <div class="form-group">
+            <label for="reprimandsInput">Кількість доган (0/2):</label>
+            <input type="number" id="reprimandsInput" min="0" max="2" placeholder="Введіть кількість доган">
+        </div>
 
-        <!-- Поле для зміни доган -->
-        <label for="reprimandCount">Кількість доган (0/2):</label>
-        <input type="number" id="reprimandCount" min="0" max="2" value="0">
+        <!-- Лічильник попереджень -->
+        <div class="form-group">
+            <label for="warningsInput">Кількість попереджень (0/3):</label>
+            <input type="number" id="warningsInput" min="0" max="3" placeholder="Введіть кількість попереджень">
+        </div>
 
-        <button onclick="updateReprimandsFromAdmin()">Зберегти догани</button>
+        <!-- Лічильники відсотків -->
+        <div class="form-group">
+            <label for="extra1Input">Проєкт виконано (%):</label>
+            <input type="number" id="extra1Input" min="0" max="100" placeholder="Введіть % виконання проєкту">
+        </div>
 
-        <!-- Поле для зміни попереджень -->
-        <label for="warningCount">Кількість попереджень (0/3):</label>
-        <input type="number" id="warningCount" min="0" max="3" value="0">
+        <div class="form-group">
+            <label for="extra2Input">Продуктивність (%):</label>
+            <input type="number" id="extra2Input" min="0" max="100" placeholder="Введіть % продуктивності">
+        </div>
 
-        <button onclick="updateWarningsFromAdmin()">Зберегти попередження</button>
+        <div class="form-group">
+            <label for="extra3Input">Оцінка ризиків (%):</label>
+            <input type="number" id="extra3Input" min="0" max="100" placeholder="Введіть % оцінки ризиків">
+        </div>
+
+        <div class="form-group">
+            <label for="extra4Input">Виконано задач (%):</label>
+            <input type="number" id="extra4Input" min="0" max="100" placeholder="Введіть % виконаних задач">
+        </div>
+
+        <div class="form-group">
+            <label for="extra5Input">Прогрес (%):</label>
+            <input type="number" id="extra5Input" min="0" max="100" placeholder="Введіть % прогресу">
+        </div>
+
+        <div class="form-group">
+            <label for="extra6Input">Точність (%):</label>
+            <input type="number" id="extra6Input" min="0" max="100" placeholder="Введіть % точності">
+        </div>
+
+        <!-- Кнопки -->
+        <div class="button-container">
+            <button onclick="saveChanges()">Зберегти</button>
+            <button class="reset-btn" onclick="resetValues()">Скинути</button>
+        </div>
+
+        <div class="success-message" id="successMessage">Дані успішно збережено!</div>
     </div>
 
     <script>
-        // Функція для збереження кількості днів
-        function updateDaysFromAdmin() {
-            const daysValue = parseInt(document.getElementById('daysCount').value);
+        // Збереження значень в Local Storage
+        function saveChanges() {
+            const daysValue = document.getElementById('daysInput').value || 0;
+            const reprimandsValue = document.getElementById('reprimandsInput').value || 0;
+            const warningsValue = document.getElementById('warningsInput').value || 0;
+
+            const extra1Value = document.getElementById('extra1Input').value || 0;
+            const extra2Value = document.getElementById('extra2Input').value || 0;
+            const extra3Value = document.getElementById('extra3Input').value || 0;
+            const extra4Value = document.getElementById('extra4Input').value || 0;
+            const extra5Value = document.getElementById('extra5Input').value || 0;
+            const extra6Value = document.getElementById('extra6Input').value || 0;
+
+            // Зберігаємо значення в localStorage
             localStorage.setItem('days', daysValue);
-            alert('Кількість днів збережено.');
+            localStorage.setItem('reprimands', reprimandsValue);
+            localStorage.setItem('warnings', warningsValue);
+
+            localStorage.setItem('extra1', extra1Value);
+            localStorage.setItem('extra2', extra2Value);
+            localStorage.setItem('extra3', extra3Value);
+            localStorage.setItem('extra4', extra4Value);
+            localStorage.setItem('extra5', extra5Value);
+            localStorage.setItem('extra6', extra6Value);
+
+            // Відображаємо повідомлення про успішне збереження
+            document.getElementById('successMessage').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 3000);
         }
 
-        // Функція для скидання днів
-        function resetDays() {
-            localStorage.setItem('days', 0);
-            alert('Лічильник днів скинуто.');
+        // Функція для скидання всіх значень
+        function resetValues() {
+            document.getElementById('daysInput').value = 0;
+            document.getElementById('reprimandsInput').value = 0;
+            document.getElementById('warningsInput').value = 0;
+
+            document.getElementById('extra1Input').value = 0;
+            document.getElementById('extra2Input').value = 0;
+            document.getElementById('extra3Input').value = 0;
+            document.getElementById('extra4Input').value = 0;
+            document.getElementById('extra5Input').value = 0;
+            document.getElementById('extra6Input').value = 0;
+
+            // Очищаємо localStorage
+            localStorage.clear();
+
+            // Повідомлення
+            document.getElementById('successMessage').textContent = 'Дані скинуто!';
+            document.getElementById('successMessage').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+                document.getElementById('successMessage').textContent = 'Дані успішно збережено!';
+            }, 3000);
         }
 
-        // Функція для збереження кількості доган
-        function updateReprimandsFromAdmin() {
-            const reprimandValue = parseInt(document.getElementById('reprimandCount').value);
-            if (reprimandValue >= 0 && reprimandValue <= 2) {
-                localStorage.setItem('reprimands', reprimandValue);
-                alert('Кількість доган збережено.');
-            } else {
-                alert('Будь ласка, введіть значення від 0 до 2.');
-            }
-        }
-
-        // Функція для збереження кількості попереджень
-        function updateWarningsFromAdmin() {
-            const warningValue = parseInt(document.getElementById('warningCount').value);
-            if (warningValue >= 0 && warningValue <= 3) {
-                localStorage.setItem('warnings', warningValue);
-                alert('Кількість попереджень збережено.');
-            } else {
-                alert('Будь ласка, введіть значення від 0 до 3.');
-            }
-        }
-
-        // Завантажуємо збережені значення при старті
+        // Автоматичне заповнення полів при завантаженні сторінки
         window.onload = function() {
-            document.getElementById('daysCount').value = localStorage.getItem('days') || 0;
-            document.getElementById('reprimandCount').value = localStorage.getItem('reprimands') || 0;
-            document.getElementById('warningCount').value = localStorage.getItem('warnings') || 0;
+            document.getElementById('daysInput').value = localStorage.getItem('days') || 0;
+            document.getElementById('reprimandsInput').value = localStorage.getItem('reprimands') || 0;
+            document.getElementById('warningsInput').value = localStorage.getItem('warnings') || 0;
+
+            document.getElementById('extra1Input').value = localStorage.getItem('extra1') || 0;
+            document.getElementById('extra2Input').value = localStorage.getItem('extra2') || 0;
+            document.getElementById('extra3Input').value = localStorage.getItem('extra3') || 0;
+            document.getElementById('extra4Input').value = localStorage.getItem('extra4') || 0;
+            document.getElementById('extra5Input').value = localStorage.getItem('extra5') || 0;
+            document.getElementById('extra6Input').value = localStorage.getItem('extra6') || 0;
         }
     </script>
 
