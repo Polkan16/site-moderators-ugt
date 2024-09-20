@@ -61,19 +61,20 @@
             padding: 10px;
             margin: 5px;
             float: left;
+            transition: background-color 0.3s, opacity 0.3s;
         }
 
         /* Кольори для лічильників */
-        .counter-box:nth-child(1) { background-color: rgba(255, 0, 0, 0.25); }
-        .counter-box:nth-child(2) { background-color: rgba(0, 255, 0, 0.25); }
-        .counter-box:nth-child(3) { background-color: rgba(0, 0, 255, 0.25); }
-        .counter-box:nth-child(4) { background-color: rgba(255, 255, 0, 0.25); }
-        .counter-box:nth-child(5) { background-color: rgba(255, 165, 0, 0.25); }
-        .counter-box:nth-child(6) { background-color: rgba(0, 255, 255, 0.25); }
-        .counter-box:nth-child(7) { background-color: rgba(255, 0, 255, 0.25); }
-        .counter-box:nth-child(8) { background-color: rgba(128, 0, 128, 0.25); }
-        .counter-box:nth-child(9) { background-color: rgba(255, 192, 203, 0.25); }
-        .counter-box:nth-child(10) { background-color: rgba(128, 128, 0, 0.25); }
+        .counter-box:nth-child(1) { background-color: rgba(255, 223, 186, 0.1); border: 1px solid rgba(255, 223, 186, 0.3); }
+        .counter-box:nth-child(2) { background-color: rgba(186, 255, 202, 0.1); border: 1px solid rgba(186, 255, 202, 0.3); }
+        .counter-box:nth-child(3) { background-color: rgba(186, 202, 255, 0.1); border: 1px solid rgba(186, 202, 255, 0.3); }
+        .counter-box:nth-child(4) { background-color: rgba(255, 255, 186, 0.1); border: 1px solid rgba(255, 255, 186, 0.3); }
+        .counter-box:nth-child(5) { background-color: rgba(255, 186, 240, 0.1); border: 1px solid rgba(255, 186, 240, 0.3); }
+        .counter-box:nth-child(6) { background-color: rgba(186, 255, 255, 0.1); border: 1px solid rgba(186, 255, 255, 0.3); }
+        .counter-box:nth-child(7) { background-color: rgba(240, 186, 255, 0.1); border: 1px solid rgba(240, 186, 255, 0.3); }
+        .counter-box:nth-child(8) { background-color: rgba(255, 224, 186, 0.1); border: 1px solid rgba(255, 224, 186, 0.3); }
+        .counter-box:nth-child(9) { background-color: rgba(224, 186, 255, 0.1); border: 1px solid rgba(224, 186, 255, 0.3); }
+        .counter-box:nth-child(10) { background-color: rgba(186, 255, 224, 0.1); border: 1px solid rgba(186, 255, 224, 0.3); }
 
         .counter-title {
             font-size: 16px;
@@ -92,6 +93,10 @@
             flex-wrap: wrap;
             justify-content: start;
             margin-top: 20px;
+        }
+
+        .counter-box:hover {
+            opacity: 0.5; /* Зміна прозорості при наведенні */
         }
     </style>
 </head>
