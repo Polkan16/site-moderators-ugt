@@ -53,27 +53,28 @@
             margin-right: 30px; /* Відступ справа */
         }
 
-        .counter {
-            background-color: rgba(255, 255, 0, 0.25); /* Жовтий фон на 25% прозорості */
-            border: 2px solid rgba(255, 255, 224, 0.75); /* Світло-жовта обводка */
+        .counter, .reprimands {
+            background-color: rgba(0, 255, 255, 0.25); /* Бірюзовий фон на 25% прозорості */
+            border: 2px solid rgba(224, 255, 255, 0.75); /* Світло-бірюзова обводка */
             border-radius: 10px;
             padding: 30px; /* Відступи всередині */
-            width: 250px; /* Ширина блока лічильника */
+            width: 250px; /* Ширина блока */
             display: inline-block;
             vertical-align: top; /* Вирівнювання по верху */
             text-align: center; /* Центрування тексту */
             margin-top: 40px; /* Відступ зверху для вирівнювання з фото */
+            margin-right: 10px; /* Відступ між блоками */
         }
 
-        .counter-title {
-            margin: 0;
-            font-weight: normal; /* Нормальний шрифт для заголовка */
-        }
-
-        .counter-number {
-            color: #FF4500; /* Червоного оранжевого відтінку */
+        .counter-number, .reprimands-number {
+            color: #FF4500; /* Червоного оранжевого відтінку для кількості днів */
             font-weight: bold; /* Жирний шрифт для цифр */
             font-size: 36px; /* Розмір шрифту для цифр */
+        }
+
+        .reprimands {
+            background-color: rgba(64, 224, 208, 0.25); /* Бірюзовий фон на 25% прозорості */
+            border: 2px solid rgba(224, 255, 255, 0.75); /* Світло-бірюзова обводка */
         }
 
         .buttons-container {
@@ -110,8 +111,14 @@
 
     <!-- Лічильник днів -->
     <div class="counter">
-        <h2 class="counter-title">Кількість днів на посаді</h2>
+        <h2>Кількість днів на посаді</h2>
         <div class="counter-number" id="dayCounter">0</div>
+    </div>
+
+    <!-- Лічильник доган -->
+    <div class="reprimands">
+        <h2>Кількість доган</h2>
+        <div class="reprimands-number" id="reprimandCounter">0/2</div>
     </div>
 
     <!-- Кнопка "Вийти з кабінету" -->
@@ -127,35 +134,41 @@
     </div>
 
     <script>
-        // Отримуємо збережене значення днів з localStorage
+        // Лічильник днів
         let days = localStorage.getItem('days') ? parseInt(localStorage.getItem('days')) : 0;
         document.getElementById('dayCounter').innerText = days;
 
-        // Функція для оновлення лічильника днів
         function updateCounter() {
             days++;
             localStorage.setItem('days', days);
             document.getElementById('dayCounter').innerText = days;
         }
 
-        // Функція для запуску лічильника
         function startCounter() {
             const now = new Date();
             const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
             const kyivTime = new Date(utc + (3600000 * 3)); // +3 години для Києва
 
-            // Обчислюємо, скільки часу залишилося до наступного дня
             const nextDay = new Date(kyivTime);
             nextDay.setHours(24, 0, 0, 0); // Наступний день о 00:00
 
-            // Запускаємо оновлення через таймер
             setTimeout(() => {
                 updateCounter(); // Оновлюємо лічильник
                 setInterval(updateCounter, 86400000); // Оновлюємо щодня
             }, nextDay - kyivTime);
         }
 
-        startCounter(); // Запускаємо лічильник
+        startCounter();
+
+        // Лічильник доган
+        let reprimands = localStorage.getItem('reprimands') ? parseInt(localStorage.getItem('reprimands')) : 0;
+        document.getElementById('reprimandCounter').innerText = `${reprimands}/2`;
+
+        function updateReprimands(newReprimands) {
+            reprimands = newReprimands;
+            localStorage.setItem('reprimands', reprimands);
+            document.getElementById('reprimandCounter').innerText = `${reprimands}/2`;
+        }
     </script>
 
 </body>
