@@ -171,7 +171,7 @@
         </div>
         <div class="counter-box teal">
             <div class="counter-title">Кількість штрафів</div>
-            <div class="counter-value" id="finesCounter">0</div>
+            <div class="counter-value" id="finesCounter2">0</div>
         </div>
     </div>
 
@@ -188,10 +188,10 @@
         // Завантажуємо значення з localStorage при завантаженні сторінки
         window.onload = function() {
             const counters = [
-                'daysCounter', 'reprimandCounter', 'warningCounter', 
-                'onlineChangesCounter', 'punishmentsCounter', 
-                'warningsCounter', 'techSupportCounter', 
-                'bonusCounter', 'finesCounter'
+                'daysCounter2', 'reprimandCounter2', 'warningCounter2', 
+                'onlineChangesCounter2', 'punishmentsCounter2', 
+                'warningsCounter2', 'techSupportCounter2', 
+                'bonusCounter2', 'finesCounter2'
             ];
             counters.forEach(id => {
                 const value = localStorage.getItem(id);
