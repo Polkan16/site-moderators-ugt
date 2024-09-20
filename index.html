@@ -15,6 +15,8 @@
             margin: 0;
             height: 100vh;
             display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Додаємо простір між контентом і футером */
         }
 
         .text-container {
@@ -64,9 +66,30 @@
             padding: 10px 0;
             text-align: center;
             font-size: 14px;
-            position: fixed;
-            bottom: 0;
+            position: relative;
             width: 100%;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px; /* Додаємо відступ перед футером */
+        }
+
+        .footer-button {
+            background-color: #ff6600; /* Яскраво-помаранчевий фон */
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .footer-button:hover {
+            background-color: #ff4500; /* Темніший помаранчевий при наведенні */
         }
 
         /* Медіа-запити для мобільних пристроїв */
@@ -87,6 +110,11 @@
                 top: 10px; /* Зменшити відстань від верху */
                 right: 10px; /* Зменшити відстань від правого краю */
             }
+
+            .footer-button {
+                font-size: 14px; /* Зменшити розмір кнопок на мобільних */
+                padding: 8px 16px;
+            }
         }
     </style>
 </head>
@@ -102,6 +130,11 @@
     <button class="login-btn" onclick="window.location.href='login.html'">
         <img src="https://i.imgur.com/dtvfULB.png" alt="Login Icon"> Вхід
     </button>
+
+    <div class="button-container">
+        <button class="footer-button" onclick="window.open('https://forms.gle/g5QVwJcBWBArSQng9')">Подати за'явку на модератора</button>
+        <button class="footer-button" onclick="window.open('https://t.me/Danil16_Dev')">Зв'ящок з S.M</button>
+    </div>
 
     <footer>
         &copy; 2024 M.D 04 | UKRAINE GTA | Всі права захищені.
