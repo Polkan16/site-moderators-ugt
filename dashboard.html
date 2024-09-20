@@ -56,10 +56,10 @@
         }
 
         .counter-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: flex-start;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px; /* Відступ між блоками */
+            justify-content: center; /* Центрування по горизонталі */
             margin-top: 40px;
         }
 
@@ -72,7 +72,6 @@
             border-radius: 10px;
             text-align: center;
             padding: 10px;
-            margin: 15px 10px;
             position: relative;
         }
 
