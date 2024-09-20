@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кабінет користувача</title>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet"> <!-- Підключення шрифту Comfortaa -->
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -40,42 +40,53 @@
         }
 
         h1 {
-            font-family: 'Comfortaa', sans-serif; /* Використання шрифту Comfortaa */
-            margin-top: 5px; /* Підняття заголовка на 5 пікселів */
+            font-family: 'Comfortaa', sans-serif;
+            margin-top: 5px;
         }
 
         .moderator-photo {
-            width: 250px; /* Ширина фото */
-            height: 300px; /* Висота фото */
-            object-fit: cover; /* Щоб фото виглядало гармонійно */
-            border-radius: 15px; /* Заокруглені кути */
-            margin-top: 40px; /* Відступ від верху */
-            float: left; /* Вирівнювання по лівому краю */
-            margin-right: 20px; /* Відступ справа */
+            width: 250px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-top: 40px;
+            float: left;
+            margin-right: 20px;
         }
 
         .buttons-container {
-            margin-top: 40px; /* Відступ між фото та кнопками */
-            clear: both; /* Очищення обтікання */
+            margin-top: 40px;
+            clear: both;
         }
 
         .dashboard-btn {
             display: inline-block;
-            background-color: rgba(255, 0, 0, 0.25); /* Червоний фон на 25% прозорості */
-            color: red; /* Червоний текст */
+            background-color: rgba(255, 0, 0, 0.25);
+            color: red;
             padding: 12px 25px;
             font-size: 18px;
-            border: 1px solid rgba(255, 0, 0, 0.75); /* Світло-червона обводка */
+            border: 1px solid rgba(255, 0, 0, 0.75);
             cursor: pointer;
-            border-radius: 20px; /* Заокруглені кнопки */
+            border-radius: 20px;
             margin-bottom: 15px;
-            width: 250px; /* Ширина кнопок */
+            width: 250px;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .dashboard-btn:hover {
-            background-color: rgba(255, 0, 0, 0.30); /* Темніший при наведенні */
-            color: white; /* Білий текст при наведенні */
+            background-color: rgba(255, 0, 0, 0.30);
+            color: white;
+        }
+
+        .counter-window {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            width: 200px;
+            margin: 20px auto; /* Центрування вікна */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
@@ -83,20 +94,32 @@
 
     <h1>👋 Привіт, це твоя основна інформація!</h1>
 
-    <!-- Фото модератора -->
     <img src="https://i.imgur.com/g51O6iF.png" alt="Moderator Photo" class="moderator-photo">
 
-    <!-- Кнопка "Вийти з кабінету" -->
     <button class="logout-btn" onclick="window.location.href='index.html'">
         <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
     </button>
 
-    <!-- Контейнер для кнопок -->
     <div class="buttons-container">
         <button class="dashboard-btn" onclick="window.location.href='info.html'">INFO M.D</button>
         <br>
         <button class="dashboard-btn" onclick="window.location.href='guide.html'">Посібник</button>
     </div>
+
+    <!-- Вікно лічильника -->
+    <div class="counter-window">
+        <h2>Лічильник днів</h2>
+        <div id="dayCounter">Дні: 0</div>
+    </div>
+
+    <script>
+        function updateCounter() {
+            const days = localStorage.getItem('days') || 0;
+            document.getElementById('dayCounter').innerText = `Дні: ${days}`;
+        }
+
+        updateCounter(); // Оновлюємо лічильник при завантаженні
+    </script>
 
 </body>
 </html>
