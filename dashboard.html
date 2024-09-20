@@ -17,7 +17,7 @@
             padding: 20px;
         }
 
-        .logout-btn, .admin-btn {
+        .logout-btn {
             display: inline-block;
             background-color: red;
             color: white;
@@ -25,10 +25,20 @@
             border: none;
             cursor: pointer;
             border-radius: 5px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
             transition: background-color 0.3s ease;
         }
 
-        .logout-btn:hover, .admin-btn:hover {
+        .logout-btn img {
+            vertical-align: middle;
+            margin-right: 8px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .logout-btn:hover {
             background-color: rgba(255, 0, 0, 0.2);
         }
 
@@ -74,15 +84,15 @@
             background-color: rgba(255, 255, 255, 0.35);
         }
 
-        .yellow { background-color: rgba(255, 255, 0, 0.1); }
-        .cyan { background-color: rgba(0, 255, 255, 0.1); }
-        .purple { background-color: rgba(255, 0, 255, 0.1); }
-        .red { background-color: rgba(255, 0, 0, 0.1); }
-        .green { background-color: rgba(0, 255, 0, 0.1); }
-        .blue { background-color: rgba(0, 0, 255, 0.1); }
-        .orange { background-color: rgba(255, 165, 0, 0.1); }
-        .pink { background-color: rgba(255, 192, 203, 0.1); }
-        .teal { background-color: rgba(0, 128, 128, 0.1); }
+        .yellow { background-color: rgba(255, 255, 0, 0.1); border: 1px solid rgba(255, 255, 0, 0.75); }
+        .cyan { background-color: rgba(0, 255, 255, 0.1); border: 1px solid rgba(0, 255, 255, 0.75); }
+        .purple { background-color: rgba(255, 0, 255, 0.1); border: 1px solid rgba(255, 0, 255, 0.75); }
+        .red { background-color: rgba(255, 0, 0, 0.1); border: 1px solid rgba(255, 0, 0, 0.75); }
+        .green { background-color: rgba(0, 255, 0, 0.1); border: 1px solid rgba(0, 255, 0, 0.75); }
+        .blue { background-color: rgba(0, 0, 255, 0.1); border: 1px solid rgba(0, 0, 255, 0.75); }
+        .orange { background-color: rgba(255, 165, 0, 0.1); border: 1px solid rgba(255, 165, 0, 0.75); }
+        .pink { background-color: rgba(255, 192, 203, 0.1); border: 1px solid rgba(255, 192, 203, 0.75); }
+        .teal { background-color: rgba(0, 128, 128, 0.1); border: 1px solid rgba(0, 128, 128, 0.75); }
 
         .counter-title {
             font-size: 14px;
@@ -98,7 +108,6 @@
 <body>
 
     <h1>👋 Привіт, це твоя основна інформація!</h1>
-
     <img src="https://i.imgur.com/g51O6iF.png" alt="Moderator Photo" class="moderator-photo">
 
     <div class="container">
@@ -139,19 +148,9 @@
             <div class="counter-value">0</div>
         </div>
     </div>
-
-    <button class="admin-btn" onclick="window.location.href='admin.html'">Відкрити адмін панель</button>
     <button class="logout-btn" onclick="window.location.href='index.html'">
         <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
     </button>
 
-    <script>
-        function startDaysCounter(days) {
-            setInterval(() => {
-                days++;
-                document.getElementById('daysCounter').textContent = days;
-            }, 86400000); // 1 день в мілісекундах
-        }
-    </script>
 </body>
 </html>
