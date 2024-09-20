@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кабінет користувача</title>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet"> <!-- Підключення шрифту Comfortaa -->
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Comfortaa', sans-serif;
-            background-color: black; /* Чорний фон */
+            background-color: black;
             color: white;
             margin: 0;
             padding: 20px;
@@ -40,66 +40,54 @@
         }
 
         h1 {
-            margin-top: 5px; /* Підняття заголовка на 5 пікселів */
+            font-family: 'Comfortaa', sans-serif;
+            margin-top: 5px;
         }
 
         .moderator-photo {
-            width: 250px; /* Ширина фото */
-            height: 300px; /* Висота фото */
-            object-fit: cover; /* Щоб фото виглядало гармонійно */
-            border-radius: 15px; /* Заокруглені кути */
-            margin-top: 40px; /* Відступ від верху */
-            float: left; /* Вирівнювання по лівому краю */
-            margin-right: 30px; /* Відступ справа */
+            width: 250px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-top: 40px;
+            float: left;
+            margin-right: 30px;
         }
 
-        .counter, .reprimands {
-            background-color: rgba(0, 255, 255, 0.25); /* Бірюзовий фон на 25% прозорості */
-            border: 2px solid rgba(224, 255, 255, 0.75); /* Світло-бірюзова обводка */
+        .counter-box {
+            width: 180px;
+            height: 100px;
+            background-color: rgba(255, 255, 0, 0.25); /* Жовтий фон */
+            border: 1px solid rgba(255, 255, 0, 0.75); /* Обводка */
             border-radius: 10px;
-            padding: 30px; /* Відступи всередині */
-            width: 250px; /* Ширина блока */
-            display: inline-block;
-            vertical-align: top; /* Вирівнювання по верху */
-            text-align: center; /* Центрування тексту */
-            margin-top: 40px; /* Відступ зверху для вирівнювання з фото */
-            margin-right: 10px; /* Відступ між блоками */
+            text-align: center;
+            padding: 10px;
+            float: left;
+            margin-right: 10px;
         }
 
-        .counter-number, .reprimands-number {
-            color: #FF4500; /* Червоного оранжевого відтінку для кількості днів */
-            font-weight: bold; /* Жирний шрифт для цифр */
-            font-size: 36px; /* Розмір шрифту для цифр */
+        .counter-box.reprimand {
+            background-color: rgba(0, 255, 255, 0.25); /* Бірюзовий фон для доган */
+            border: 1px solid rgba(0, 255, 255, 0.75); /* Обводка бірюзова */
         }
 
-        .reprimands {
-            background-color: rgba(64, 224, 208, 0.25); /* Бірюзовий фон на 25% прозорості */
-            border: 2px solid rgba(224, 255, 255, 0.75); /* Світло-бірюзова обводка */
+        .counter-box.warning {
+            background-color: rgba(255, 0, 255, 0.25); /* Фіолетовий фон для попереджень */
+            border: 1px solid rgba(255, 0, 255, 0.75); /* Фіолетова обводка */
         }
 
-        .buttons-container {
-            margin-top: 20px; /* Відступ між фото та кнопками */
-            clear: both; /* Очищення обтікання */
+        .counter-title {
+            font-size: 14px;
+            color: white;
         }
 
-        .dashboard-btn {
-            display: inline-block;
-            background-color: rgba(255, 0, 0, 0.25); /* Червоний фон на 25% прозорості */
-            color: red; /* Червоний текст */
-            padding: 12px 25px;
-            font-size: 18px;
-            border: 1px solid rgba(255, 0, 0, 0.75); /* Світло-червона обводка */
-            cursor: pointer;
-            border-radius: 20px; /* Заокруглені кнопки */
-            margin-bottom: 15px;
-            width: 250px; /* Ширина кнопок */
-            transition: background-color 0.3s ease, color 0.3s ease;
+        .counter-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: orange; /* Червоний відтінок */
+            margin-top: 10px;
         }
 
-        .dashboard-btn:hover {
-            background-color: rgba(255, 0, 0, 0.30); /* Темніший при наведенні */
-            color: white; /* Білий текст при наведенні */
-        }
     </style>
 </head>
 <body>
@@ -110,15 +98,21 @@
     <img src="https://i.imgur.com/g51O6iF.png" alt="Moderator Photo" class="moderator-photo">
 
     <!-- Лічильник днів -->
-    <div class="counter">
-        <h2>Кількість днів на посаді</h2>
-        <div class="counter-number" id="dayCounter">0</div>
+    <div class="counter-box" id="daysCounterBox">
+        <div class="counter-title">Кількість днів на посаді</div>
+        <div class="counter-value" id="daysCounter">0</div>
     </div>
 
     <!-- Лічильник доган -->
-    <div class="reprimands">
-        <h2>Кількість доган</h2>
-        <div class="reprimands-number" id="reprimandCounter">0/2</div>
+    <div class="counter-box reprimand" id="reprimandCounterBox">
+        <div class="counter-title">Кількість доган</div>
+        <div class="counter-value" id="reprimandCounter">0/2</div>
+    </div>
+
+    <!-- Лічильник попереджень -->
+    <div class="counter-box warning" id="warningCounterBox">
+        <div class="counter-title">Кількість попереджень</div>
+        <div class="counter-value" id="warningCounter">0/3</div>
     </div>
 
     <!-- Кнопка "Вийти з кабінету" -->
@@ -126,48 +120,35 @@
         <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
     </button>
 
-    <!-- Контейнер для кнопок -->
-    <div class="buttons-container">
-        <button class="dashboard-btn" onclick="window.location.href='info.html'">INFO M.D</button>
-        <br>
-        <button class="dashboard-btn" onclick="window.location.href='guide.html'">Посібник</button>
-    </div>
-
     <script>
-        // Лічильник днів
-        let days = localStorage.getItem('days') ? parseInt(localStorage.getItem('days')) : 0;
-        document.getElementById('dayCounter').innerText = days;
+        function updateDaysCounter() {
+            let savedDays = parseInt(localStorage.getItem('days')) || 0;
+            let currentDate = new Date();
+            let lastUpdateDate = new Date(localStorage.getItem('lastUpdateDate'));
 
-        function updateCounter() {
-            days++;
-            localStorage.setItem('days', days);
-            document.getElementById('dayCounter').innerText = days;
+            if (!lastUpdateDate || currentDate.getDate() !== lastUpdateDate.getDate()) {
+                savedDays += 1;
+                localStorage.setItem('days', savedDays);
+                localStorage.setItem('lastUpdateDate', currentDate);
+            }
+
+            document.getElementById('daysCounter').innerText = savedDays;
         }
 
-        function startCounter() {
-            const now = new Date();
-            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-            const kyivTime = new Date(utc + (3600000 * 3)); // +3 години для Києва
-
-            const nextDay = new Date(kyivTime);
-            nextDay.setHours(24, 0, 0, 0); // Наступний день о 00:00
-
-            setTimeout(() => {
-                updateCounter(); // Оновлюємо лічильник
-                setInterval(updateCounter, 86400000); // Оновлюємо щодня
-            }, nextDay - kyivTime);
+        function updateReprimands() {
+            let savedReprimands = localStorage.getItem('reprimands') || 0;
+            document.getElementById('reprimandCounter').innerText = `${savedReprimands}/2`;
         }
 
-        startCounter();
+        function updateWarnings() {
+            let savedWarnings = localStorage.getItem('warnings') || 0;
+            document.getElementById('warningCounter').innerText = `${savedWarnings}/3`;
+        }
 
-        // Лічильник доган
-        let reprimands = localStorage.getItem('reprimands') ? parseInt(localStorage.getItem('reprimands')) : 0;
-        document.getElementById('reprimandCounter').innerText = `${reprimands}/2`;
-
-        function updateReprimands(newReprimands) {
-            reprimands = newReprimands;
-            localStorage.setItem('reprimands', reprimands);
-            document.getElementById('reprimandCounter').innerText = `${reprimands}/2`;
+        window.onload = function() {
+            updateDaysCounter();
+            updateReprimands();
+            updateWarnings();
         }
     </script>
 
