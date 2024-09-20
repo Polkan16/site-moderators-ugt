@@ -1,35 +1,23 @@
-// Функція для відображення форми авторизації
+// Показати форму авторизації
 function showLoginForm() {
-    document.getElementById('loginForm').classList.remove('hidden');
+    document.getElementById("loginForm").classList.remove("hidden");
 }
 
-// Функція для авторизації
+// Сховати форму авторизації
+function hideLoginForm() {
+    document.getElementById("loginForm").classList.add("hidden");
+}
+
+// Імітація входу
 function login() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const errorMessage = document.getElementById("errorMessage");
 
-    // Єдиний логін і пароль для авторизації
-    const validUsername = 'admin';
-    const validPassword = 'password123';
-
-    if (username === validUsername && password === validPassword) {
-        // Перенаправлення на нову сторінку після успішної авторизації
-        window.location.href = 'dashboard.html';
+    if (username === "admin" && password === "12345") {
+        alert("Вхід успішний!");
+        hideLoginForm(); // Закриваємо форму після успішного входу
     } else {
-        // Показуємо повідомлення про помилку
-        document.getElementById('errorMessage').textContent = 'Невірний логін або пароль!';
+        errorMessage.textContent = "Невірний логін або пароль!";
     }
-}
-
-// Функція для виходу
-function logout() {
-    // Перенаправлення на головну сторінку
-    window.location.href = 'index.html';
-}
-
-
-
-// Функція для виходу
-function logout() {
-    window.location.href = 'index.html'; // Перенаправлення на головну сторінку
 }
