@@ -11,6 +11,7 @@
             color: white;
             margin: 0;
             padding: 20px;
+            text-align: center;
         }
 
         .logout-btn {
@@ -37,12 +38,55 @@
         .logout-btn:hover {
             background-color: darkred;
         }
+
+        .moderator-photo {
+            margin-top: 20px;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 2px solid red;
+        }
+
+        .buttons-container {
+            margin-top: 20px;
+        }
+
+        .dashboard-btn {
+            display: inline-block;
+            background-color: rgba(255, 0, 0, 0.25); /* Червоний фон на 25% прозорості */
+            color: red; /* Червоний текст */
+            padding: 10px 20px;
+            font-size: 18px;
+            border: 1px solid rgba(255, 0, 0, 0.75); /* Світло-червона обводка */
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .dashboard-btn:hover {
+            background-color: rgba(255, 0, 0, 0.75); /* Темніший при наведенні */
+            color: white; /* Білий текст при наведенні */
+        }
     </style>
 </head>
 <body>
+
     <h1>Вітаємо в кабінеті користувача!</h1>
+
+    <!-- Кнопка "Вийти з кабінету" -->
     <button class="logout-btn" onclick="window.location.href='index.html'">
         <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
     </button>
+
+    <!-- Фото модератора -->
+    <img src="https://i.imgur.com/lIEQ78A.png" alt="Moderator Photo" class="moderator-photo">
+
+    <!-- Кнопки -->
+    <div class="buttons-container">
+        <button class="dashboard-btn" onclick="window.location.href='info.html'">INFO M.D</button>
+        <button class="dashboard-btn" onclick="window.location.href='guide.html'">Посібник</button>
+    </div>
+
 </body>
 </html>
