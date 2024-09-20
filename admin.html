@@ -58,7 +58,7 @@
         <label for="daysInput">Дні:</label>
         <input type="number" id="daysInput" value="0">
         <button onclick="updateDays()">Оновити</button>
-        
+
         <br><br>
 
         <label for="reprimandsInput">Доган:</label>
@@ -113,47 +113,48 @@
     <script>
         function updateDays() {
             const days = document.getElementById('daysInput').value;
+            localStorage.setItem('daysCounter', days);
             document.getElementById('daysCounter').textContent = days;
         }
 
         function updateReprimands() {
             const reprimands = document.getElementById('reprimandsInput').value;
-            document.getElementById('reprimandCounter').textContent = reprimands + '/2';
+            localStorage.setItem('reprimandCounter', reprimands + '/2');
         }
 
         function updateWarnings() {
             const warnings = document.getElementById('warningsInput').value;
-            document.getElementById('warningCounter').textContent = warnings + '/3';
+            localStorage.setItem('warningCounter', warnings + '/3');
         }
 
         function updateOnlineChanges() {
             const onlineChanges = document.getElementById('onlineChangesInput').value;
-            document.getElementById('onlineChangesCounter').textContent = onlineChanges;
+            localStorage.setItem('onlineChangesCounter', onlineChanges);
         }
 
         function updatePunishments() {
             const punishments = document.getElementById('punishmentsInput').value;
-            document.getElementById('punishmentsCounter').textContent = punishments;
+            localStorage.setItem('punishmentsCounter', punishments);
         }
 
         function updateWarningsCount() {
             const warningsCount = document.getElementById('warningsCountInput').value;
-            document.getElementById('warningsCounter').textContent = warningsCount;
+            localStorage.setItem('warningsCounter', warningsCount);
         }
 
         function updateTechSupport() {
             const techSupport = document.getElementById('techSupportInput').value;
-            document.getElementById('techSupportCounter').textContent = techSupport;
+            localStorage.setItem('techSupportCounter', techSupport);
         }
 
         function updateBonus() {
             const bonus = document.getElementById('bonusInput').value;
-            document.getElementById('bonusCounter').textContent = bonus;
+            localStorage.setItem('bonusCounter', bonus);
         }
 
         function updateFines() {
             const fines = document.getElementById('finesInput').value;
-            document.getElementById('finesCounter').textContent = fines;
+            localStorage.setItem('finesCounter', fines);
         }
     </script>
 </body>
