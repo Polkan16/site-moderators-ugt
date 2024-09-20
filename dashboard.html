@@ -54,26 +54,64 @@
             margin-right: 30px;
         }
 
+        .counter-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Центрування по горизонталі */
+            align-items: flex-start; /* Вирівнювання по вертикалі */
+            margin-top: 40px;
+        }
+
         .counter-box {
             width: 180px;
             height: 100px;
             background-color: rgba(255, 255, 0, 0.25); /* Жовтий фон */
-            border: 1px solid rgba(255, 255, 0, 0.75); /* Обводка */
+            border: 1px solid rgba(255, 255, 0, 0.75); /* Жовта обводка */
             border-radius: 10px;
             text-align: center;
             padding: 10px;
-            float: left;
-            margin-right: 10px;
+            margin: 15px 10px; /* Відступи між блоками */
+            position: relative;
         }
 
         .counter-box.reprimand {
-            background-color: rgba(0, 255, 255, 0.25); /* Бірюзовий фон для доган */
-            border: 1px solid rgba(0, 255, 255, 0.75); /* Обводка бірюзова */
+            background-color: rgba(0, 255, 255, 0.25); /* Бірюзовий фон */
+            border: 1px solid rgba(0, 255, 255, 0.75); /* Бірюзова обводка */
         }
 
         .counter-box.warning {
-            background-color: rgba(255, 0, 255, 0.25); /* Фіолетовий фон для попереджень */
+            background-color: rgba(255, 0, 255, 0.25); /* Фіолетовий фон */
             border: 1px solid rgba(255, 0, 255, 0.75); /* Фіолетова обводка */
+        }
+
+        .counter-box.extra1 {
+            background-color: rgba(255, 165, 0, 0.25); /* Помаранчевий */
+            border: 1px solid rgba(255, 165, 0, 0.75);
+        }
+
+        .counter-box.extra2 {
+            background-color: rgba(0, 128, 0, 0.25); /* Зелений */
+            border: 1px solid rgba(0, 128, 0, 0.75);
+        }
+
+        .counter-box.extra3 {
+            background-color: rgba(128, 0, 128, 0.25); /* Фіолетовий */
+            border: 1px solid rgba(128, 0, 128, 0.75);
+        }
+
+        .counter-box.extra4 {
+            background-color: rgba(0, 0, 255, 0.25); /* Синій */
+            border: 1px solid rgba(0, 0, 255, 0.75);
+        }
+
+        .counter-box.extra5 {
+            background-color: rgba(255, 99, 71, 0.25); /* Червоний */
+            border: 1px solid rgba(255, 99, 71, 0.75);
+        }
+
+        .counter-box.extra6 {
+            background-color: rgba(75, 0, 130, 0.25); /* Індиго */
+            border: 1px solid rgba(75, 0, 130, 0.75);
         }
 
         .counter-title {
@@ -97,30 +135,61 @@
     <!-- Фото модератора -->
     <img src="https://i.imgur.com/g51O6iF.png" alt="Moderator Photo" class="moderator-photo">
 
-    <!-- Лічильник днів -->
-    <div class="counter-box" id="daysCounterBox">
-        <div class="counter-title">Кількість днів на посаді</div>
-        <div class="counter-value" id="daysCounter">0</div>
-    </div>
+    <!-- Контейнер для лічильників -->
+    <div class="counter-container">
 
-    <!-- Лічильник доган -->
-    <div class="counter-box reprimand" id="reprimandCounterBox">
-        <div class="counter-title">Кількість доган</div>
-        <div class="counter-value" id="reprimandCounter">0/2</div>
-    </div>
+        <!-- Лічильник днів -->
+        <div class="counter-box" id="daysCounterBox">
+            <div class="counter-title">Кількість днів на посаді</div>
+            <div class="counter-value" id="daysCounter">0</div>
+        </div>
 
-    <!-- Лічильник попереджень -->
-    <div class="counter-box warning" id="warningCounterBox">
-        <div class="counter-title">Кількість попереджень</div>
-        <div class="counter-value" id="warningCounter">0/3</div>
-    </div>
+        <!-- Лічильник доган -->
+        <div class="counter-box reprimand" id="reprimandCounterBox">
+            <div class="counter-title">Кількість доган</div>
+            <div class="counter-value" id="reprimandCounter">0/2</div>
+        </div>
 
-    <!-- Кнопка "Вийти з кабінету" -->
-    <button class="logout-btn" onclick="window.location.href='index.html'">
-        <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
-    </button>
+        <!-- Лічильник попереджень -->
+        <div class="counter-box warning" id="warningCounterBox">
+            <div class="counter-title">Кількість попереджень</div>
+            <div class="counter-value" id="warningCounter">0/3</div>
+        </div>
+
+        <!-- Додаткові лічильники -->
+        <div class="counter-box extra1" id="extra1CounterBox">
+            <div class="counter-title">Проєкт виконано</div>
+            <div class="counter-value" id="extra1Counter">50%</div>
+        </div>
+
+        <div class="counter-box extra2" id="extra2CounterBox">
+            <div class="counter-title">Продуктивність</div>
+            <div class="counter-value" id="extra2Counter">80%</div>
+        </div>
+
+        <div class="counter-box extra3" id="extra3CounterBox">
+            <div class="counter-title">Оцінка ризиків</div>
+            <div class="counter-value" id="extra3Counter">20%</div>
+        </div>
+
+        <div class="counter-box extra4" id="extra4CounterBox">
+            <div class="counter-title">Виконано задач</div>
+            <div class="counter-value" id="extra4Counter">60%</div>
+        </div>
+
+        <div class="counter-box extra5" id="extra5CounterBox">
+            <div class="counter-title">Прогрес</div>
+            <div class="counter-value" id="extra5Counter">90%</div>
+        </div>
+
+        <div class="counter-box extra6" id="extra6CounterBox">
+            <div class="counter-title">Точність</div>
+            <div class="counter-value" id="extra6Counter">75%</div>
+        </div>
+    </div>
 
     <script>
+        // Оновлення лічильника днів
         function updateDaysCounter() {
             let savedDays = parseInt(localStorage.getItem('days')) || 0;
             let currentDate = new Date();
@@ -135,6 +204,7 @@
             document.getElementById('daysCounter').innerText = savedDays;
         }
 
+        // Оновлення лічильників доган і попереджень
         function updateReprimands() {
             let savedReprimands = localStorage.getItem('reprimands') || 0;
             document.getElementById('reprimandCounter').innerText = `${savedReprimands}/2`;
@@ -145,6 +215,7 @@
             document.getElementById('warningCounter').innerText = `${savedWarnings}/3`;
         }
 
+        // Оновлення всіх лічильників при завантаженні сторінки
         window.onload = function() {
             updateDaysCounter();
             updateReprimands();
