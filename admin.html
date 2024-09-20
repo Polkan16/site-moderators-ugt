@@ -54,19 +54,58 @@
 
     <div class="admin-panel">
         <h2>Адмін панель</h2>
-        <label for="daysInput">Днів на посаді:</label>
-        <input type="number" id="daysInput" value="0" min="0">
+        
+        <label for="daysInput">Дні:</label>
+        <input type="number" id="daysInput" value="0">
         <button onclick="updateDays()">Оновити</button>
+        
         <br><br>
-        <label for="reprimandsInput">Догани:</label>
-        <input type="number" id="reprimandsInput" value="0" min="0">
+
+        <label for="reprimandsInput">Доган:</label>
+        <input type="number" id="reprimandsInput" value="0">
         <button onclick="updateReprimands()">Оновити</button>
+
         <br><br>
-        <label for="warningsInput">Попередження:</label>
-        <input type="number" id="warningsInput" value="0" min="0">
+
+        <label for="warningsInput">Попереджень:</label>
+        <input type="number" id="warningsInput" value="0">
         <button onclick="updateWarnings()">Оновити</button>
+
         <br><br>
-        <button onclick="resetCounters()">Скинути все</button>
+
+        <label for="onlineChangesInput">Онлайн змін:</label>
+        <input type="number" id="onlineChangesInput" value="0">
+        <button onclick="updateOnlineChanges()">Оновити</button>
+
+        <br><br>
+
+        <label for="punishmentsInput">Покарань:</label>
+        <input type="number" id="punishmentsInput" value="0">
+        <button onclick="updatePunishments()">Оновити</button>
+
+        <br><br>
+
+        <label for="warningsCountInput">Попереджень:</label>
+        <input type="number" id="warningsCountInput" value="0">
+        <button onclick="updateWarningsCount()">Оновити</button>
+
+        <br><br>
+
+        <label for="techSupportInput">Відповідей тех-підтримки:</label>
+        <input type="number" id="techSupportInput" value="0">
+        <button onclick="updateTechSupport()">Оновити</button>
+
+        <br><br>
+
+        <label for="bonusInput">Премії:</label>
+        <input type="number" id="bonusInput" value="0">
+        <button onclick="updateBonus()">Оновити</button>
+
+        <br><br>
+
+        <label for="finesInput">Штрафів:</label>
+        <input type="number" id="finesInput" value="0">
+        <button onclick="updateFines()">Оновити</button>
     </div>
 
     <button class="logout-btn" onclick="window.location.href='index.html'">Вийти з адмін панелі</button>
@@ -87,13 +126,34 @@
             document.getElementById('warningCounter').textContent = warnings + '/3';
         }
 
-        function resetCounters() {
-            document.getElementById('daysCounter').textContent = '0';
-            document.getElementById('reprimandCounter').textContent = '0/2';
-            document.getElementById('warningCounter').textContent = '0/3';
-            document.getElementById('daysInput').value = '0';
-            document.getElementById('reprimandsInput').value = '0';
-            document.getElementById('warningsInput').value = '0';
+        function updateOnlineChanges() {
+            const onlineChanges = document.getElementById('onlineChangesInput').value;
+            document.getElementById('onlineChangesCounter').textContent = onlineChanges;
+        }
+
+        function updatePunishments() {
+            const punishments = document.getElementById('punishmentsInput').value;
+            document.getElementById('punishmentsCounter').textContent = punishments;
+        }
+
+        function updateWarningsCount() {
+            const warningsCount = document.getElementById('warningsCountInput').value;
+            document.getElementById('warningsCounter').textContent = warningsCount;
+        }
+
+        function updateTechSupport() {
+            const techSupport = document.getElementById('techSupportInput').value;
+            document.getElementById('techSupportCounter').textContent = techSupport;
+        }
+
+        function updateBonus() {
+            const bonus = document.getElementById('bonusInput').value;
+            document.getElementById('bonusCounter').textContent = bonus;
+        }
+
+        function updateFines() {
+            const fines = document.getElementById('finesInput').value;
+            document.getElementById('finesCounter').textContent = fines;
         }
     </script>
 </body>
