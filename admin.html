@@ -3,66 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Адмін Панель</title>
+    <title>Адмін панель</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Comfortaa', sans-serif;
             background-color: black;
             color: white;
             margin: 0;
             padding: 20px;
         }
 
-        .button {
-            background-color: green;
-            padding: 10px 20px;
+        .admin-panel {
+            width: 300px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 0, 0.25); /* Жовтий фон на 25% прозорості */
+            border: 2px solid rgba(255, 255, 0, 0.75); /* Обводка */
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: red;
+            color: white;
             border: none;
             border-radius: 5px;
-            color: white;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-right: 10px;
+            font-size: 16px;
         }
 
-        .button:hover {
-            background-color: darkgreen;
-        }
-
-        .counter {
-            margin-top: 20px;
-            font-size: 20px;
-            font-family: 'Comfortaa', sans-serif;
+        button:hover {
+            background-color: darkred;
         }
     </style>
 </head>
 <body>
 
-    <h1>Адмін Панель</h1>
+    <div class="admin-panel">
+        <h1>Адмін Панель</h1>
 
-    <button class="button" onclick="startCounter()">Запустити лічильник</button>
-    <button class="button" onclick="resetCounter()">Скинути лічильник</button>
+        <!-- Поле для зміни доган -->
+        <label for="reprimandCount">Кількість доган (0/2):</label>
+        <input type="number" id="reprimandCount" min="0" max="2" value="0">
 
-    <div class="counter" id="counterStatus">Дні: 0</div>
+        <!-- Кнопка збереження змін -->
+        <button onclick="updateReprimandsFromAdmin()">Зберегти</button>
+
+        <!-- Кнопка для скидання днів -->
+        <button style="margin-top: 20px;" onclick="resetDays()">Скинути дні</button>
+    </div>
 
     <script>
-        function startCounter() {
-            let days = localStorage.getItem('days') || 0;
-            localStorage.setItem('days', ++days);
-            updateCounter();
+        // Функція для збереження кількості доган
+        function updateReprimandsFromAdmin() {
+            const reprimandValue = parseInt(document.getElementById('reprimandCount').value);
+            if (reprimandValue >= 0 && reprimandValue <= 2) {
+                localStorage.setItem('reprimands', reprimandValue);
+                alert('Кількість доган збережено.');
+            } else {
+                alert('Будь ласка, введіть значення від 0 до 2.');
+            }
         }
 
-        function resetCounter() {
+        // Функція для скидання кількості днів
+        function resetDays() {
             localStorage.setItem('days', 0);
-            updateCounter();
+            alert('Лічильник днів скинуто.');
         }
 
-        function updateCounter() {
-            const days = localStorage.getItem('days') || 0;
-            document.getElementById('counterStatus').innerText = `Дні: ${days}`;
+        // При завантаженні заповнюємо поле з доганами
+        window.onload = function() {
+            const savedReprimands = localStorage.getItem('reprimands') ? parseInt(localStorage.getItem('reprimands')) : 0;
+            document.getElementById('reprimandCount').value = savedReprimands;
         }
-
-        updateCounter(); // Оновлюємо статус при завантаженні
     </script>
 
 </body>
