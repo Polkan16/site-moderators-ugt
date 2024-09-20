@@ -58,11 +58,11 @@
             border: 2px solid rgba(255, 255, 224, 0.75); /* Світло-жовта обводка */
             border-radius: 10px;
             padding: 30px; /* Відступи всередині */
-            margin-top: 40px; /* Відступ від верхнього контенту */
             width: 250px; /* Ширина блока лічильника */
             display: inline-block;
             vertical-align: top; /* Вирівнювання по верху */
             text-align: center; /* Центрування тексту */
+            margin-top: 40px; /* Відступ зверху для вирівнювання з фото */
         }
 
         .counter-title {
@@ -109,7 +109,7 @@
     <img src="https://i.imgur.com/g51O6iF.png" alt="Moderator Photo" class="moderator-photo">
 
     <!-- Лічильник днів -->
-    <div class="counter" style="margin-top: -260px; margin-left: 280px;"> <!-- Вирівнювання по верху з фото -->
+    <div class="counter">
         <h2 class="counter-title">Кількість днів на посаді</h2>
         <div class="counter-number" id="dayCounter">0</div>
     </div>
