@@ -63,33 +63,34 @@
         footer {
             background-color: #333; /* Темний фон контитулу */
             color: white;
-            padding: 10px 0;
-            text-align: center;
+            padding: 10px 20px;
+            text-align: left; /* Ліве вирівнювання для тексту футера */
             font-size: 14px;
             position: relative;
             width: 100%;
+            display: flex;
+            justify-content: space-between; /* Розподіл між текстом і кнопками */
+            align-items: center;
         }
 
-        .button-container {
+        .footer-buttons {
             display: flex;
-            justify-content: center;
-            margin-bottom: 20px; /* Додаємо відступ перед футером */
+            gap: 10px; /* Відстань між кнопками */
         }
 
         .footer-button {
-            background-color: #ff6600; /* Яскраво-помаранчевий фон */
+            background-color: #444; /* Трохи темніший сірий фон */
             color: white;
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 5px 15px; /* Менший розмір кнопки */
+            font-size: 12px; /* Менший шрифт */
             border: none;
-            border-radius: 5px;
+            border-radius: 3px;
             cursor: pointer;
-            margin: 0 10px;
             transition: background-color 0.3s ease;
         }
 
         .footer-button:hover {
-            background-color: #ff4500; /* Темніший помаранчевий при наведенні */
+            background-color: #ff6600; /* Яскравий помаранчевий при наведенні */
         }
 
         /* Медіа-запити для мобільних пристроїв */
@@ -112,8 +113,8 @@
             }
 
             .footer-button {
-                font-size: 14px; /* Зменшити розмір кнопок на мобільних */
-                padding: 8px 16px;
+                font-size: 10px; /* Зменшити розмір кнопок на мобільних */
+                padding: 5px 10px;
             }
         }
     </style>
@@ -131,13 +132,12 @@
         <img src="https://i.imgur.com/dtvfULB.png" alt="Login Icon"> Вхід
     </button>
 
-    <div class="button-container">
-        <button class="footer-button" onclick="window.open('https://forms.gle/g5QVwJcBWBArSQng9')">Подати за'явку на модератора</button>
-        <button class="footer-button" onclick="window.open('https://t.me/Danil16_Dev')">Зв'ящок з S.M</button>
-    </div>
-
     <footer>
         &copy; 2024 M.D 04 | UKRAINE GTA | Всі права захищені.
+        <div class="footer-buttons">
+            <button class="footer-button" onclick="window.open('https://discord.com', '_blank')">Discord</button>
+            <button class="footer-button" onclick="window.open('https://gta.com', '_blank')">GTA</button>
+        </div>
     </footer>
 </body>
 </html>
