@@ -4,27 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Головна сторінка</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .login-btn {
+            display: inline-block;
+            background-color: rgba(255, 0, 0, 0.25); /* Червоний фон на 25% прозорості */
+            color: red; /* Червоний текст */
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background-color: rgba(255, 0, 0, 0.75); /* Темніший при наведенні */
+        }
+    </style>
 </head>
 <body>
-    <div class="header">
-        <!-- Кнопка для входу -->
-        <button id="loginButton" class="login-btn" onclick="showLoginForm()">Вхід</button>
-    </div>
-    
-    <!-- Спливаюче вікно авторизації -->
-    <div id="loginForm" class="login-form hidden">
-        <h2>Авторизація</h2>
-        <label for="username">Логін:</label>
-        <input type="text" id="username" placeholder="Введіть логін">
-        <label for="password">Пароль:</label>
-        <input type="password" id="password" placeholder="Введіть пароль">
-        <button onclick="login()">Увійти</button>
-        <p id="errorMessage" class="error-message"></p>
-        <button class="close-btn" onclick="hideLoginForm()">Закрити</button>
-    </div>
-
-    <script src="script.js"></script>
+    <h1>Ласкаво просимо!</h1>
+    <button class="login-btn" onclick="window.location.href='login.html'">Вхід</button>
 </body>
 </html>
