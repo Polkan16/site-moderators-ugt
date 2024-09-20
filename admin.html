@@ -52,6 +52,55 @@
         <button onclick="updateWarnings()">Оновити</button>
     </div>
 
+    <!-- Оновлення для додаткових блоків -->
+    <div>
+        <h3>Оновити додатковий блок 1:</h3>
+        <input type="number" id="extraCounter1Input" placeholder="Введіть значення" />
+        <button onclick="updateExtraCounter(1)">Оновити</button>
+    </div>
+    
+    <div>
+        <h3>Оновити додатковий блок 2:</h3>
+        <input type="number" id="extraCounter2Input" placeholder="Введіть значення" />
+        <button onclick="updateExtraCounter(2)">Оновити</button>
+    </div>
+
+    <div>
+        <h3>Оновити додатковий блок 3:</h3>
+        <input type="number" id="extraCounter3Input" placeholder="Введіть значення" />
+        <button onclick="updateExtraCounter(3)">Оновити</button>
+    </div>
+
+    <div>
+        <h3>Оновити додатковий блок 4:</h3>
+        <input type="number" id="extraCounter4Input" placeholder="Введіть значення" />
+        <button onclick="updateExtraCounter(4)">Оновити</button>
+    </div>
+
+    <div>
+        <h3>Оновити додатковий блок 5:</h3>
+        <input type="number" id="extraCounter5Input" placeholder="Введіть значення" />
+        <button onclick="updateExtraCounter(5)">Оновити</button>
+    </div>
+
+    <div>
+        <h3>Оновити додатковий блок 6:</h3>
+        <input type="number" id="extraCounter6Input" placeholder="Введіть значення" />
+        <button onclick="updateExtraCounter(6)">Оновити</button>
+    </div>
+
+    <div>
+        <h3>Оновити додатковий блок 7:</h3>
+        <input type="number" id="extraCounter7Input" placeholder="Введіть значення" />
+        <button onclick="updateExtraCounter(7)">Оновити</button>
+    </div>
+
+    <div>
+        <h3>Оновити додатковий блок 8:</h3>
+        <input type="number" id="extraCounter8Input" placeholder="Введіть значення" />
+        <button onclick="updateExtraCounter(8)">Оновити</button>
+    </div>
+
     <div>
         <h3>Скинути до 0:</h3>
         <button onclick="resetDays()">Скинути дні</button>
@@ -74,6 +123,12 @@
             let warnings = parseInt(document.getElementById('warningsInput').value);
             localStorage.setItem('warnings', warnings);
             alert('Кількість попереджень оновлено!');
+        }
+
+        function updateExtraCounter(counter) {
+            let value = parseInt(document.getElementById(`extraCounter${counter}Input`).value);
+            localStorage.setItem(`extraCounter${counter}`, value);
+            alert(`Додатковий блок ${counter} оновлено!`);
         }
 
         function resetDays() {
