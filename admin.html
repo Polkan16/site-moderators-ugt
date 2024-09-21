@@ -49,11 +49,11 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
             margin-top: 60px;
             width: 100%;
-            max-width: 400px;
+            max-width: 600px;
         }
 
         input {
-            width: 300px;
+            width: 100%;
             padding: 10px;
             margin: 10px 0;
             border-radius: 5px;
@@ -80,14 +80,41 @@
         button:hover {
             background-color: rgba(0, 128, 0, 1);
         }
+
+        .user-list {
+            margin-top: 20px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            margin: 5px 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .user-item:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
     </style>
 </head>
 <body>
 
     <button class="logout-btn" onclick="window.location.href='index.html'">Вихід</button>
-    <h1>Адмін-панель користувача: <span id="username-display">Гість</span></h1>
+    <h1>Адмін-панель користувача</h1>
 
     <div class="container">
+        <h2>Список кабінетів</h2>
+        <div class="user-list" id="userList"></div>
+    </div>
+
+    <div class="container">
+        <h2>Редагувати інформацію кабінету</h2>
+        <input type="text" id="userIdInput" placeholder="ID користувача" />
         <input type="text" id="daysCounterInput" placeholder="Кількість днів" />
         <input type="text" id="reprimandCounterInput" placeholder="Кількість доган" />
         <input type="text" id="warningCounterInput" placeholder="Кількість попереджень" />
@@ -101,8 +128,50 @@
     </div>
 
     <script>
+        // Функція для відображення користувачів
+        function displayUsers() {
+            const userList = document.getElementById('userList');
+            userList.innerHTML = '';
+
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('user_')) {
+                    const userId = key.split('_')[1];
+                    const userItem = document.createElement('div');
+                    userItem.className = 'user-item';
+                    userItem.textContent = `Кабінет: ${userId}`;
+                    userItem.onclick = () => loadUserData(userId);
+                    userList.appendChild(userItem);
+                }
+            }
+        }
+
+        // Завантажує дані користувача
+        function loadUserData(userId) {
+            const counters = [
+                'daysCounter', 'reprimandCounter', 'warningCounter', 
+                'onlineChangesCounter', 'punishmentsCounter', 
+                'warningsCounter', 'techSupportCounter', 
+                'bonusCounter', 'finesCounter'
+            ];
+
+            document.getElementById('userIdInput').value = userId;
+
+            counters.forEach(id => {
+                const value = localStorage.getItem(`user_${userId}_${id}`);
+                document.getElementById(`${id}Input`).value = value || '';
+            });
+        }
+
+        // Оновлює інформацію
         document.getElementById('updateButton').addEventListener('click', () => {
-            const userId = 'defaultUser'; // Можна встановити як завгодно
+            const userId = document.getElementById('userIdInput').value;
+
+            if (!userId) {
+                alert('Введіть ID користувача!');
+                return;
+            }
+
             const counters = [
                 'daysCounter', 'reprimandCounter', 'warningCounter', 
                 'onlineChangesCounter', 'punishmentsCounter', 
@@ -112,11 +181,15 @@
 
             counters.forEach(id => {
                 const inputValue = document.getElementById(`${id}Input`).value;
-                localStorage.setItem(`${userId}_${id}`, inputValue);
+                localStorage.setItem(`user_${userId}_${id}`, inputValue);
             });
 
             alert('Дані успішно оновлені!');
+            displayUsers();
         });
+
+        // Відображення користувачів при завантаженні
+        window.onload = displayUsers;
     </script>
 
 </body>
