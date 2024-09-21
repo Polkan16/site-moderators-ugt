@@ -19,7 +19,6 @@
             position: relative;
             overflow: hidden;
         }
-
         .background-image {
             position: absolute;
             top: 0;
@@ -29,14 +28,12 @@
             background-image: url('https://i.imgur.com/gxpN7VC.png');
             background-size: cover;
             background-position: center;
-            opacity: 0.5; /* Непрозорість фону */
-            z-index: -1; /* Підкладка під формою */
+            opacity: 0.5;
+            z-index: -1;
         }
-
         h1 {
             margin-bottom: 20px;
         }
-
         .form-container {
             background-color: rgba(255, 255, 255, 0.1);
             padding: 20px;
@@ -45,9 +42,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            z-index: 1; /* Накладається над фоном */
+            z-index: 1;
         }
-
         .form-container input {
             margin: 10px 0;
             padding: 10px;
@@ -55,7 +51,6 @@
             border: none;
             width: 200px;
         }
-
         .form-container button {
             margin-top: 10px;
             padding: 10px;
@@ -67,11 +62,9 @@
             transition: background-color 0.3s ease;
             width: 100%;
         }
-
         .form-container button:hover {
             background-color: rgba(0, 255, 0, 0.25);
         }
-
         .switch-link {
             margin-top: 10px;
             color: #FFA500;
@@ -82,7 +75,6 @@
 <body>
 
     <div class="background-image"></div>
-
     <h1>Авторизація / Реєстрація</h1>
     <div class="form-container">
         <input type="text" id="username" placeholder="Ім'я" required style="display: none;">
@@ -93,14 +85,46 @@
         <div class="switch-link" onclick="switchForm()">Вже маєш акаунт? Увійти!</div>
     </div>
 
-    <!-- Supabase SDK -->
     <script src="https://unpkg.com/@supabase/supabase-js"></script>
-
     <script>
-        const supabaseUrl = 'https://ndgyfarjkawkmiinmxew.supabase.co';
-        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5kZ3lmYXJqa2F3a21paW5teGV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjY5NDQxNTYsImV4cCI6MjA0MjUyMDE1Nn0.cv_DV0Qxp8IAvAKu1j2CK2xSJ1U8fWhEyZCZCZ2ULx0'; // Замініть на свій анонімний ключ
+        const supabaseUrl = 'https://ndgyfarjkawkmiinmxew.supabase.co'; // Ваш Supabase URL
+        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5kZ3lmYXJqa2F3a21paW5teGV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjY5NDQxNTYsImV4cCI6MjA0MjUyMDE1Nn0.cv_DV0Qxp8IAvAKu1j2CK2xSJ1U8fWhEyZCZCZ2ULx0'; // Ваш анонімний ключ
+        const { createClient } = supabase;
+        const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-        const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
+        document.getElementById('login-btn').addEventListener('click', async function() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const { user, error } = await supabase.auth.signIn({ email, password });
+            if (error) {
+                alert("Помилка: " + error.message);
+            } else {
+                window.location.href = 'dashboard.html'; // Перейти на сторінку кабінету
+            }
+        });
+
+        document.getElementById('register-btn').addEventListener('click', async function() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const username = document.getElementById('username').value;
+
+            const { user, error } = await supabase.auth.signUp({ email, password });
+            if (error) {
+                alert("Помилка: " + error.message);
+            } else {
+                // Додати дані користувача в базу
+                const { data, error: dbError } = await supabase.from('users').insert([
+                    { id: user.id, username: username, daysOnPosition: 0, reprimands: 0, warnings: 0, onlineChanges: 0, punishments: 0, techSupportAnswers: 0, bonuses: 0, fines: 0 }
+                ]);
+
+                if (dbError) {
+                    alert("Помилка при збереженні даних: " + dbError.message);
+                } else {
+                    window.location.href = 'dashboard.html'; // Перейти на сторінку кабінету
+                }
+            }
+        });
 
         function switchForm() {
             const usernameInput = document.getElementById('username');
@@ -128,40 +152,6 @@
                 document.getElementById('password').value = '';
             }
         }
-
-        document.getElementById('login-btn').addEventListener('click', async function() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            const { user, error } = await supabase.auth.signIn({ email, password });
-            if (error) {
-                alert("Помилка: " + error.message);
-            } else {
-                window.location.href = 'dashboard.html';
-            }
-        });
-
-        document.getElementById('register-btn').addEventListener('click', async function() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const username = document.getElementById('username').value;
-
-            const { user, error } = await supabase.auth.signUp({ email, password });
-            if (error) {
-                alert("Помилка: " + error.message);
-            } else {
-                // Додати дані користувача в базу
-                const { data, error: dbError } = await supabase.from('users').insert([
-                    { id: user.id, username: username, daysOnPosition: 0, reprimands: 0, warnings: 0, onlineChanges: 0, punishments: 0, techSupportAnswers: 0, bonuses: 0, fines: 0 }
-                ]);
-
-                if (dbError) {
-                    alert("Помилка при збереженні даних: " + dbError.message);
-                } else {
-                    window.location.href = 'dashboard.html';
-                }
-            }
-        });
     </script>
 
 </body>
