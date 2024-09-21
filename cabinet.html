@@ -221,15 +221,21 @@
         function loadUserData(userId) {
             firebase.database().ref(`/users/${userId}`).once('value').then(snapshot => {
                 const userData = snapshot.val();
-                document.getElementById('daysCounter').textContent = userData.daysOnPosition || 0;
-                document.getElementById('reprimandCounter').textContent = `${userData.reprimands || 0}/2`;
-                document.getElementById('warningCounter').textContent = `${userData.warnings || 0}/3`;
-                document.getElementById('onlineChangesCounter').textContent = userData.onlineChanges || 0;
-                document.getElementById('punishmentsCounter').textContent = userData.punishments || 0;
-                document.getElementById('warningsCounter').textContent = userData.warnings || 0;
-                document.getElementById('techSupportCounter').textContent = userData.techSupportAnswers || 0;
-                document.getElementById('bonusCounter').textContent = userData.bonuses || 0;
-                document.getElementById('finesCounter').textContent = userData.fines || 0;
+                if (userData) {
+                    document.getElementById('daysCounter').textContent = userData.daysOnPosition || 0;
+                    document.getElementById('reprimandCounter').textContent = `${userData.reprimands || 0}/2`;
+                    document.getElementById('warningCounter').textContent = `${userData.warnings || 0}/3`;
+                    document.getElementById('onlineChangesCounter').textContent = userData.onlineChanges || 0;
+                    document.getElementById('punishmentsCounter').textContent = userData.punishments || 0;
+                    document.getElementById('warningsCounter').textContent = userData.warnings || 0;
+                    document.getElementById('techSupportCounter').textContent = userData.techSupportAnswers || 0;
+                    document.getElementById('bonusCounter').textContent = userData.bonuses || 0;
+                    document.getElementById('finesCounter').textContent = userData.fines || 0;
+                } else {
+                    console.error("Дані користувача не знайдені");
+                }
+            }).catch(error => {
+                console.error("Помилка при завантаженні даних:", error);
             });
         }
     </script>
