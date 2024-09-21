@@ -3,156 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title>Адмін Панель</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Comfortaa', sans-serif;
-            background-color: rgba(0, 0, 9, 9.9);
-            background-image: url('https://i.imgur.com/gxpN7VC.png');
-            background-size: cover;
-            background-position: center;
+            background-color: rgba(0, 0, 9, 0.9);
             color: white;
             margin: 0;
             padding: 20px;
         }
-
-        .logout-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: rgba(255, 0, 0, 0.7);
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .logout-btn:hover {
-            background-color: rgba(255, 0, 0, 0.9);
-        }
-
-        .admin-panel {
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-            max-width: 300px;
-            margin: 20px;
-            float: left;
-        }
-
-        h2 {
-            text-align: center;
+        .user-container {
             margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid white;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
         }
-
-        label {
+        .counter-box {
             margin: 10px 0;
-            display: block;
-            font-weight: bold;
-        }
-
-        input[type="number"], input[type="text"] {
-            width: 60px;
-            padding: 5px;
+            padding: 10px;
             border-radius: 5px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
         }
-
-        button {
-            padding: 5px 10px;
-            cursor: pointer;
-            background-color: rgba(0, 128, 0, 0.7);
-            color: white;
+        input {
+            margin-bottom: 10px;
+            width: calc(100% - 20px);
+            padding: 10px;
             border: none;
             border-radius: 5px;
-            transition: background-color 0.3s ease;
-            margin-top: 10px;
         }
-
+        button {
+            padding: 10px;
+            background-color: rgba(0, 128, 128, 0.7);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
         button:hover {
-            background-color: rgba(0, 128, 0, 0.9);
+            background-color: rgba(0, 128, 128, 0.9);
+        }
+        .counter-title {
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <button class="logout-btn" onclick="logout()">Вийти</button>
+<h1>Адмін Панель</h1>
 
-    <div class="admin-panel">
-        <h2>Адмін панель 1</h2>
-        <label for="daysInput">Дні:</label>
-        <input type="number" id="daysInput" value="0">
-        <button onclick="update('daysInput', 'daysCounter')">Оновити</button>
+<div id="users"></div>
 
-        <label for="chatCountInput">Кількість повідомлень в чаті:</label>
-        <input type="number" id="chatCountInput" value="0">
-        <button onclick="update('chatCountInput', 'chatCounter')">Оновити</button>
+<script>
+    const users = JSON.parse(localStorage.getItem('users')) || {};
 
-        <label for="userCountInput">Кількість користувачів:</label>
-        <input type="number" id="userCountInput" value="0">
-        <button onclick="update('userCountInput', 'userCounter')">Оновити</button>
+    function loadUsers() {
+        const usersDiv = document.getElementById('users');
+        usersDiv.innerHTML = '';
 
-        <label for="adminNameInput">Ім'я адміна:</label>
-        <input type="text" id="adminNameInput" value="">
-        <button onclick="updateText('adminNameInput', 'adminName')">Оновити</button>
-    </div>
+        for (const username in users) {
+            const userDiv = document.createElement('div');
+            userDiv.className = 'user-container';
 
-    <script>
-        // Перевірка чи користувач авторизований
-        if (!sessionStorage.getItem('isLoggedIn')) {
-            window.location.href = 'login.html'; // Редирект на сторінку авторизації
+            userDiv.innerHTML = `
+                <h2>${username}</h2>
+                <div class="counter-box">
+                    <div class="counter-title">Кількість днів на посаді</div>
+                    <input type="text" id="${username}-daysCounter" value="${users[username].daysCounter || 0}">
+                </div>
+                <div class="counter-box">
+                    <div class="counter-title">Кількість доган</div>
+                    <input type="text" id="${username}-reprimandCounter" value="${users[username].reprimandCounter || '0/2'}">
+                </div>
+                <div class="counter-box">
+                    <div class="counter-title">Кількість попереджень</div>
+                    <input type="text" id="${username}-warningCounter" value="${users[username].warningCounter || '0/3'}">
+                </div>
+                <div class="counter-box">
+                    <div class="counter-title">Кількість онлайн змін</div>
+                    <input type="text" id="${username}-onlineChangesCounter" value="${users[username].onlineChangesCounter || 0}">
+                </div>
+                <div class="counter-box">
+                    <div class="counter-title">Кількість покарань</div>
+                    <input type="text" id="${username}-punishmentsCounter" value="${users[username].punishmentsCounter || 0}">
+                </div>
+                <div class="counter-box">
+                    <div class="counter-title">Кількість попереджень</div>
+                    <input type="text" id="${username}-warningsCounter" value="${users[username].warningsCounter || 0}">
+                </div>
+                <div class="counter-box">
+                    <div class="counter-title">Кількість відповідей у "питання до тех-підтримки"</div>
+                    <input type="text" id="${username}-techSupportCounter" value="${users[username].techSupportCounter || 0}">
+                </div>
+                <div class="counter-box">
+                    <div class="counter-title">Кількість премії</div>
+                    <input type="text" id="${username}-bonusCounter" value="${users[username].bonusCounter || 0}">
+                </div>
+                <div class="counter-box">
+                    <div class="counter-title">Кількість штрафів</div>
+                    <input type="text" id="${username}-finesCounter" value="${users[username].finesCounter || 0}">
+                </div>
+                <button onclick="saveUser('${username}')">Зберегти</button>
+            `;
+
+            usersDiv.appendChild(userDiv);
         }
+    }
 
-        // Завантаження даних з localStorage
-        window.onload = function() {
-            loadValue('daysInput', 'daysCounter');
-            loadValue('chatCountInput', 'chatCounter');
-            loadValue('userCountInput', 'userCounter');
-            loadTextValue('adminNameInput', 'adminName');
-        };
+    function saveUser(username) {
+        users[username].daysCounter = document.getElementById(`${username}-daysCounter`).value;
+        users[username].reprimandCounter = document.getElementById(`${username}-reprimandCounter`).value;
+        users[username].warningCounter = document.getElementById(`${username}-warningCounter`).value;
+        users[username].onlineChangesCounter = document.getElementById(`${username}-onlineChangesCounter`).value;
+        users[username].punishmentsCounter = document.getElementById(`${username}-punishmentsCounter`).value;
+        users[username].warningsCounter = document.getElementById(`${username}-warningsCounter`).value;
+        users[username].techSupportCounter = document.getElementById(`${username}-techSupportCounter`).value;
+        users[username].bonusCounter = document.getElementById(`${username}-bonusCounter`).value;
+        users[username].finesCounter = document.getElementById(`${username}-finesCounter`).value;
+        
+        localStorage.setItem('users', JSON.stringify(users));
+        alert('Дані збережено');
+    }
 
-        // Функція для оновлення числових значень
-        function update(inputId, counterKey) {
-            const value = document.getElementById(inputId).value;
-            localStorage.setItem(counterKey, value);
-            alert('Значення оновлено!');
-        }
+    loadUsers();
+</script>
 
-        // Функція для оновлення текстових значень
-        function updateText(inputId, textKey) {
-            const value = document.getElementById(inputId).value;
-            localStorage.setItem(textKey, value);
-            alert('Ім\'я оновлено!');
-        }
-
-        // Функція для завантаження числових значень з localStorage
-        function loadValue(inputId, counterKey) {
-            const value = localStorage.getItem(counterKey);
-            if (value !== null) {
-                document.getElementById(inputId).value = value;
-            }
-        }
-
-        // Функція для завантаження текстових значень з localStorage
-        function loadTextValue(inputId, textKey) {
-            const value = localStorage.getItem(textKey);
-            if (value !== null) {
-                document.getElementById(inputId).value = value;
-            }
-        }
-
-        // Функція для виходу з адмін-панелі
-        function logout() {
-            sessionStorage.removeItem('isLoggedIn');
-            sessionStorage.removeItem('username');
-            window.location.href = 'login.html'; // Повернутися на сторінку логіну
-        }
-    </script>
 </body>
 </html>
