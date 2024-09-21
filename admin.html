@@ -8,14 +8,14 @@
     <style>
         body {
             font-family: 'Comfortaa', sans-serif;
-            background-color: rgba(0, 0, 0, 0.8); /* Чорний фон */
+            background-color: rgba(0, 0, 0, 0.8);
             color: white;
             margin: 0;
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            background-image: url('https://i.imgur.com/gxpN7VC.png'); /* Зображення фону */
+            background-image: url('https://i.imgur.com/gxpN7VC.png');
             background-size: cover;
             background-position: center;
         }
@@ -29,8 +29,8 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
             position: absolute;
-            top: 20px; /* Відстань від верху */
-            right: 20px; /* Відстань від правого краю */
+            top: 20px;
+            right: 20px;
         }
 
         .logout-btn:hover {
@@ -47,7 +47,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            margin-top: 60px; /* Додаємо відступ для кнопки "Вихід" */
+            margin-top: 60px;
             width: 100%;
             max-width: 400px;
         }
@@ -101,7 +101,6 @@
     </div>
 
     <script>
-        // Отримуємо ім'я користувача з localStorage
         const currentUser = localStorage.getItem('currentUser');
         document.getElementById('username-display').textContent = currentUser || 'Гість';
 
