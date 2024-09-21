@@ -102,6 +102,33 @@
 
         const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
+        function switchForm() {
+            const usernameInput = document.getElementById('username');
+            const loginButton = document.getElementById('login-btn');
+            const registerButton = document.getElementById('register-btn');
+
+            if (loginButton.style.display !== 'none') {
+                usernameInput.style.display = 'block';
+                loginButton.style.display = 'none';
+                registerButton.style.display = 'block';
+                document.querySelector('.switch-link').textContent = "Не маєш акаунту? Зареєструватися!";
+                
+                // Очищення полів
+                document.getElementById('email').value = '';
+                document.getElementById('password').value = '';
+            } else {
+                usernameInput.style.display = 'none';
+                loginButton.style.display = 'block';
+                registerButton.style.display = 'none';
+                document.querySelector('.switch-link').textContent = "Вже маєш акаунт? Увійти!";
+                
+                // Очищення полів
+                document.getElementById('username').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('password').value = '';
+            }
+        }
+
         document.getElementById('login-btn').addEventListener('click', async function() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
@@ -135,33 +162,6 @@
                 }
             }
         });
-
-        function switchForm() {
-            const usernameInput = document.getElementById('username');
-            const loginButton = document.getElementById('login-btn');
-            const registerButton = document.getElementById('register-btn');
-
-            if (loginButton.style.display !== 'none') {
-                usernameInput.style.display = 'block';
-                loginButton.style.display = 'none';
-                registerButton.style.display = 'block';
-                document.querySelector('.switch-link').textContent = "Не маєш акаунту? Зареєструватися!";
-                
-                // Очищення полів
-                document.getElementById('email').value = '';
-                document.getElementById('password').value = '';
-            } else {
-                usernameInput.style.display = 'none';
-                loginButton.style.display = 'block';
-                registerButton.style.display = 'none';
-                document.querySelector('.switch-link').textContent = "Вже маєш акаунт? Увійти!";
-                
-                // Очищення полів
-                document.getElementById('username').value = '';
-                document.getElementById('email').value = '';
-                document.getElementById('password').value = '';
-            }
-        }
     </script>
 
 </body>
