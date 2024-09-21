@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мій кабінет</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Comfortaa', sans-serif;
+            background-color: rgba(0, 0, 9, 9.9);
+            background-image: url('https://i.imgur.com/gxpN7VC.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .logout-btn {
+            display: inline-block;
+            background-color: rgba(255, 0, 0, 0.15);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            transition: background-color 0.3s ease;
+            font-family: 'Comfortaa', sans-serif; /* Додаємо шрифт для кнопки */
+            font-weight: 400;
+        }
+
+        .logout-btn img {
+            vertical-align: middle;
+            margin-right: 8px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(255, 0, 0, 0.25);
+        }
+
+        h1 {
+            font-family: 'Comfortaa', sans-serif;
+            margin-top: 5px;
+        }
+
+        .moderator-photo {
+            width: 250px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-top: 5px;
+            float: left; /* Додаємо флоат, щоб фото було ліворуч */
+            margin-right: 30px; /* Відступ справа */
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .counter-box {
+            width: 180px;
+            height: 100px;
+            border-radius: 10px;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .counter-box:hover {
+            background-color: rgba(255, 255, 255, 0.35);
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            width: 250px;
+            background-color: rgba(255, 0, 0, 0.10);
+            color: white;
+            padding: 10px 0;
+            border: 1px solid rgba(255, 102, 102, 0.75);
+            cursor: pointer;
+            border-radius: 55px;
+            margin-bottom: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background-color: rgba(255, 0, 0, 0.20);
+        }
+
+        .yellow { background-color: rgba(255, 255, 0, 0.1); border: 1px solid rgba(255, 255, 0, 0.75); }
+        .cyan { background-color: rgba(0, 255, 255, 0.1); border: 1px solid rgba(0, 255, 255, 0.75); }
+        .purple { background-color: rgba(255, 0, 255, 0.1); border: 1px solid rgba(255, 0, 255, 0.75); }
+        .red { background-color: rgba(255, 0, 0, 0.1); border: 1px solid rgba(255, 0, 0, 0.75); }
+        .green { background-color: rgba(0, 255, 0, 0.1); border: 1px solid rgba(0, 255, 0, 0.75); }
+        .blue { background-color: rgba(0, 0, 255, 0.1); border: 1px solid rgba(0, 0, 255, 0.75); }
+        .orange { background-color: rgba(255, 165, 0, 0.1); border: 1px solid rgba(255, 165, 0, 0.75); }
+        .pink { background-color: rgba(255, 192, 203, 0.1); border: 1px solid rgba(255, 192, 203, 0.75); }
+        .teal { background-color: rgba(0, 128, 128, 0.1); border: 1px solid rgba(0, 128, 128, 0.75); }
+
+        .counter-title {
+            font-size: 14px;
+        }
+
+        .counter-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #FFA500;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>👋 Привіт, <span id="username-display"></span>! Це твоя основна інформація!</h1>
+    <img src="https://i.imgur.com/g51O6iF.png" alt="Moderator Photo" class="moderator-photo">
+
+    <div class="container">
+        <div class="counter-box yellow">
+            <div class="counter-title">Кількість днів на посаді</div>
+            <div class="counter-value" id="daysCounter">0</div>
+        </div>
+        <div class="counter-box cyan">
+            <div class="counter-title">Кількість доган</div>
+            <div class="counter-value" id="reprimandCounter">0/2</div>
+        </div>
+        <div class="counter-box purple">
+            <div class="counter-title">Кількість попереджень</div>
+            <div class="counter-value" id="warningCounter">0/3</div>
+        </div>
+        <div class="counter-box red">
+            <div class="counter-title">Кількість онлайн змін</div>
+            <div class="counter-value" id="onlineChangesCounter">0</div>
+        </div>
+        <div class="counter-box green">
+            <div class="counter-title">Кількість покарань</div>
+            <div class="counter-value" id="punishmentsCounter">0</div>
+        </div>
+        <div class="counter-box blue">
+            <div class="counter-title">Кількість попереджень</div>
+            <div class="counter-value" id="warningsCounter">0</div>
+        </div>
+        <div class="counter-box orange">
+            <div class="counter-title">Кількість відповідей у "питання до тех-підтримки"</div>
+            <div class="counter-value" id="techSupportCounter">0</div>
+        </div>
+        <div class="counter-box pink">
+            <div class="counter-title">Кількість премії</div>
+            <div class="counter-value" id="bonusCounter">0</div>
+        </div>
+        <div class="counter-box teal">
+            <div class="counter-title">Кількість штрафів</div>
+            <div class="counter-value" id="finesCounter">0</div>
+        </div>
+    </div>
+
+    <div class="button-container">
+        <button class="action-btn" onclick="alert('Перша дія')">INFO M.D</button>
+        <button class="action-btn" onclick="alert('Друга дія')">Довідник</button>
+    </div>
+
+    <button class="logout-btn" onclick="window.location.href='index.html'">
+        <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
+    </button>
+
+    <script>
+        window.onload = function() {
+            const counters = [
+                'daysCounter', 'reprimandCounter', 'warningCounter', 
+                'onlineChangesCounter', 'punishmentsCounter', 
+                'warningsCounter', 'techSupportCounter', 
+                'bonusCounter', 'finesCounter'
+            ];
+            counters.forEach(id => {
+                const value = localStorage.getItem(id);
+                if (value) {
+                    document.getElementById(id).textContent = value;
+                }
+            });
+
+            // Отримуємо ім'я користувача з localStorage
+            const currentUser = localStorage.getItem('currentUser');
+            document.getElementById('username-display').textContent = currentUser || 'Гість';
+        };
+    </script>
+
+</body>
+</html>
