@@ -3,135 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вхід / Реєстрація</title>
+    <title>Авторизація / Реєстрація</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Comfortaa', sans-serif;
-            background-color: rgba(0, 0, 9, 9.9);
+            background-color: black;
             color: white;
-            margin: 0;
-            padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             height: 100vh;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .background-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-image: url('https://i.imgur.com/gxpN7VC.png');
             background-size: cover;
             background-position: center;
+            opacity: 0.5; /* Непрозорість фону */
+            z-index: -1; /* Підкладка під формою */
         }
 
-        .login-box {
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            width: 300px;
-        }
-
-        .login-box h1 {
-            text-align: center;
+        h1 {
             margin-bottom: 20px;
         }
 
-        .login-box input {
-            width: 100%;
-            padding: 10px;
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1; /* Накладається над фоном */
+        }
+
+        .form-container input {
             margin: 10px 0;
-            border: none;
-            border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-        }
-
-        .login-box button {
-            width: 100%;
             padding: 10px;
-            background-color: rgba(0, 128, 128, 0.7);
-            border: none;
             border-radius: 5px;
-            cursor: pointer;
+            border: none;
+            width: 200px;
+        }
+
+        .form-container button {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: rgba(0, 255, 0, 0.15);
             color: white;
-            margin-top: 10px;
-            transition: background-color 0.3s ease;
-        }
-
-        .login-box button:hover {
-            background-color: rgba(0, 128, 128, 0.9);
-        }
-
-        .toggle-link {
-            text-align: center;
-            color: #00FF00;
             cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .form-container button:hover {
+            background-color: rgba(0, 255, 0, 0.25);
+        }
+
+        .switch-link {
             margin-top: 10px;
+            color: #FFA500;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-    <div class="login-box" id="login-box">
-        <h1 id="form-title">Вхід</h1>
-        <input type="text" id="username" placeholder="Логін">
-        <input type="password" id="password" placeholder="Пароль">
-        <button id="submit-btn" onclick="login()">Увійти</button>
-        <div class="toggle-link" onclick="toggleForm()">Немає акаунту? Реєстрація</div>
+    <div class="background-image"></div>
+
+    <h1>Авторизація / Реєстрація</h1>
+    <div class="form-container">
+        <input type="text" id="username" placeholder="Ім'я" required>
+        <input type="email" id="email" placeholder="Електронна адреса" required>
+        <input type="password" id="password" placeholder="Пароль" required>
+        <button id="login-btn">Увійти</button>
+        <button id="register-btn">Зареєструватися</button>
+        <div class="switch-link" onclick="switchForm()">Вже маєш акаунт? Увійти!</div>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+
     <script>
-        let isLogin = true;
+        const firebaseConfig = {
+            apiKey: "AIzaSyB-DclLIkm_PO6YU4PfuVZOdckmwwt0txc",
+            authDomain: "moderators-04.firebaseapp.com",
+            projectId: "moderators-04",
+            storageBucket: "moderators-04.appspot.com",
+            messagingSenderId: "1001042309074",
+            appId: "1:1001042309074:web:abc123example"
+        };
 
-        function toggleForm() {
-            const title = document.getElementById('form-title');
-            const submitBtn = document.getElementById('submit-btn');
-            const toggleLink = document.querySelector('.toggle-link');
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.database();
 
-            isLogin = !isLogin;
-
-            if (isLogin) {
-                title.textContent = 'Вхід';
-                submitBtn.textContent = 'Увійти';
-                toggleLink.textContent = 'Немає акаунту? Реєстрація';
-            } else {
-                title.textContent = 'Реєстрація';
-                submitBtn.textContent = 'Зареєструватися';
-                toggleLink.textContent = 'Вже є акаунт? Вхід';
-            }
-        }
-
-        function login() {
-            const username = document.getElementById('username').value;
+        document.getElementById('login-btn').onclick = function() {
+            const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            if (!username || !password) {
-                alert('Будь ласка, заповніть всі поля');
-                return;
-            }
+            auth.signInWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    window.location.href = 'dashboard.html';
+                })
+                .catch(error => {
+                    alert("Помилка: " + error.message);
+                });
+        };
 
-            const users = JSON.parse(localStorage.getItem('users')) || {};
+        document.getElementById('register-btn').onclick = function() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const username = document.getElementById('username').value;
 
-            if (isLogin) {
-                // Логін
-                if (users[username] && users[username].password === password) {
-                    localStorage.setItem('currentUser', username);
-                    window.location.href = 'cabinet.html';
-                } else {
-                    alert('Невірний логін або пароль');
-                }
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    const userId = userCredential.user.uid;
+                    return db.ref('/users/' + userId).set({
+                        username: username,
+                        daysOnPosition: 0,
+                        reprimands: 0,
+                        warnings: 0,
+                        onlineChanges: 0,
+                        punishments: 0,
+                        techSupportAnswers: 0,
+                        bonuses: 0,
+                        fines: 0
+                    });
+                })
+                .then(() => {
+                    window.location.href = 'dashboard.html';
+                })
+                .catch(error => {
+                    alert("Помилка: " + error.message);
+                });
+        };
+
+        function switchForm() {
+            const form = document.querySelector('.form-container');
+            const loginButton = document.getElementById('login-btn');
+            const registerButton = document.getElementById('register-btn');
+            const usernameInput = document.getElementById('username');
+
+            if (loginButton.style.display === 'none') {
+                usernameInput.style.display = 'block';
+                loginButton.style.display = 'block';
+                registerButton.style.display = 'block';
+                document.querySelector('.switch-link').textContent = "Не маєш акаунту? Зареєструватися!";
             } else {
-                // Реєстрація
-                if (users[username]) {
-                    alert('Користувач з таким логіном вже існує');
-                } else {
-                    users[username] = { password };
-                    localStorage.setItem('users', JSON.stringify(users));
-                    alert('Реєстрація успішна! Тепер ви можете увійти');
-                    toggleForm();
-                }
+                usernameInput.style.display = 'none';
+                loginButton.style.display = 'block';
+                registerButton.style.display = 'block';
+                document.querySelector('.switch-link').textContent = "Вже маєш акаунт? Увійти!";
             }
         }
     </script>
 
 </body>
 </html>
-
