@@ -182,61 +182,51 @@
         <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
     </button>
 
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js"></script>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyB-DclLIkm_PO6YU4PfuVZOdckmwwt0txc",
-            authDomain: "moderators-04.firebaseapp.com",
-            databaseURL: "https://moderators-04-default-rtdb.firebaseio.com",
-            projectId: "moderators-04",
-            storageBucket: "moderators-04.appspot.com",
-            messagingSenderId: "1001042309074",
-            appId: "1:1001042309074:web:abc123example"
-        };
+        const supabaseUrl = 'https://ndgyfarjkawkmiinmxew.supabase.co';
+        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5kZ3lmYXJqa2F3a21paW5teGV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjY5NDQxNTYsImV4cCI6MjA0MjUyMDE1Nn0.cv_DV0Qxp8IAvAKu1j2CK2xSJ1U8fWhEyZCZCZ2ULx0'; // Замініть на ваш анонімний ключ
 
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.database();
+        const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
         function logout() {
-            auth.signOut().then(() => {
+            supabase.auth.signOut().then(() => {
                 window.location.href = 'login.html';
             });
         }
 
         window.onload = function() {
-            auth.onAuthStateChanged(user => {
-                if (user) {
-                    document.getElementById('username-display').textContent = user.displayName || 'Користувач';
-                    loadUserData(user.uid);
+            supabase.auth.onAuthStateChange((event, session) => {
+                if (session) {
+                    document.getElementById('username-display').textContent = session.user.email || 'Користувач';
+                    loadUserData(session.user.id);
                 } else {
                     window.location.href = 'login.html';
                 }
             });
         };
 
-        function loadUserData(userId) {
-            firebase.database().ref(`/users/${userId}`).once('value').then(snapshot => {
-                const userData = snapshot.val();
-                if (userData) {
-                    document.getElementById('daysCounter').textContent = userData.daysOnPosition || 0;
-                    document.getElementById('reprimandCounter').textContent = `${userData.reprimands || 0}/2`;
-                    document.getElementById('warningCounter').textContent = `${userData.warnings || 0}/3`;
-                    document.getElementById('onlineChangesCounter').textContent = userData.onlineChanges || 0;
-                    document.getElementById('punishmentsCounter').textContent = userData.punishments || 0;
-                    document.getElementById('warningsCounter').textContent = userData.warnings || 0;
-                    document.getElementById('techSupportCounter').textContent = userData.techSupportAnswers || 0;
-                    document.getElementById('bonusCounter').textContent = userData.bonuses || 0;
-                    document.getElementById('finesCounter').textContent = userData.fines || 0;
-                } else {
-                    console.error("Дані користувача не знайдені");
-                }
-            }).catch(error => {
+        async function loadUserData(userId) {
+            const { data, error } = await supabase
+                .from('users')
+                .select('*')
+                .eq('id', userId)
+                .single();
+
+            if (error) {
                 console.error("Помилка при завантаженні даних:", error);
-            });
+            } else {
+                document.getElementById('daysCounter').textContent = data.daysOnPosition || 0;
+                document.getElementById('reprimandCounter').textContent = `${data.reprimands || 0}/2`;
+                document.getElementById('warningCounter').textContent = `${data.warnings || 0}/3`;
+                document.getElementById('onlineChangesCounter').textContent = data.onlineChanges || 0;
+                document.getElementById('punishmentsCounter').textContent = data.punishments || 0;
+                document.getElementById('warningsCounter').textContent = data.warnings || 0;
+                document.getElementById('techSupportCounter').textContent = data.techSupportAnswers || 0;
+                document.getElementById('bonusCounter').textContent = data.bonuses || 0;
+                document.getElementById('finesCounter').textContent = data.fines || 0;
+            }
         }
     </script>
 
