@@ -85,11 +85,11 @@
 
     <h1>Авторизація / Реєстрація</h1>
     <div class="form-container">
-        <input type="text" id="username" placeholder="Ім'я" required>
+        <input type="text" id="username" placeholder="Ім'я" required style="display: none;">
         <input type="email" id="email" placeholder="Електронна адреса" required>
         <input type="password" id="password" placeholder="Пароль" required>
         <button id="login-btn">Увійти</button>
-        <button id="register-btn">Зареєструватися</button>
+        <button id="register-btn" style="display: none;">Зареєструватися</button>
         <div class="switch-link" onclick="switchForm()">Вже маєш акаунт? Увійти!</div>
     </div>
 
@@ -154,20 +154,19 @@
         };
 
         function switchForm() {
-            const form = document.querySelector('.form-container');
+            const usernameInput = document.getElementById('username');
             const loginButton = document.getElementById('login-btn');
             const registerButton = document.getElementById('register-btn');
-            const usernameInput = document.getElementById('username');
 
-            if (loginButton.style.display === 'none') {
+            if (loginButton.style.display !== 'none') {
                 usernameInput.style.display = 'block';
-                loginButton.style.display = 'block';
+                loginButton.style.display = 'none';
                 registerButton.style.display = 'block';
                 document.querySelector('.switch-link').textContent = "Не маєш акаунту? Зареєструватися!";
             } else {
                 usernameInput.style.display = 'none';
                 loginButton.style.display = 'block';
-                registerButton.style.display = 'block';
+                registerButton.style.display = 'none';
                 document.querySelector('.switch-link').textContent = "Вже маєш акаунт? Увійти!";
             }
         }
