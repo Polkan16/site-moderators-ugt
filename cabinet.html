@@ -29,7 +29,7 @@
             top: 20px;
             right: 20px;
             transition: background-color 0.3s ease;
-            font-family: 'Comfortaa', sans-serif; /* Додаємо шрифт для кнопки */
+            font-family: 'Comfortaa', sans-serif;
             font-weight: 400;
         }
 
@@ -55,8 +55,8 @@
             object-fit: cover;
             border-radius: 15px;
             margin-top: 5px;
-            float: left; /* Додаємо флоат, щоб фото було ліворуч */
-            margin-right: 30px; /* Відступ справа */
+            float: left;
+            margin-right: 30px;
         }
 
         .container {
@@ -183,24 +183,44 @@
         <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
     </button>
 
-    <script>
-        window.onload = function() {
-            const counters = [
-                'daysCounter', 'reprimandCounter', 'warningCounter', 
-                'onlineChangesCounter', 'punishmentsCounter', 
-                'warningsCounter', 'techSupportCounter', 
-                'bonusCounter', 'finesCounter'
-            ];
-            counters.forEach(id => {
-                const value = localStorage.getItem(id);
-                if (value) {
-                    document.getElementById(id).textContent = value;
-                }
-            });
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
 
-            // Отримуємо ім'я користувача з localStorage
-            const currentUser = localStorage.getItem('currentUser');
-            document.getElementById('username-display').textContent = currentUser || 'Гість';
+    <script>
+        // Firebase конфігурація
+        const firebaseConfig = {
+            apiKey: "AIzaSyB-DclLIkm_PO6YU4PfuVZOdckmwwt0txc",
+            authDomain: "moderators-04.firebaseapp.com",
+            databaseURL: "https://moderators-04-default-rtdb.firebaseio.com",
+            projectId: "moderators-04",
+            storageBucket: "moderators-04.appspot.com",
+            messagingSenderId: "1001042309074",
+            appId: "1:1001042309074:web:abc123example"
+        };
+
+        // Ініціалізація Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // Отримуємо дані з бази даних і відображаємо в кабінеті
+        window.onload = function() {
+            const userId = "user123";  // Поточний ідентифікатор користувача
+
+            // Отримуємо дані користувача з бази даних
+            firebase.database().ref(`/users/${userId}`).once('value').then(snapshot => {
+                const userData = snapshot.val();
+                document.getElementById('username-display').textContent = userData.username || 'Гість';
+                document.getElementById('daysCounter').textContent = userData.daysOnPosition || 0;
+                document.getElementById('reprimandCounter').textContent = `${userData.reprimands || 0}/2`;
+                document.getElementById('warningCounter').textContent = `${userData.warnings || 0}/3`;
+                document.getElementById('onlineChangesCounter').textContent = userData.onlineChanges || 0;
+                document.getElementById('punishmentsCounter').textContent = userData.punishments || 0;
+                document.getElementById('warningsCounter').textContent = userData.warnings || 0;
+                document.getElementById('techSupportCounter').textContent = userData.techSupportAnswers || 0;
+                document.getElementById('bonusCounter').textContent = userData.bonuses || 0;
+                document.getElementById('finesCounter').textContent = userData.fines || 0;
+            });
         };
     </script>
 
