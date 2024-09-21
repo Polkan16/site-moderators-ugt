@@ -112,7 +112,7 @@
         const auth = firebase.auth();
         const db = firebase.database();
 
-        document.getElementById('login-btn').onclick = function() {
+        document.getElementById('login-btn').addEventListener('click', function() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
@@ -123,9 +123,9 @@
                 .catch(error => {
                     alert("Помилка: " + error.message);
                 });
-        };
+        });
 
-        document.getElementById('register-btn').onclick = function() {
+        document.getElementById('register-btn').addEventListener('click', function() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const username = document.getElementById('username').value;
@@ -151,7 +151,7 @@
                 .catch(error => {
                     alert("Помилка: " + error.message);
                 });
-        };
+        });
 
         function switchForm() {
             const usernameInput = document.getElementById('username');
@@ -163,11 +163,20 @@
                 loginButton.style.display = 'none';
                 registerButton.style.display = 'block';
                 document.querySelector('.switch-link').textContent = "Не маєш акаунту? Зареєструватися!";
+                
+                // Очищення полів
+                document.getElementById('email').value = '';
+                document.getElementById('password').value = '';
             } else {
                 usernameInput.style.display = 'none';
                 loginButton.style.display = 'block';
                 registerButton.style.display = 'none';
                 document.querySelector('.switch-link').textContent = "Вже маєш акаунт? Увійти!";
+                
+                // Очищення полів
+                document.getElementById('username').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('password').value = '';
             }
         }
     </script>
