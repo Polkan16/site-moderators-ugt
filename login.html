@@ -81,6 +81,9 @@
         const users = {
             'Данило Шульга': { password: 'QAZ7845', redirect: 'dashboard.html' },
             'Кірілл Фантом': { password: 'Phantom100', redirect: 'moder2.html' },
+            'user2': { password: 'user2pass', redirect: 'page2.html' },
+            'user3': { password: 'user3pass', redirect: 'page3.html' },
+            'user4': { password: 'user4pass', redirect: 'page4.html' },
             'Admin': { password: 'QAZ7845', redirect: 'admin.html' },
         };
 
@@ -90,8 +93,8 @@
             const user = users[username];
 
             if (user && user.password === password) {
-                sessionStorage.setItem('isLoggedIn', 'true');
-                sessionStorage.setItem('username', username);
+                sessionStorage.setItem('isLoggedIn', true); // Зберігаємо сесію
+                sessionStorage.setItem('username', username); // Зберігаємо ім'я користувача
                 window.location.href = user.redirect; // Перехід на відповідну сторінку
             } else {
                 document.getElementById('error').style.display = 'block'; // Вивести помилку
