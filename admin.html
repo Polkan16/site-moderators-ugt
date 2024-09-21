@@ -42,154 +42,89 @@
             color: #FFA500;
         }
 
-        .container {
+        .user-container {
             background-color: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            margin-top: 60px;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
             margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
+            width: 100%;
+            max-width: 400px;
         }
 
-        input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
+        .input-field {
+            margin: 5px 0;
+            width: 100%;
+            padding: 5px;
         }
 
-        button {
-            padding: 10px 20px;
+        .update-btn {
             background-color: rgba(0, 128, 0, 0.7);
             color: white;
             border: none;
             border-radius: 5px;
+            padding: 10px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-top: 20px;
         }
 
-        button:hover {
+        .update-btn:hover {
             background-color: rgba(0, 128, 0, 1);
-        }
-
-        .user-list {
-            margin-top: 20px;
-            max-width: 600px;
-            width: 100%;
-        }
-
-        .user-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            margin: 5px 0;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .user-item:hover {
-            background-color: rgba(255, 255, 255, 0.2);
         }
     </style>
 </head>
 <body>
 
     <button class="logout-btn" onclick="window.location.href='index.html'">Вихід</button>
-    <h1>Адмін-панель користувача</h1>
+    <h1>Адмін-панель користувачів</h1>
 
-    <div class="container">
-        <h2>Список кабінетів</h2>
-        <div class="user-list" id="userList"></div>
-    </div>
-
-    <div class="container">
-        <h2>Редагувати інформацію кабінету</h2>
-        <input type="text" id="userIdInput" placeholder="ID користувача" />
-        <input type="text" id="daysCounterInput" placeholder="Кількість днів" />
-        <input type="text" id="reprimandCounterInput" placeholder="Кількість доган" />
-        <input type="text" id="warningCounterInput" placeholder="Кількість попереджень" />
-        <input type="text" id="onlineChangesCounterInput" placeholder="Кількість онлайн змін" />
-        <input type="text" id="punishmentsCounterInput" placeholder="Кількість покарань" />
-        <input type="text" id="warningsCounterInput" placeholder="Кількість попереджень" />
-        <input type="text" id="techSupportCounterInput" placeholder="Кількість відповідей" />
-        <input type="text" id="bonusCounterInput" placeholder="Кількість премії" />
-        <input type="text" id="finesCounterInput" placeholder="Кількість штрафів" />
-        <button id="updateButton">Оновити інформацію</button>
-    </div>
+    <div id="users-container"></div>
 
     <script>
-        // Функція для відображення користувачів
-        function displayUsers() {
-            const userList = document.getElementById('userList');
-            userList.innerHTML = '';
+        // Функція для завантаження даних користувачів
+        function loadUsers() {
+            const usersContainer = document.getElementById('users-container');
+            usersContainer.innerHTML = ''; // Очищуємо контейнер
 
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if (key.startsWith('user_')) {
-                    const userId = key.split('_')[1];
-                    const userItem = document.createElement('div');
-                    userItem.className = 'user-item';
-                    userItem.textContent = `Кабінет: ${userId}`;
-                    userItem.onclick = () => loadUserData(userId);
-                    userList.appendChild(userItem);
-                }
-            }
-        }
+            // Отримуємо всі ключі з localStorage
+            const userKeys = Object.keys(localStorage).filter(key => key.startsWith('user_'));
 
-        // Завантажує дані користувача
-        function loadUserData(userId) {
-            const counters = [
-                'daysCounter', 'reprimandCounter', 'warningCounter', 
-                'onlineChangesCounter', 'punishmentsCounter', 
-                'warningsCounter', 'techSupportCounter', 
-                'bonusCounter', 'finesCounter'
-            ];
+            userKeys.forEach(key => {
+                const userId = key.split('_')[1];
+                const userData = {
+                    days: localStorage.getItem(`user_${userId}_days`) || 0,
+                    reprimands: localStorage.getItem(`user_${userId}_reprimands`) || 0,
+                    warnings: localStorage.getItem(`user_${userId}_warnings`) || 0,
+                };
 
-            document.getElementById('userIdInput').value = userId;
-
-            counters.forEach(id => {
-                const value = localStorage.getItem(`user_${userId}_${id}`);
-                document.getElementById(`${id}Input`).value = value || '';
+                // Створюємо елемент для кожного користувача
+                const userDiv = document.createElement('div');
+                userDiv.className = 'user-container';
+                userDiv.innerHTML = `
+                    <h2>Кабінет: ${userId}</h2>
+                    <input type="text" class="input-field" placeholder="Кількість днів" value="${userData.days}" id="days_${userId}" />
+                    <input type="text" class="input-field" placeholder="Кількість доган" value="${userData.reprimands}" id="reprimands_${userId}" />
+                    <input type="text" class="input-field" placeholder="Кількість попереджень" value="${userData.warnings}" id="warnings_${userId}" />
+                    <button class="update-btn" onclick="updateUser('${userId}')">Оновити</button>
+                `;
+                usersContainer.appendChild(userDiv);
             });
         }
 
-        // Оновлює інформацію
-        document.getElementById('updateButton').addEventListener('click', () => {
-            const userId = document.getElementById('userIdInput').value;
+        // Функція для оновлення даних користувача
+        function updateUser(userId) {
+            const days = document.getElementById(`days_${userId}`).value;
+            const reprimands = document.getElementById(`reprimands_${userId}`).value;
+            const warnings = document.getElementById(`warnings_${userId}`).value;
 
-            if (!userId) {
-                alert('Введіть ID користувача!');
-                return;
-            }
+            localStorage.setItem(`user_${userId}_days`, days);
+            localStorage.setItem(`user_${userId}_reprimands`, reprimands);
+            localStorage.setItem(`user_${userId}_warnings`, warnings);
 
-            const counters = [
-                'daysCounter', 'reprimandCounter', 'warningCounter', 
-                'onlineChangesCounter', 'punishmentsCounter', 
-                'warningsCounter', 'techSupportCounter', 
-                'bonusCounter', 'finesCounter'
-            ];
+            alert(`Дані користувача ${userId} оновлені!`);
+            loadUsers(); // Перезавантажуємо список користувачів
+        }
 
-            counters.forEach(id => {
-                const inputValue = document.getElementById(`${id}Input`).value;
-                localStorage.setItem(`user_${userId}_${id}`, inputValue);
-            });
-
-            alert('Дані успішно оновлені!');
-            displayUsers();
-        });
-
-        // Відображення користувачів при завантаженні
-        window.onload = displayUsers;
+        window.onload = loadUsers;
     </script>
 
 </body>
