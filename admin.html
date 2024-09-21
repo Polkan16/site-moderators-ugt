@@ -3,207 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Адмін панель</title>
+    <title>Адмін Панель</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Comfortaa', sans-serif;
-            background-color: #121212;
-            color: #ffffff;
+            background-color: rgba(0, 0, 9, 9.9);
+            color: white;
             margin: 0;
             padding: 20px;
         }
 
-        h1 {
-            text-align: center;
-            color: #FFA500;
+        .container {
+            margin: 0 auto;
+            max-width: 800px;
         }
 
-        .logout-btn {
-            background-color: rgba(255, 0, 0, 0.15);
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            transition: background-color 0.3s;
-        }
-
-        .logout-btn:hover {
-            background-color: rgba(255, 0, 0, 0.25);
-        }
-
-        .admin-panel {
-            margin: 20px auto;
-            border: 1px solid #FFA500;
-            border-radius: 10px;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.7);
-            max-width: 1200px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            border: 1px solid #FFA500;
-            padding: 10px;
-            text-align: center;
-        }
-
-        th {
-            background-color: rgba(255, 165, 0, 0.2);
-            color: #000;
-        }
-
-        td {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .edit-btn {
-            background-color: #FFA500;
-            color: #000;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            padding: 5px 10px;
-        }
-
-        .input-field {
-            width: 90%;
-            padding: 5px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-        }
-
-        .button-container {
+        .user-row {
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-top: 20px;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #555;
+        }
+
+        input {
+            width: 60px;
+            margin-left: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        .save-btn {
+            background-color: rgba(0, 255, 0, 0.3);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .user-panel {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
 
-    <h1>👋 Адмін панель</h1>
+    <h1>Адмін Панель</h1>
+    <div class="container" id="user-container"></div>
 
-    <div class="admin-panel">
-        <h2>Редагувати інформацію користувачів</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Ім'я</th>
-                    <th>Днів на посаді</th>
-                    <th>Доган</th>
-                    <th>Попереджень</th>
-                    <th>Онлайн змін</th>
-                    <th>Покарань</th>
-                    <th>Премій</th>
-                    <th>Штрафів</th>
-                    <th>Відповідей у техпідтримку</th>
-                    <th>Додаткова інформація</th>
-                    <th>Дій</th>
-                </tr>
-            </thead>
-            <tbody id="userTable">
-                <!-- Користувачі будуть додані тут через JavaScript -->
-            </tbody>
-        </table>
-    </div>
-
-    <div class="button-container">
-        <button class="logout-btn" onclick="window.location.href='index.html'">
-            Вийти з кабінету
-        </button>
-    </div>
+    <button class="save-btn" onclick="addUser()">Додати нового користувача</button>
 
     <script>
-        const users = [
-            { username: 'User1', days: '10', reprimands: '1', warnings: '2', onlineChanges: '3', punishments: '0', bonuses: '5', fines: '1', techSupport: '2', newBlock: '' },
-            { username: 'User2', days: '5', reprimands: '0', warnings: '1', onlineChanges: '2', punishments: '1', bonuses: '3', fines: '0', techSupport: '1', newBlock: '' },
-        ];
+        const users = JSON.parse(localStorage.getItem('users')) || [];
 
-        function loadUsers() {
-            const userTable = document.getElementById('userTable');
-            userTable.innerHTML = '';
+        function renderUsers() {
+            const container = document.getElementById('user-container');
+            container.innerHTML = '';
+
             users.forEach((user, index) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${user.username}</td>
-                    <td><input type="text" value="${user.days}" class="input-field" id="days-${index}"></td>
-                    <td><input type="text" value="${user.reprimands}" class="input-field" id="reprimands-${index}"></td>
-                    <td><input type="text" value="${user.warnings}" class="input-field" id="warnings-${index}"></td>
-                    <td><input type="text" value="${user.onlineChanges}" class="input-field" id="onlineChanges-${index}"></td>
-                    <td><input type="text" value="${user.punishments}" class="input-field" id="punishments-${index}"></td>
-                    <td><input type="text" value="${user.bonuses}" class="input-field" id="bonuses-${index}"></td>
-                    <td><input type="text" value="${user.fines}" class="input-field" id="fines-${index}"></td>
-                    <td><input type="text" value="${user.techSupport}" class="input-field" id="techSupport-${index}"></td>
-                    <td><input type="text" value="${user.newBlock}" class="input-field" id="newBlock-${index}"></td>
-                    <td><button class="edit-btn" onclick="saveChanges(${index})">Зберегти</button></td>
+                const userPanel = document.createElement('div');
+                userPanel.classList.add('user-panel');
+                userPanel.innerHTML = `
+                    <h2>${user.username}</h2>
+                    <div>Кількість днів: <input type="text" id="days-${index}" value="${user.days || 0}"></div>
+                    <div>Кількість доган: <input type="text" id="reprimands-${index}" value="${user.reprimands || 0}"></div>
+                    <div>Кількість попереджень: <input type="text" id="warnings-${index}" value="${user.warnings || 0}"></div>
+                    <div>Кількість онлайн змін: <input type="text" id="onlineChanges-${index}" value="${user.onlineChanges || 0}"></div>
+                    <div>Кількість покарань: <input type="text" id="punishments-${index}" value="${user.punishments || 0}"></div>
+                    <div>Кількість штрафів: <input type="text" id="fines-${index}" value="${user.fines || 0}"></div>
+                    <div>Кількість відповідей у "питання до тех-підтримки": <input type="text" id="techSupport-${index}" value="${user.techSupport || 0}"></div>
+                    <div>Кількість премії: <input type="text" id="bonus-${index}" value="${user.bonus || 0}"></div>
+                    <button class="save-btn" onclick="saveChanges(${index})">Зберегти</button>
                 `;
-                userTable.appendChild(row);
+
+                container.appendChild(userPanel);
             });
         }
 
         function saveChanges(index) {
-            const days = document.getElementById(`days-${index}`).value;
-            const reprimands = document.getElementById(`reprimands-${index}`).value;
-            const warnings = document.getElementById(`warnings-${index}`).value;
-            const onlineChanges = document.getElementById(`onlineChanges-${index}`).value;
-            const punishments = document.getElementById(`punishments-${index}`).value;
-            const bonuses = document.getElementById(`bonuses-${index}`).value;
-            const fines = document.getElementById(`fines-${index}`).value;
-            const techSupport = document.getElementById(`techSupport-${index}`).value;
-            const newBlock = document.getElementById(`newBlock-${index}`).value;
+            const user = users[index];
+            user.days = document.getElementById(`days-${index}`).value;
+            user.reprimands = document.getElementById(`reprimands-${index}`).value;
+            user.warnings = document.getElementById(`warnings-${index}`).value;
+            user.onlineChanges = document.getElementById(`onlineChanges-${index}`).value;
+            user.punishments = document.getElementById(`punishments-${index}`).value;
+            user.fines = document.getElementById(`fines-${index}`).value;
+            user.techSupport = document.getElementById(`techSupport-${index}`).value;
+            user.bonus = document.getElementById(`bonus-${index}`).value;
 
-            users[index] = {
-                username: users[index].username,
-                days,
-                reprimands,
-                warnings,
-                onlineChanges,
-                punishments,
-                bonuses,
-                fines,
-                techSupport,
-                newBlock
-            };
-
-            alert(`Зміни для ${users[index].username} збережено!`);
+            localStorage.setItem('users', JSON.stringify(users));
+            alert('Зміни збережено!');
         }
 
-        // Імітуємо створення нового кабінету
-        const currentUser = localStorage.getItem('currentUser') || 'NewUser';
-        addNewUser(currentUser);
-
-        function addNewUser(username) {
-            const newUser = {
-                username,
-                days: '',
-                reprimands: '',
-                warnings: '',
-                onlineChanges: '',
-                punishments: '',
-                bonuses: '',
-                fines: '',
-                techSupport: '',
-                newBlock: ''
-            };
-            
-            users.push(newUser);
-            loadUsers();
+        function addUser() {
+            const username = prompt('Введіть ім\'я користувача:');
+            if (username) {
+                users.push({ 
+                    username, 
+                    days: 0, 
+                    reprimands: 0, 
+                    warnings: 0,
+                    onlineChanges: 0,
+                    punishments: 0,
+                    fines: 0,
+                    techSupport: 0,
+                    bonus: 0 
+                });
+                localStorage.setItem('users', JSON.stringify(users));
+                renderUsers();
+            }
         }
 
-        window.onload = loadUsers;
+        renderUsers();
     </script>
 
 </body>
