@@ -3,134 +3,188 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Адмін Панель</title>
+    <title>Адмінка</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Comfortaa', sans-serif;
             background-color: rgba(0, 0, 9, 0.9);
+            background-image: url('https://i.imgur.com/gxpN7VC.png');
+            background-size: cover;
+            background-position: center;
             color: white;
             margin: 0;
             padding: 20px;
         }
-
-        .logout-btn {
-            background-color: rgba(255, 0, 0, 0.15);
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            transition: background-color 0.3s ease;
+        h1, h2 {
+            text-align: center;
         }
-
-        .logout-btn:hover {
-            background-color: rgba(255, 0, 0, 0.25);
-        }
-
-        .cabinet {
-            margin-bottom: 20px;
+        .user-list {
+            margin-top: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            background: rgba(255, 255, 255, 0.1);
             padding: 15px;
-            border: 1px solid white;
-            border-radius: 10px;
+            border-radius: 8px;
         }
-
-        .cabinet input {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+        .user {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-
-        .save-btn, .add-btn {
-            background-color: rgba(0, 255, 0, 0.1);
-            color: white;
-            padding: 10px;
+        .edit-btn {
+            margin-left: 10px;
+            padding: 5px 10px;
+            background-color: rgba(0, 255, 0, 0.15);
             border: none;
-            cursor: pointer;
             border-radius: 5px;
-            transition: background-color 0.3s ease;
+            cursor: pointer;
         }
-
-        .save-btn:hover, .add-btn:hover {
-            background-color: rgba(0, 255, 0, 0.2);
+        .update-form {
+            margin-top: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .update-form label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        .update-form input {
+            width: calc(50% - 10px);
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin-bottom: 10px;
+            margin-right: 10px;
+        }
+        .update-btn {
+            padding: 10px 20px;
+            background-color: rgba(255, 165, 0, 0.15);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
 
-    <h1>Адмін Панель Кабінетів</h1>
+    <h1>Список користувачів</h1>
+    <div class="user-list" id="user-list"></div>
 
-    <div id="cabinets-container"></div>
-    <button class="add-btn" onclick="addCabinet()">Додати Кабінет</button>
-
-    <button class="logout-btn" onclick="window.location.href='index.html'">Вийти</button>
+    <div class="update-form" id="updateForm" style="display:none;">
+        <h2>Змінити дані користувача</h2>
+        <input type="text" id="editUserId" placeholder="ID користувача" disabled>
+        
+        <label for="editDaysCounter">Кількість днів на посаді:</label>
+        <input type="text" id="editDaysCounter">
+        
+        <label for="editReprimandCounter">Кількість доган:</label>
+        <input type="text" id="editReprimandCounter">
+        
+        <label for="editWarningCounter">Кількість попереджень:</label>
+        <input type="text" id="editWarningCounter">
+        
+        <label for="editOnlineChangesCounter">Кількість онлайн змін:</label>
+        <input type="text" id="editOnlineChangesCounter">
+        
+        <label for="editPunishmentsCounter">Кількість покарань:</label>
+        <input type="text" id="editPunishmentsCounter">
+        
+        <label for="editWarningsCounter">Кількість попереджень:</label>
+        <input type="text" id="editWarningsCounter">
+        
+        <label for="editTechSupportCounter">Кількість відповідей у тех. підтримці:</label>
+        <input type="text" id="editTechSupportCounter">
+        
+        <label for="editBonusCounter">Кількість премії:</label>
+        <input type="text" id="editBonusCounter">
+        
+        <label for="editFinesCounter">Кількість штрафів:</label>
+        <input type="text" id="editFinesCounter">
+        
+        <button class="update-btn" id="updateBtn">Зберегти зміни</button>
+    </div>
 
     <script>
-        let cabinets = JSON.parse(localStorage.getItem('cabinets')) || [
-            { id: 1, username: 'Користувач 1', days: 5, reprimands: '0/2', warnings: '0/3', onlineChanges: 0, punishments: 0, techSupport: 0, bonus: 0, fines: 0 },
-            { id: 2, username: 'Користувач 2', days: 10, reprimands: '1/2', warnings: '2/3', onlineChanges: 1, punishments: 1, techSupport: 1, bonus: 1, fines: 1 }
-        ];
+        function fetchUsers() {
+            const userList = document.getElementById('user-list');
+            userList.innerHTML = '';
 
-        function renderCabinets() {
-            const container = document.getElementById('cabinets-container');
-            container.innerHTML = ''; // Очистити контейнер
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key !== 'currentUser') {
+                    const userData = JSON.parse(localStorage.getItem(key));
+                    const userDiv = document.createElement('div');
+                    userDiv.className = 'user';
+                    userDiv.textContent = `${key} (ID: ${userData.id})`;
 
-            cabinets.forEach(cabinet => {
-                const cabinetDiv = document.createElement('div');
-                cabinetDiv.className = 'cabinet';
-                cabinetDiv.innerHTML = `
-                    <h3>Кабінет ID: ${cabinet.id}</h3>
-                    <input type="text" value="${cabinet.username}" placeholder="Ім'я користувача" data-id="${cabinet.id}" data-field="username">
-                    <input type="number" value="${cabinet.days}" placeholder="Кількість днів на посаді" data-id="${cabinet.id}" data-field="days">
-                    <input type="text" value="${cabinet.reprimands}" placeholder="Кількість доган" data-id="${cabinet.id}" data-field="reprimands">
-                    <input type="text" value="${cabinet.warnings}" placeholder="Кількість попереджень" data-id="${cabinet.id}" data-field="warnings">
-                    <input type="number" value="${cabinet.onlineChanges}" placeholder="Кількість онлайн змін" data-id="${cabinet.id}" data-field="onlineChanges">
-                    <input type="number" value="${cabinet.punishments}" placeholder="Кількість покарань" data-id="${cabinet.id}" data-field="punishments">
-                    <input type="number" value="${cabinet.techSupport}" placeholder="Кількість відповідей у тех.підтримку" data-id="${cabinet.id}" data-field="techSupport">
-                    <input type="number" value="${cabinet.bonus}" placeholder="Кількість премії" data-id="${cabinet.id}" data-field="bonus">
-                    <input type="number" value="${cabinet.fines}" placeholder="Кількість штрафів" data-id="${cabinet.id}" data-field="fines">
-                    <button class="save-btn" onclick="saveCabinet(${cabinet.id})">Зберегти</button>
-                    <button class="delete-btn" onclick="deleteCabinet(${cabinet.id})">Видалити</button>
-                `;
-                container.appendChild(cabinetDiv);
+                    const editButton = document.createElement('button');
+                    editButton.textContent = 'Редагувати';
+                    editButton.className = 'edit-btn';
+                    editButton.onclick = () => editUser(userData);
+                    userDiv.appendChild(editButton);
+
+                    userList.appendChild(userDiv);
+                }
+            }
+        }
+
+        function editUser(userData) {
+            document.getElementById('editUserId').value = userData.id;
+            document.getElementById('editDaysCounter').value = userData.daysCounter;
+            document.getElementById('editReprimandCounter').value = userData.reprimandCounter;
+            document.getElementById('editWarningCounter').value = userData.warningCounter;
+            document.getElementById('editOnlineChangesCounter').value = userData.onlineChangesCounter;
+            document.getElementById('editPunishmentsCounter').value = userData.punishmentsCounter;
+            document.getElementById('editWarningsCounter').value = userData.warningsCounter;
+            document.getElementById('editTechSupportCounter').value = userData.techSupportCounter;
+            document.getElementById('editBonusCounter').value = userData.bonusCounter;
+            document.getElementById('editFinesCounter').value = userData.finesCounter;
+            document.getElementById('updateForm').style.display = 'block';
+        }
+
+        document.getElementById('updateBtn').onclick = function() {
+            const userId = document.getElementById('editUserId').value;
+            const updatedData = {
+                daysCounter: document.getElementById('editDaysCounter').value,
+                reprimandCounter: document.getElementById('editReprimandCounter').value,
+                warningCounter: document.getElementById('editWarningCounter').value,
+                onlineChangesCounter: document.getElementById('editOnlineChangesCounter').value,
+                punishmentsCounter: document.getElementById('editPunishmentsCounter').value,
+                warningsCounter: document.getElementById('editWarningsCounter').value,
+                techSupportCounter: document.getElementById('editTechSupportCounter').value,
+                bonusCounter: document.getElementById('editBonusCounter').value,
+                finesCounter: document.getElementById('editFinesCounter').value
+            };
+
+            const userKey = Object.keys(localStorage).find(key => {
+                const userData = JSON.parse(localStorage.getItem(key));
+                return userData.id == userId;
             });
-        }
 
-        function saveCabinet(id) {
-            const inputs = document.querySelectorAll(`[data-id="${id}"]`);
-            inputs.forEach(input => {
-                const field = input.getAttribute('data-field');
-                const value = input.value;
+            if (userKey) {
+                const userData = JSON.parse(localStorage.getItem(userKey));
+                Object.assign(userData, updatedData);
+                localStorage.setItem(userKey, JSON.stringify(userData));
+                alert('Дані оновлено');
+                fetchUsers(); // Оновлюємо список
+                document.getElementById('updateForm').style.display = 'none'; // Сховати форму
+            } else {
+                alert('Користувача не знайдено');
+            }
+        };
 
-                const cabinet = cabinets.find(c => c.id === id);
-                cabinet[field] = value;
-            });
-
-            localStorage.setItem('cabinets', JSON.stringify(cabinets));
-            alert(`Кабінет ${id} оновлено!`);
-        }
-
-        function addCabinet() {
-            const newId = cabinets.length ? cabinets[cabinets.length - 1].id + 1 : 1;
-            cabinets.push({ id: newId, username: '', days: 0, reprimands: '0/2', warnings: '0/3', onlineChanges: 0, punishments: 0, techSupport: 0, bonus: 0, fines: 0 });
-            renderCabinets();
-            localStorage.setItem('cabinets', JSON.stringify(cabinets));
-        }
-
-        function deleteCabinet(id) {
-            cabinets = cabinets.filter(c => c.id !== id);
-            renderCabinets();
-            localStorage.setItem('cabinets', JSON.stringify(cabinets));
-            alert(`Кабінет ${id} видалено!`);
-        }
-
-        // Виклик функції для відображення кабінетів
-        renderCabinets();
+        fetchUsers(); // Викликаємо при завантаженні
     </script>
+
 </body>
 </html>
