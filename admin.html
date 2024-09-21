@@ -3,132 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Адмін Панель</title>
+    <title>Адмін панель</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Comfortaa', sans-serif;
-            background-color: rgba(0, 0, 9, 0.9);
-            color: white;
+            background-color: #f0f0f0;
             margin: 0;
             padding: 20px;
         }
-        .user-container {
-            margin-bottom: 20px;
-            padding: 20px;
-            border: 1px solid white;
+        .admin-panel {
+            width: 400px;
+            background-color: white;
             border-radius: 10px;
-            background-color: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            position: relative;
         }
-        .counter-box {
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.1);
+        h1 {
+            text-align: center;
+            color: #333;
         }
-        input {
-            margin-bottom: 10px;
-            width: calc(100% - 20px);
+        .button {
+            width: 100%;
             padding: 10px;
-            border: none;
-            border-radius: 5px;
-        }
-        button {
-            padding: 10px;
-            background-color: rgba(0, 128, 128, 0.7);
+            background-color: #007bff;
+            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .logout-btn {
+            background-color: rgba(255, 0, 0, 0.15);
             color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
             transition: background-color 0.3s ease;
         }
-        button:hover {
-            background-color: rgba(0, 128, 128, 0.9);
-        }
-        .counter-title {
-            font-weight: bold;
+        .logout-btn:hover {
+            background-color: rgba(255, 0, 0, 0.25);
         }
     </style>
 </head>
 <body>
 
-<h1>Адмін Панель</h1>
+    <div class="admin-panel" id="adminPanel" style="display: none;">
+        <h1>Адмін панель</h1>
+        <button class="button" onclick="performAdminAction()">Виконати дію</button>
+    </div>
 
-<div id="users"></div>
+    <button class="logout-btn" onclick="logout()">Вихід</button>
 
-<script>
-    const users = JSON.parse(localStorage.getItem('users')) || {};
+    <script>
+        // Перевірка статусу авторизації при завантаженні
+        window.onload = function() {
+            if (localStorage.getItem('isAdmin') !== 'true') {
+                alert('Ви не авторизовані. Перенаправлення на сторінку входу.');
+                window.location.href = 'login.html'; // Перенаправлення на сторінку входу
+            } else {
+                document.getElementById('adminPanel').style.display = 'block';
+            }
+        };
 
-    function loadUsers() {
-        const usersDiv = document.getElementById('users');
-        usersDiv.innerHTML = '';
-
-        for (const username in users) {
-            const userDiv = document.createElement('div');
-            userDiv.className = 'user-container';
-
-            userDiv.innerHTML = `
-                <h2>${username}</h2>
-                <div class="counter-box">
-                    <div class="counter-title">Кількість днів на посаді</div>
-                    <input type="text" id="${username}-daysCounter" value="${users[username].daysCounter || 0}">
-                </div>
-                <div class="counter-box">
-                    <div class="counter-title">Кількість доган</div>
-                    <input type="text" id="${username}-reprimandCounter" value="${users[username].reprimandCounter || '0/2'}">
-                </div>
-                <div class="counter-box">
-                    <div class="counter-title">Кількість попереджень</div>
-                    <input type="text" id="${username}-warningCounter" value="${users[username].warningCounter || '0/3'}">
-                </div>
-                <div class="counter-box">
-                    <div class="counter-title">Кількість онлайн змін</div>
-                    <input type="text" id="${username}-onlineChangesCounter" value="${users[username].onlineChangesCounter || 0}">
-                </div>
-                <div class="counter-box">
-                    <div class="counter-title">Кількість покарань</div>
-                    <input type="text" id="${username}-punishmentsCounter" value="${users[username].punishmentsCounter || 0}">
-                </div>
-                <div class="counter-box">
-                    <div class="counter-title">Кількість попереджень</div>
-                    <input type="text" id="${username}-warningsCounter" value="${users[username].warningsCounter || 0}">
-                </div>
-                <div class="counter-box">
-                    <div class="counter-title">Кількість відповідей у "питання до тех-підтримки"</div>
-                    <input type="text" id="${username}-techSupportCounter" value="${users[username].techSupportCounter || 0}">
-                </div>
-                <div class="counter-box">
-                    <div class="counter-title">Кількість премії</div>
-                    <input type="text" id="${username}-bonusCounter" value="${users[username].bonusCounter || 0}">
-                </div>
-                <div class="counter-box">
-                    <div class="counter-title">Кількість штрафів</div>
-                    <input type="text" id="${username}-finesCounter" value="${users[username].finesCounter || 0}">
-                </div>
-                <button onclick="saveUser('${username}')">Зберегти</button>
-            `;
-
-            usersDiv.appendChild(userDiv);
+        // Вихід з системи
+        function logout() {
+            localStorage.removeItem('isAdmin'); // Очистити статус авторизації
+            alert('Ви вийшли з системи!');
+            window.location.href = 'login.html'; // Перенаправлення на сторінку входу
         }
-    }
-
-    function saveUser(username) {
-        users[username].daysCounter = document.getElementById(`${username}-daysCounter`).value;
-        users[username].reprimandCounter = document.getElementById(`${username}-reprimandCounter`).value;
-        users[username].warningCounter = document.getElementById(`${username}-warningCounter`).value;
-        users[username].onlineChangesCounter = document.getElementById(`${username}-onlineChangesCounter`).value;
-        users[username].punishmentsCounter = document.getElementById(`${username}-punishmentsCounter`).value;
-        users[username].warningsCounter = document.getElementById(`${username}-warningsCounter`).value;
-        users[username].techSupportCounter = document.getElementById(`${username}-techSupportCounter`).value;
-        users[username].bonusCounter = document.getElementById(`${username}-bonusCounter`).value;
-        users[username].finesCounter = document.getElementById(`${username}-finesCounter`).value;
-        
-        localStorage.setItem('users', JSON.stringify(users));
-        alert('Дані збережено');
-    }
-
-    loadUsers();
-</script>
+    </script>
 
 </body>
 </html>
