@@ -16,21 +16,6 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .background-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://i.imgur.com/gxpN7VC.png');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.5;
-            z-index: -1;
         }
 
         h1 {
@@ -45,7 +30,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            z-index: 1;
         }
 
         .form-container input {
@@ -81,8 +65,6 @@
 </head>
 <body>
 
-    <div class="background-image"></div>
-
     <h1>Авторизація / Реєстрація</h1>
     <div class="form-container">
         <input type="text" id="username" placeholder="Ім'я" required style="display: none;">
@@ -93,69 +75,41 @@
         <div class="switch-link" onclick="switchForm()">Вже маєш акаунт? Увійти!</div>
     </div>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <!-- Supabase JS library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/dist/umd/supabase.min.js"></script>
 
     <script>
-        // Конфігурація Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyB-DclLIkm_PO6YU4PfuVZOdckmwwt0txc",
-            authDomain: "moderators-04.firebaseapp.com",
-            databaseURL: "https://moderators-04-default-rtdb.firebaseio.com",
-            projectId: "moderators-04",
-            storageBucket: "moderators-04.appspot.com",
-            messagingSenderId: "164926314110",
-            appId: "1:164926314110:web:bee82c277c62577df32a2f",
-            measurementId: "G-H87RENJD89"
-        };
+        const supabaseUrl = 'https://ndgyfarjkawkmiinmxew.supabase.co';
+        const supabaseAnonKey = 'YOUR_ANON_PUBLIC_KEY'; // Вставте сюди ваш анонімний ключ
 
-        // Ініціалізація Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.database();
+        const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
-        document.getElementById('login-btn').addEventListener('click', function() {
+        document.getElementById('login-btn').onclick = async function() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            auth.signInWithEmailAndPassword(email, password)
-                .then(userCredential => {
-                    window.location.href = 'dashboard.html';
-                })
-                .catch(error => {
-                    alert("Помилка: " + error.message);
-                });
-        });
+            const { user, error } = await supabase.auth.signIn({ email, password });
+            if (error) {
+                alert("Помилка: " + error.message);
+            } else {
+                window.location.href = 'dashboard.html'; // Перенаправлення на панель
+            }
+        };
 
-        document.getElementById('register-btn').addEventListener('click', function() {
+        document.getElementById('register-btn').onclick = async function() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const username = document.getElementById('username').value;
 
-            auth.createUserWithEmailAndPassword(email, password)
-                .then(userCredential => {
-                    const userId = userCredential.user.uid;
-                    return db.ref('/users/' + userId).set({
-                        username: username,
-                        daysOnPosition: 0,
-                        reprimands: 0,
-                        warnings: 0,
-                        onlineChanges: 0,
-                        punishments: 0,
-                        techSupportAnswers: 0,
-                        bonuses: 0,
-                        fines: 0
-                    });
-                })
-                .then(() => {
-                    window.location.href = 'dashboard.html';
-                })
-                .catch(error => {
-                    alert("Помилка: " + error.message);
-                });
-        });
+            const { user, error } = await supabase.auth.signUp({ email, password });
+            if (error) {
+                alert("Помилка: " + error.message);
+            } else {
+                // Тут можна зберегти ім'я користувача у вашій базі даних, якщо потрібно
+                alert("Користувач зареєстрований!"); // Показати повідомлення про успішну реєстрацію
+                window.location.href = 'dashboard.html'; // Перенаправлення на панель
+            }
+        };
 
         function switchForm() {
             const usernameInput = document.getElementById('username');
