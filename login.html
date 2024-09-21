@@ -100,11 +100,15 @@
                 return;
             }
 
-            const { user, error } = await supabase.auth.signIn({ email, password });
-            if (error) {
-                alert("Помилка: " + error.message);
-            } else {
-                window.location.href = 'dashboard.html'; // Перейти на сторінку кабінету
+            try {
+                const { user, error } = await supabase.auth.signIn({ email, password });
+                if (error) {
+                    alert("Помилка: " + error.message);
+                } else {
+                    window.location.href = 'dashboard.html'; // Перейти на сторінку кабінету
+                }
+            } catch (err) {
+                alert("Сталася помилка під час авторизації.");
             }
         });
 
@@ -118,10 +122,13 @@
                 return;
             }
 
-            const { user, error } = await supabase.auth.signUp({ email, password });
-            if (error) {
-                alert("Помилка: " + error.message);
-            } else {
+            try {
+                const { user, error } = await supabase.auth.signUp({ email, password });
+                if (error) {
+                    alert("Помилка: " + error.message);
+                    return;
+                }
+
                 const { data, error: dbError } = await supabase.from('users').insert([
                     { id: user.id, username, daysOnPosition: 0, reprimands: 0, warnings: 0, onlineChanges: 0, punishments: 0, techSupportAnswers: 0, bonuses: 0, fines: 0 }
                 ]);
@@ -131,6 +138,8 @@
                 } else {
                     window.location.href = 'dashboard.html'; // Перейти на сторінку кабінету
                 }
+            } catch (err) {
+                alert("Сталася помилка під час реєстрації.");
             }
         });
 
