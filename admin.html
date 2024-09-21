@@ -3,83 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Адмін панель</title>
+    <title>Адмін-панель користувача</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Comfortaa', sans-serif;
-            background-color: #f0f0f0;
+            background-color: rgba(0, 0, 0, 0.8); /* Чорний фон */
+            color: white;
             margin: 0;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            background-image: url('https://i.imgur.com/gxpN7VC.png'); /* Зображення фону */
+            background-size: cover;
+            background-position: center;
         }
-        .admin-panel {
-            width: 400px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            position: relative;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        .button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .button:hover {
-            background-color: #0056b3;
-        }
+
         .logout-btn {
-            background-color: rgba(255, 0, 0, 0.15);
+            background-color: rgba(255, 0, 0, 0.7);
             color: white;
-            padding: 10px;
             border: none;
             border-radius: 5px;
-            position: absolute;
-            top: 20px;
-            right: 20px;
+            padding: 10px 15px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            position: absolute;
+            top: 20px; /* Відстань від верху */
+            right: 20px; /* Відстань від правого краю */
         }
+
         .logout-btn:hover {
-            background-color: rgba(255, 0, 0, 0.25);
+            background-color: rgba(255, 0, 0, 1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #FFA500;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            margin-top: 60px; /* Додаємо відступ для кнопки "Вихід" */
+            width: 100%;
+            max-width: 400px;
+        }
+
+        input {
+            width: 300px;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: rgba(0, 128, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: rgba(0, 128, 0, 1);
         }
     </style>
 </head>
 <body>
 
-    <div class="admin-panel" id="adminPanel" style="display: none;">
-        <h1>Адмін панель</h1>
-        <button class="button" onclick="performAdminAction()">Виконати дію</button>
+    <button class="logout-btn" onclick="window.location.href='index.html'">Вихід</button>
+    <h1>Адмін-панель користувача: <span id="username-display"></span></h1>
+
+    <div class="container">
+        <input type="text" id="daysCounterInput" placeholder="Кількість днів" />
+        <input type="text" id="reprimandCounterInput" placeholder="Кількість доган" />
+        <input type="text" id="warningCounterInput" placeholder="Кількість попереджень" />
+        <input type="text" id="onlineChangesCounterInput" placeholder="Кількість онлайн змін" />
+        <input type="text" id="punishmentsCounterInput" placeholder="Кількість покарань" />
+        <input type="text" id="warningsCounterInput" placeholder="Кількість попереджень" />
+        <input type="text" id="techSupportCounterInput" placeholder="Кількість відповідей" />
+        <input type="text" id="bonusCounterInput" placeholder="Кількість премії" />
+        <input type="text" id="finesCounterInput" placeholder="Кількість штрафів" />
+        <button id="updateButton">Оновити інформацію</button>
     </div>
 
-    <button class="logout-btn" onclick="logout()">Вихід</button>
-
     <script>
-        // Перевірка статусу авторизації при завантаженні
-        window.onload = function() {
-            if (localStorage.getItem('isAdmin') !== 'true') {
-                alert('Ви не авторизовані. Перенаправлення на сторінку входу.');
-                window.location.href = 'login.html'; // Перенаправлення на сторінку входу
-            } else {
-                document.getElementById('adminPanel').style.display = 'block';
-            }
-        };
+        // Отримуємо ім'я користувача з localStorage
+        const currentUser = localStorage.getItem('currentUser');
+        document.getElementById('username-display').textContent = currentUser || 'Гість';
 
-        // Вихід з системи
-        function logout() {
-            localStorage.removeItem('isAdmin'); // Очистити статус авторизації
-            alert('Ви вийшли з системи!');
-            window.location.href = 'login.html'; // Перенаправлення на сторінку входу
-        }
+        document.getElementById('updateButton').addEventListener('click', () => {
+            const userId = currentUser || 'defaultUser';
+            const counters = [
+                'daysCounter', 'reprimandCounter', 'warningCounter', 
+                'onlineChangesCounter', 'punishmentsCounter', 
+                'warningsCounter', 'techSupportCounter', 
+                'bonusCounter', 'finesCounter'
+            ];
+
+            counters.forEach(id => {
+                const inputValue = document.getElementById(`${id}Input`).value;
+                localStorage.setItem(`${userId}_${id}`, inputValue);
+            });
+
+            alert('Дані успішно оновлені!');
+        });
     </script>
 
 </body>
