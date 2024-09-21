@@ -8,121 +8,112 @@
     <style>
         body {
             font-family: 'Comfortaa', sans-serif;
-            background-color: rgba(0, 0, 9, 9.9);
+            background-color: rgba(0, 0, 9, 0.9);
             color: white;
             margin: 0;
             padding: 20px;
         }
 
-        .container {
-            margin: 0 auto;
-            max-width: 800px;
-        }
-
-        .user-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            border-bottom: 1px solid #555;
-        }
-
-        input {
-            width: 60px;
-            margin-left: 10px;
-            background: rgba(255, 255, 255, 0.1);
+        .logout-btn {
+            background-color: rgba(255, 0, 0, 0.15);
             color: white;
+            padding: 10px 20px;
             border: none;
+            cursor: pointer;
             border-radius: 5px;
-            padding: 5px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(255, 0, 0, 0.25);
+        }
+
+        .cabinet {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid white;
+            border-radius: 10px;
+        }
+
+        .cabinet input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
 
         .save-btn {
-            background-color: rgba(0, 255, 0, 0.3);
+            background-color: rgba(0, 255, 0, 0.1);
             color: white;
+            padding: 10px;
             border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
             cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
 
-        .user-panel {
-            margin: 20px 0;
-            padding: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 5px;
+        .save-btn:hover {
+            background-color: rgba(0, 255, 0, 0.2);
         }
     </style>
 </head>
 <body>
 
-    <h1>Адмін Панель</h1>
-    <div class="container" id="user-container"></div>
+    <h1>Адмін Панель Кабінетів</h1>
 
-    <button class="save-btn" onclick="addUser()">Додати нового користувача</button>
+    <div id="cabinets-container"></div>
+
+    <button class="logout-btn" onclick="window.location.href='index.html'">Вийти</button>
 
     <script>
-        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const cabinets = [
+            { id: 1, username: 'Користувач 1', days: 5, reprimands: '0/2', warnings: '0/3', onlineChanges: 0, punishments: 0, techSupport: 0, bonus: 0, fines: 0 },
+            { id: 2, username: 'Користувач 2', days: 10, reprimands: '1/2', warnings: '2/3', onlineChanges: 1, punishments: 1, techSupport: 1, bonus: 1, fines: 1 }
+        ];
 
-        function renderUsers() {
-            const container = document.getElementById('user-container');
-            container.innerHTML = '';
+        function renderCabinets() {
+            const container = document.getElementById('cabinets-container');
+            container.innerHTML = ''; // Очистити контейнер
 
-            users.forEach((user, index) => {
-                const userPanel = document.createElement('div');
-                userPanel.classList.add('user-panel');
-                userPanel.innerHTML = `
-                    <h2>${user.username}</h2>
-                    <div>Кількість днів: <input type="text" id="days-${index}" value="${user.days || 0}"></div>
-                    <div>Кількість доган: <input type="text" id="reprimands-${index}" value="${user.reprimands || 0}"></div>
-                    <div>Кількість попереджень: <input type="text" id="warnings-${index}" value="${user.warnings || 0}"></div>
-                    <div>Кількість онлайн змін: <input type="text" id="onlineChanges-${index}" value="${user.onlineChanges || 0}"></div>
-                    <div>Кількість покарань: <input type="text" id="punishments-${index}" value="${user.punishments || 0}"></div>
-                    <div>Кількість штрафів: <input type="text" id="fines-${index}" value="${user.fines || 0}"></div>
-                    <div>Кількість відповідей у "питання до тех-підтримки": <input type="text" id="techSupport-${index}" value="${user.techSupport || 0}"></div>
-                    <div>Кількість премії: <input type="text" id="bonus-${index}" value="${user.bonus || 0}"></div>
-                    <button class="save-btn" onclick="saveChanges(${index})">Зберегти</button>
+            cabinets.forEach(cabinet => {
+                const cabinetDiv = document.createElement('div');
+                cabinetDiv.className = 'cabinet';
+                cabinetDiv.innerHTML = `
+                    <h3>Кабінет ID: ${cabinet.id}</h3>
+                    <input type="text" value="${cabinet.username}" placeholder="Ім'я користувача" data-id="${cabinet.id}" data-field="username">
+                    <input type="number" value="${cabinet.days}" placeholder="Кількість днів на посаді" data-id="${cabinet.id}" data-field="days">
+                    <input type="text" value="${cabinet.reprimands}" placeholder="Кількість доган" data-id="${cabinet.id}" data-field="reprimands">
+                    <input type="text" value="${cabinet.warnings}" placeholder="Кількість попереджень" data-id="${cabinet.id}" data-field="warnings">
+                    <input type="number" value="${cabinet.onlineChanges}" placeholder="Кількість онлайн змін" data-id="${cabinet.id}" data-field="onlineChanges">
+                    <input type="number" value="${cabinet.punishments}" placeholder="Кількість покарань" data-id="${cabinet.id}" data-field="punishments">
+                    <input type="number" value="${cabinet.techSupport}" placeholder="Кількість відповідей у тех.підтримку" data-id="${cabinet.id}" data-field="techSupport">
+                    <input type="number" value="${cabinet.bonus}" placeholder="Кількість премії" data-id="${cabinet.id}" data-field="bonus">
+                    <input type="number" value="${cabinet.fines}" placeholder="Кількість штрафів" data-id="${cabinet.id}" data-field="fines">
+                    <button class="save-btn" onclick="saveCabinet(${cabinet.id})">Зберегти</button>
                 `;
-
-                container.appendChild(userPanel);
+                container.appendChild(cabinetDiv);
             });
         }
 
-        function saveChanges(index) {
-            const user = users[index];
-            user.days = document.getElementById(`days-${index}`).value;
-            user.reprimands = document.getElementById(`reprimands-${index}`).value;
-            user.warnings = document.getElementById(`warnings-${index}`).value;
-            user.onlineChanges = document.getElementById(`onlineChanges-${index}`).value;
-            user.punishments = document.getElementById(`punishments-${index}`).value;
-            user.fines = document.getElementById(`fines-${index}`).value;
-            user.techSupport = document.getElementById(`techSupport-${index}`).value;
-            user.bonus = document.getElementById(`bonus-${index}`).value;
+        function saveCabinet(id) {
+            const inputs = document.querySelectorAll(`[data-id="${id}"]`);
+            inputs.forEach(input => {
+                const field = input.getAttribute('data-field');
+                const value = input.value;
 
-            localStorage.setItem('users', JSON.stringify(users));
-            alert('Зміни збережено!');
+                const cabinet = cabinets.find(c => c.id === id);
+                cabinet[field] = value;
+            });
+
+            alert(`Кабінет ${id} оновлено!`);
         }
 
-        function addUser() {
-            const username = prompt('Введіть ім\'я користувача:');
-            if (username) {
-                users.push({ 
-                    username, 
-                    days: 0, 
-                    reprimands: 0, 
-                    warnings: 0,
-                    onlineChanges: 0,
-                    punishments: 0,
-                    fines: 0,
-                    techSupport: 0,
-                    bonus: 0 
-                });
-                localStorage.setItem('users', JSON.stringify(users));
-                renderUsers();
-            }
-        }
-
-        renderUsers();
+        // Виклик функції для відображення кабінетів
+        renderCabinets();
     </script>
-
 </body>
 </html>
