@@ -85,13 +85,11 @@
         <div class="switch-link" onclick="switchForm()">Вже маєш акаунт? Увійти!</div>
     </div>
 
-    <script src="https://unpkg.com/@supabase/supabase-js"></script>
     <script>
-        const supabaseUrl = 'https://ndgyfarjkawkmiinmxew.supabase.co'; // Ваш Supabase URL
-        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5kZ3lmYXJqa2F3a21paW5teGV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjY5NDQxNTYsImV4cCI6MjA0MjUyMDE1Nn0.cv_DV0Qxp8IAvAKu1j2CK2xSJ1U8fWhEyZCZCZ2ULx0'; // Замініть на свій анонімний ключ
-        const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
+        // Симуляція авторизації
+        const users = {}; // Зберігатимемо користувачів у пам'яті
 
-        document.getElementById('login-btn').addEventListener('click', async function() {
+        document.getElementById('login-btn').addEventListener('click', function() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
@@ -100,19 +98,15 @@
                 return;
             }
 
-            try {
-                const { user, error } = await supabase.auth.signIn({ email, password });
-                if (error) {
-                    alert("Помилка: " + error.message);
-                } else {
-                    window.location.href = 'dashboard.html'; // Перейти на сторінку кабінету
-                }
-            } catch (err) {
-                alert("Сталася помилка під час авторизації.");
+            if (users[email] && users[email].password === password) {
+                alert("Авторизація успішна!");
+                window.location.href = 'dashboard.html'; // Перейти на сторінку кабінету
+            } else {
+                alert("Неправильний email або пароль.");
             }
         });
 
-        document.getElementById('register-btn').addEventListener('click', async function() {
+        document.getElementById('register-btn').addEventListener('click', function() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const username = document.getElementById('username').value;
@@ -122,25 +116,9 @@
                 return;
             }
 
-            try {
-                const { user, error } = await supabase.auth.signUp({ email, password });
-                if (error) {
-                    alert("Помилка: " + error.message);
-                    return;
-                }
-
-                const { data, error: dbError } = await supabase.from('users').insert([
-                    { id: user.id, username, daysOnPosition: 0, reprimands: 0, warnings: 0, onlineChanges: 0, punishments: 0, techSupportAnswers: 0, bonuses: 0, fines: 0 }
-                ]);
-
-                if (dbError) {
-                    alert("Помилка при збереженні даних: " + dbError.message);
-                } else {
-                    window.location.href = 'dashboard.html'; // Перейти на сторінку кабінету
-                }
-            } catch (err) {
-                alert("Сталася помилка під час реєстрації.");
-            }
+            users[email] = { username, password };
+            alert("Реєстрація успішна! Тепер ви можете увійти.");
+            switchForm();
         });
 
         function switchForm() {
