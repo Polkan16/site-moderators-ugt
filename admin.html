@@ -3,187 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Адмінка</title>
+    <title>Адмін-панель</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Comfortaa', sans-serif;
-            background-color: rgba(0, 0, 9, 0.9);
-            background-image: url('https://i.imgur.com/gxpN7VC.png');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            margin: 0;
+            background-color: #f0f0f0;
             padding: 20px;
         }
-        h1, h2 {
+        h1 {
             text-align: center;
+            margin-bottom: 30px;
         }
-        .user-list {
-            margin-top: 20px;
+        .form-container {
             max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 8px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
         }
-        .user {
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .form-group {
+            margin-bottom: 15px;
         }
-        .edit-btn {
-            margin-left: 10px;
-            padding: 5px 10px;
-            background-color: rgba(0, 255, 0, 0.15);
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .update-form {
-            margin-top: 20px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 8px;
-        }
-        .update-form label {
+        label {
             display: block;
-            margin: 10px 0 5px;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
-        .update-form input {
-            width: calc(50% - 10px);
+        input, select {
+            width: 100%;
             padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
             border-radius: 5px;
-            border: none;
-            margin-bottom: 10px;
-            margin-right: 10px;
         }
-        .update-btn {
-            padding: 10px 20px;
-            background-color: rgba(255, 165, 0, 0.15);
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
             color: white;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-            display: block;
-            margin: 0 auto;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
 
-    <h1>Список користувачів</h1>
-    <div class="user-list" id="user-list"></div>
+    <h1>Адмін-панель</h1>
 
-    <div class="update-form" id="updateForm" style="display:none;">
-        <h2>Змінити дані користувача</h2>
-        <input type="text" id="editUserId" placeholder="ID користувача" disabled>
-        
-        <label for="editDaysCounter">Кількість днів на посаді:</label>
-        <input type="text" id="editDaysCounter">
-        
-        <label for="editReprimandCounter">Кількість доган:</label>
-        <input type="text" id="editReprimandCounter">
-        
-        <label for="editWarningCounter">Кількість попереджень:</label>
-        <input type="text" id="editWarningCounter">
-        
-        <label for="editOnlineChangesCounter">Кількість онлайн змін:</label>
-        <input type="text" id="editOnlineChangesCounter">
-        
-        <label for="editPunishmentsCounter">Кількість покарань:</label>
-        <input type="text" id="editPunishmentsCounter">
-        
-        <label for="editWarningsCounter">Кількість попереджень:</label>
-        <input type="text" id="editWarningsCounter">
-        
-        <label for="editTechSupportCounter">Кількість відповідей у тех. підтримці:</label>
-        <input type="text" id="editTechSupportCounter">
-        
-        <label for="editBonusCounter">Кількість премії:</label>
-        <input type="text" id="editBonusCounter">
-        
-        <label for="editFinesCounter">Кількість штрафів:</label>
-        <input type="text" id="editFinesCounter">
-        
-        <button class="update-btn" id="updateBtn">Зберегти зміни</button>
+    <div class="form-container">
+        <div class="form-group">
+            <label for="userId">Виберіть користувача</label>
+            <select id="userId">
+                <!-- Користувачі будуть завантажені динамічно -->
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="daysOnPosition">Кількість днів на посаді</label>
+            <input type="number" id="daysOnPosition" placeholder="Введіть кількість днів">
+        </div>
+
+        <div class="form-group">
+            <label for="reprimands">Кількість доган</label>
+            <input type="number" id="reprimands" placeholder="Введіть кількість доган">
+        </div>
+
+        <div class="form-group">
+            <label for="warnings">Кількість попереджень</label>
+            <input type="number" id="warnings" placeholder="Введіть кількість попереджень">
+        </div>
+
+        <div class="form-group">
+            <label for="onlineChanges">Кількість онлайн змін</label>
+            <input type="number" id="onlineChanges" placeholder="Введіть кількість змін">
+        </div>
+
+        <div class="form-group">
+            <label for="punishments">Кількість покарань</label>
+            <input type="number" id="punishments" placeholder="Введіть кількість покарань">
+        </div>
+
+        <div class="form-group">
+            <label for="techSupportAnswers">Кількість відповідей тех-підтримки</label>
+            <input type="number" id="techSupportAnswers" placeholder="Введіть кількість відповідей">
+        </div>
+
+        <div class="form-group">
+            <label for="bonuses">Кількість премії</label>
+            <input type="number" id="bonuses" placeholder="Введіть кількість премії">
+        </div>
+
+        <div class="form-group">
+            <label for="fines">Кількість штрафів</label>
+            <input type="number" id="fines" placeholder="Введіть кількість штрафів">
+        </div>
+
+        <button onclick="updateUserData()">Оновити дані користувача</button>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+
     <script>
-        function fetchUsers() {
-            const userList = document.getElementById('user-list');
-            userList.innerHTML = '';
-
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if (key !== 'currentUser') {
-                    const userData = JSON.parse(localStorage.getItem(key));
-                    const userDiv = document.createElement('div');
-                    userDiv.className = 'user';
-                    userDiv.textContent = `${key} (ID: ${userData.id})`;
-
-                    const editButton = document.createElement('button');
-                    editButton.textContent = 'Редагувати';
-                    editButton.className = 'edit-btn';
-                    editButton.onclick = () => editUser(userData);
-                    userDiv.appendChild(editButton);
-
-                    userList.appendChild(userDiv);
-                }
-            }
-        }
-
-        function editUser(userData) {
-            document.getElementById('editUserId').value = userData.id;
-            document.getElementById('editDaysCounter').value = userData.daysCounter;
-            document.getElementById('editReprimandCounter').value = userData.reprimandCounter;
-            document.getElementById('editWarningCounter').value = userData.warningCounter;
-            document.getElementById('editOnlineChangesCounter').value = userData.onlineChangesCounter;
-            document.getElementById('editPunishmentsCounter').value = userData.punishmentsCounter;
-            document.getElementById('editWarningsCounter').value = userData.warningsCounter;
-            document.getElementById('editTechSupportCounter').value = userData.techSupportCounter;
-            document.getElementById('editBonusCounter').value = userData.bonusCounter;
-            document.getElementById('editFinesCounter').value = userData.finesCounter;
-            document.getElementById('updateForm').style.display = 'block';
-        }
-
-        document.getElementById('updateBtn').onclick = function() {
-            const userId = document.getElementById('editUserId').value;
-            const updatedData = {
-                daysCounter: document.getElementById('editDaysCounter').value,
-                reprimandCounter: document.getElementById('editReprimandCounter').value,
-                warningCounter: document.getElementById('editWarningCounter').value,
-                onlineChangesCounter: document.getElementById('editOnlineChangesCounter').value,
-                punishmentsCounter: document.getElementById('editPunishmentsCounter').value,
-                warningsCounter: document.getElementById('editWarningsCounter').value,
-                techSupportCounter: document.getElementById('editTechSupportCounter').value,
-                bonusCounter: document.getElementById('editBonusCounter').value,
-                finesCounter: document.getElementById('editFinesCounter').value
-            };
-
-            const userKey = Object.keys(localStorage).find(key => {
-                const userData = JSON.parse(localStorage.getItem(key));
-                return userData.id == userId;
-            });
-
-            if (userKey) {
-                const userData = JSON.parse(localStorage.getItem(userKey));
-                Object.assign(userData, updatedData);
-                localStorage.setItem(userKey, JSON.stringify(userData));
-                alert('Дані оновлено');
-                fetchUsers(); // Оновлюємо список
-                document.getElementById('updateForm').style.display = 'none'; // Сховати форму
-            } else {
-                alert('Користувача не знайдено');
-            }
+        // Firebase конфігурація
+        const firebaseConfig = {
+            apiKey: "AIzaSyB-DclLIkm_PO6YU4PfuVZOdckmwwt0txc",
+            authDomain: "moderators-04.firebaseapp.com",
+            databaseURL: "https://moderators-04-default-rtdb.firebaseio.com",
+            projectId: "moderators-04",
+            storageBucket: "moderators-04.appspot.com",
+            messagingSenderId: "1001042309074",
+            appId: "1:1001042309074:web:abc123example"
         };
 
-        fetchUsers(); // Викликаємо при завантаженні
+        // Ініціалізація Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // Завантаження користувачів у випадаючий список
+        window.onload = function() {
+            firebase.database().ref('/users').once('value').then(snapshot => {
+                const users = snapshot.val();
+                const userSelect = document.getElementById('userId');
+                for (const userId in users) {
+                    const option = document.createElement('option');
+                    option.value = userId;
+                    option.textContent = users[userId].username;
+                    userSelect.appendChild(option);
+                }
+            });
+        };
+
+        // Функція для оновлення даних користувача
+        function updateUserData() {
+            const userId = document.getElementById('userId').value;
+            const daysOnPosition = document.getElementById('daysOnPosition').value;
+            const reprimands = document.getElementById('reprimands').value;
+            const warnings = document.getElementById('warnings').value;
+            const onlineChanges = document.getElementById('onlineChanges').value;
+            const punishments = document.getElementById('punishments').value;
+            const techSupportAnswers = document.getElementById('techSupportAnswers').value;
+            const bonuses = document.getElementById('bonuses').value;
+            const fines = document.getElementById('fines').value;
+
+            // Оновлення даних у Firebase
+            firebase.database().ref(`/users/${userId}`).update({
+                daysOnPosition: daysOnPosition,
+                reprimands: reprimands,
+                warnings: warnings,
+                onlineChanges: onlineChanges,
+                punishments: punishments,
+                techSupportAnswers: techSupportAnswers,
+                bonuses: bonuses,
+                fines: fines
+            }).then(() => {
+                alert('Дані користувача успішно оновлено!');
+            }).catch(error => {
+                alert('Сталася помилка: ' + error.message);
+            });
+        }
     </script>
 
 </body>
