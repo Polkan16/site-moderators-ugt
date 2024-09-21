@@ -202,35 +202,7 @@
             const currentUser = localStorage.getItem('currentUser');
             document.getElementById('username-display').textContent = currentUser || 'Гість';
         };
-
-<script>
-    window.onload = function() {
-        const counters = [
-            'daysCounter', 'reprimandCounter', 'warningCounter', 
-            'onlineChangesCounter', 'punishmentsCounter', 
-            'warningsCounter', 'techSupportCounter', 
-            'bonusCounter', 'finesCounter'
-        ];
-        counters.forEach(id => {
-            const value = localStorage.getItem(id);
-            if (value) {
-                document.getElementById(id).textContent = value;
-            }
-        });
-
-        // Отримуємо ім'я користувача з localStorage
-        const currentUser = localStorage.getItem('currentUser');
-        document.getElementById('username-display').textContent = currentUser || 'Гість';
-
-        // Генерація випадкового ID для кабінету
-        if (!localStorage.getItem('userID')) {
-            const randomID = Math.random().toString(36).substring(2, 10); // Генеруємо випадковий ID
-            localStorage.setItem('userID', randomID); // Зберігаємо ID в localStorage
-        }
-    };
-</script>
-
-
+    </script>
 
 </body>
 </html>
