@@ -29,6 +29,8 @@
             top: 20px;
             right: 20px;
             transition: background-color 0.3s ease;
+            font-family: 'Comfortaa', sans-serif; /* Додаємо шрифт для кнопки */
+            font-weight: 400;
         }
 
         .logout-btn img {
@@ -48,13 +50,13 @@
         }
 
         .moderator-photo {
-            width: 350px;
-            height: 400px;
+            width: 250px;
+            height: 300px;
             object-fit: cover;
             border-radius: 15px;
             margin-top: 5px;
-            float: left;
-            margin-right: 30px;
+            float: left; /* Додаємо флоат, щоб фото було ліворуч */
+            margin-right: 30px; /* Відступ справа */
         }
 
         .container {
@@ -92,25 +94,24 @@
         }
 
         .action-btn {
-            width: 350px;
+            width: 250px;
             background-color: rgba(255, 0, 0, 0.10);
             color: white;
-            padding: 15px 0;
+            padding: 10px 0;
             border: 1px solid rgba(255, 102, 102, 0.75);
             cursor: pointer;
-            margin: 10px 0;
             border-radius: 55px;
+            margin-bottom: 15px;
             transition: background-color 0.3s ease;
         }
 
         .action-btn:hover {
-            background-color: rgba(255, 0, 0, 0.25);
+            background-color: rgba(255, 0, 0, 0.20);
         }
 
-        /* Custom counter styles */
         .yellow { background-color: rgba(255, 255, 0, 0.1); border: 1px solid rgba(255, 255, 0, 0.75); }
         .cyan { background-color: rgba(0, 255, 255, 0.1); border: 1px solid rgba(0, 255, 255, 0.75); }
-        .purple { background-color: rgba(128, 0, 128, 0.1); border: 1px solid rgba(128, 0, 128, 0.75); }
+        .purple { background-color: rgba(255, 0, 255, 0.1); border: 1px solid rgba(255, 0, 255, 0.75); }
         .red { background-color: rgba(255, 0, 0, 0.1); border: 1px solid rgba(255, 0, 0, 0.75); }
         .green { background-color: rgba(0, 255, 0, 0.1); border: 1px solid rgba(0, 255, 0, 0.75); }
         .blue { background-color: rgba(0, 0, 255, 0.1); border: 1px solid rgba(0, 0, 255, 0.75); }
@@ -178,56 +179,29 @@
         <button class="action-btn" onclick="alert('Друга дія')">Довідник</button>
     </div>
 
-    <button class="logout-btn" onclick="logout()">
+    <button class="logout-btn" onclick="window.location.href='index.html'">
         <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
     </button>
 
-    <script src="https://unpkg.com/@supabase/supabase-js"></script>
-
     <script>
-        const supabaseUrl = 'https://ndgyfarjkawkmiinmxew.supabase.co';
-        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5kZ3lmYXJqa2F3a21paW5teGV3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjY5NDQxNTYsImV4cCI6MjA0MjUyMDE1Nn0.cv_DV0Qxp8IAvAKu1j2CK2xSJ1U8fWhEyZCZCZ2ULx0'; // Замініть на ваш анонімний ключ
-
-        const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
-
-        function logout() {
-            supabase.auth.signOut().then(() => {
-                window.location.href = 'login.html';
-            });
-        }
-
         window.onload = function() {
-            supabase.auth.onAuthStateChange((event, session) => {
-                if (session) {
-                    document.getElementById('username-display').textContent = session.user.email || 'Користувач';
-                    loadUserData(session.user.id);
-                } else {
-                    window.location.href = 'login.html';
+            const counters = [
+                'daysCounter', 'reprimandCounter', 'warningCounter', 
+                'onlineChangesCounter', 'punishmentsCounter', 
+                'warningsCounter', 'techSupportCounter', 
+                'bonusCounter', 'finesCounter'
+            ];
+            counters.forEach(id => {
+                const value = localStorage.getItem(id);
+                if (value) {
+                    document.getElementById(id).textContent = value;
                 }
             });
+
+            // Отримуємо ім'я користувача з localStorage
+            const currentUser = localStorage.getItem('currentUser');
+            document.getElementById('username-display').textContent = currentUser || 'Гість';
         };
-
-        async function loadUserData(userId) {
-            const { data, error } = await supabase
-                .from('users')
-                .select('*')
-                .eq('id', userId)
-                .single();
-
-            if (error) {
-                console.error("Помилка при завантаженні даних:", error);
-            } else {
-                document.getElementById('daysCounter').textContent = data.daysOnPosition || 0;
-                document.getElementById('reprimandCounter').textContent = `${data.reprimands || 0}/2`;
-                document.getElementById('warningCounter').textContent = `${data.warnings || 0}/3`;
-                document.getElementById('onlineChangesCounter').textContent = data.onlineChanges || 0;
-                document.getElementById('punishmentsCounter').textContent = data.punishments || 0;
-                document.getElementById('warningsCounter').textContent = data.warnings || 0;
-                document.getElementById('techSupportCounter').textContent = data.techSupportAnswers || 0;
-                document.getElementById('bonusCounter').textContent = data.bonuses || 0;
-                document.getElementById('finesCounter').textContent = data.fines || 0;
-            }
-        }
     </script>
 
 </body>
