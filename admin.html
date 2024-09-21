@@ -85,7 +85,7 @@
 <body>
 
     <button class="logout-btn" onclick="window.location.href='index.html'">Вихід</button>
-    <h1>Адмін-панель користувача: <span id="username-display"></span></h1>
+    <h1>Адмін-панель користувача: <span id="username-display">Гість</span></h1>
 
     <div class="container">
         <input type="text" id="daysCounterInput" placeholder="Кількість днів" />
@@ -101,11 +101,8 @@
     </div>
 
     <script>
-        const currentUser = localStorage.getItem('currentUser');
-        document.getElementById('username-display').textContent = currentUser || 'Гість';
-
         document.getElementById('updateButton').addEventListener('click', () => {
-            const userId = currentUser || 'defaultUser';
+            const userId = 'defaultUser'; // Можна встановити як завгодно
             const counters = [
                 'daysCounter', 'reprimandCounter', 'warningCounter', 
                 'onlineChangesCounter', 'punishmentsCounter', 
