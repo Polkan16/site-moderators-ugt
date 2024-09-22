@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: 'Comfortaa', sans-serif;
-            background-color: rgba(0, 0, 9, 9.9);
+            background-color: rgba(0, 0, 9, 0.9);
             background-image: url('https://i.imgur.com/gxpN7VC.png');
             background-size: cover;
             background-position: center;
@@ -211,7 +211,7 @@
                 db.collection("users").doc(userId).get().then((doc) => {
                     if (doc.exists) {
                         const data = doc.data();
-                        document.getElementById('username-display').textContent = userId; // Відображення ID користувача
+                        document.getElementById('username-display').textContent = data.nickname || userId; // Відображення імені користувача
                         document.getElementById('daysCounter').textContent = data.daysCounter || 0;
                         document.getElementById('reprimandCounter').textContent = data.reprimandCounter || '0/2';
                         document.getElementById('warningCounter').textContent = data.warningCounter || '0/3';
