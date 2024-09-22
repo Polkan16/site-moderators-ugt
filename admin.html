@@ -8,20 +8,29 @@
     <style>
         body {
             font-family: 'Comfortaa', sans-serif;
-            background-color: #f0f0f0;
+            background-color: #000;
+            background-image: url('https://i.imgur.com/Hyzrfhq.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
             padding: 20px;
+            overflow-y: auto; /* Додаємо прокрутку по вертикалі */
+            height: 100vh; /* Висота вікна */
+            box-sizing: border-box;
         }
         h1 {
             text-align: center;
             margin-bottom: 30px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
         }
         .form-container {
-            max-width: 600px;
+            max-width: 500px;
             margin: 0 auto;
             padding: 20px;
-            background-color: white;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
             border-radius: 10px;
+            backdrop-filter: blur(10px);
         }
         .form-group {
             margin-bottom: 15px;
@@ -37,6 +46,8 @@
             font-size: 16px;
             border: 1px solid #ddd;
             border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
         }
         button {
             width: 100%;
@@ -47,6 +58,7 @@
             cursor: pointer;
             font-size: 18px;
             border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
         button:hover {
             background-color: #45a049;
@@ -72,37 +84,37 @@
 
         <div class="form-group">
             <label for="reprimands">Кількість доган</label>
-            <input type="number" id="reprimands" placeholder="Введіть кількість доган">
+            <input type="text" id="reprimands" placeholder="Введіть кількість доган або текст">
         </div>
 
         <div class="form-group">
             <label for="warnings">Кількість попереджень</label>
-            <input type="number" id="warnings" placeholder="Введіть кількість попереджень">
+            <input type="text" id="warnings" placeholder="Введіть кількість попереджень або текст">
         </div>
 
         <div class="form-group">
             <label for="onlineChanges">Кількість онлайн змін</label>
-            <input type="number" id="onlineChanges" placeholder="Введіть кількість змін">
+            <input type="text" id="onlineChanges" placeholder="Введіть кількість змін або текст">
         </div>
 
         <div class="form-group">
             <label for="punishments">Кількість покарань</label>
-            <input type="number" id="punishments" placeholder="Введіть кількість покарань">
+            <input type="text" id="punishments" placeholder="Введіть кількість покарань або текст">
         </div>
 
         <div class="form-group">
             <label for="techSupportAnswers">Кількість відповідей тех-підтримки</label>
-            <input type="number" id="techSupportAnswers" placeholder="Введіть кількість відповідей">
+            <input type="text" id="techSupportAnswers" placeholder="Введіть кількість відповідей або текст">
         </div>
 
         <div class="form-group">
             <label for="bonuses">Кількість премії</label>
-            <input type="number" id="bonuses" placeholder="Введіть кількість премії">
+            <input type="text" id="bonuses" placeholder="Введіть кількість премії або текст">
         </div>
 
         <div class="form-group">
             <label for="fines">Кількість штрафів</label>
-            <input type="number" id="fines" placeholder="Введіть кількість штрафів">
+            <input type="text" id="fines" placeholder="Введіть кількість штрафів або текст">
         </div>
 
         <button onclick="updateUserData()">Оновити дані користувача</button>
