@@ -19,10 +19,10 @@
         }
 
         .login-box {
-            background: rgba(0, 0, 0, 5.9);
+            background: rgba(0, 0, 0, 0.7);
             padding: 40px;
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 9.9);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             width: 350px;
             text-align: center;
         }
@@ -84,10 +84,12 @@
         <div class="toggle-link" onclick="toggleForm()">Немає акаунту? Реєстрація</div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore.js"></script>
-    <script>
+    <script type="module">
+        // Імпортуйте Firebase з модулів
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
+        import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore.js";
+
         const firebaseConfig = {
             apiKey: "AIzaSyActJbyO19Id6kORysVIHLfuszxpOJIAhU",
             authDomain: "my-site-ugt.firebaseapp.com",
@@ -98,9 +100,9 @@
             measurementId: "G-QQRT88S72B"
         };
 
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
         let isLogin = true;
 
@@ -126,7 +128,7 @@
 
             if (isLogin) {
                 // Логін
-                auth.signInWithEmailAndPassword(email, password)
+                signInWithEmailAndPassword(auth, email, password)
                     .then((userCredential) => {
                         const user = userCredential.user;
                         localStorage.setItem('currentUser', user.uid);
@@ -137,11 +139,11 @@
                     });
             } else {
                 // Реєстрація
-                auth.createUserWithEmailAndPassword(email, password)
+                createUserWithEmailAndPassword(auth, email, password)
                     .then((userCredential) => {
                         const user = userCredential.user;
                         // Додати користувача до Firestore
-                        db.collection("users").doc(user.uid).set({
+                        setDoc(doc(db, "users", user.uid), {
                             daysCounter: 0,
                             reprimandCounter: 0,
                             warningCounter: 0,
