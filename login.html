@@ -1,6 +1,3 @@
-вхід
-
-
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -11,63 +8,69 @@
     <style>
         body {
             font-family: 'Comfortaa', sans-serif;
-            background-color: rgba(0, 0, 9, 9.9);
+            background: url('https://i.imgur.com/gxpN7VC.png') no-repeat center center fixed;
+            background-size: cover;
             color: white;
             margin: 0;
-            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-image: url('https://i.imgur.com/gxpN7VC.png');
-            background-size: cover;
-            background-position: center;
         }
 
         .login-box {
-            background-color: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.7);
             padding: 40px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            width: 300px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            width: 350px;
+            text-align: center;
         }
 
         .login-box h1 {
-            text-align: center;
             margin-bottom: 20px;
+            font-size: 24px;
         }
 
         .login-box input {
             width: 100%;
-            padding: 10px;
+            padding: 15px;
             margin: 10px 0;
             border: none;
             border-radius: 5px;
             background-color: rgba(255, 255, 255, 0.2);
             color: white;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-box input:focus {
+            background-color: rgba(255, 255, 255, 0.3);
+            outline: none;
         }
 
         .login-box button {
             width: 100%;
-            padding: 10px;
-            background-color: rgba(0, 128, 128, 0.7);
+            padding: 15px;
+            background-color: #008080;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             color: white;
-            margin-top: 10px;
+            font-size: 18px;
+            margin-top: 15px;
             transition: background-color 0.3s ease;
         }
 
         .login-box button:hover {
-            background-color: rgba(0, 128, 128, 0.9);
+            background-color: #005757;
         }
 
         .toggle-link {
-            text-align: center;
+            margin-top: 15px;
             color: #00FF00;
             cursor: pointer;
-            margin-top: 10px;
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -75,13 +78,30 @@
 
     <div class="login-box" id="login-box">
         <h1 id="form-title">Вхід</h1>
-        <input type="text" id="username" placeholder="Логін">
-        <input type="password" id="password" placeholder="Пароль">
+        <input type="email" id="username" placeholder="Електронна пошта" required>
+        <input type="password" id="password" placeholder="Пароль" required>
         <button id="submit-btn" onclick="login()">Увійти</button>
         <div class="toggle-link" onclick="toggleForm()">Немає акаунту? Реєстрація</div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore.js"></script>
     <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyActJbyO19Id6kORysVIHLfuszxpOJIAhU",
+            authDomain: "my-site-ugt.firebaseapp.com",
+            projectId: "my-site-ugt",
+            storageBucket: "my-site-ugt.appspot.com",
+            messagingSenderId: "503757810760",
+            appId: "1:503757810760:web:a5423cc90427602ea4fc7d",
+            measurementId: "G-QQRT88S72B"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
         let isLogin = true;
 
         function toggleForm() {
@@ -90,51 +110,58 @@
             const toggleLink = document.querySelector('.toggle-link');
 
             isLogin = !isLogin;
-
-            if (isLogin) {
-                title.textContent = 'Вхід';
-                submitBtn.textContent = 'Увійти';
-                toggleLink.textContent = 'Немає акаунту? Реєстрація';
-            } else {
-                title.textContent = 'Реєстрація';
-                submitBtn.textContent = 'Зареєструватися';
-                toggleLink.textContent = 'Вже є акаунт? Вхід';
-            }
+            title.textContent = isLogin ? 'Вхід' : 'Реєстрація';
+            submitBtn.textContent = isLogin ? 'Увійти' : 'Зареєструватися';
+            toggleLink.textContent = isLogin ? 'Немає акаунту? Реєстрація' : 'Є акаунт? Увійти';
         }
 
         function login() {
-            const username = document.getElementById('username').value;
+            const email = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            if (!username || !password) {
+            if (!email || !password) {
                 alert('Будь ласка, заповніть всі поля');
                 return;
             }
 
-            const users = JSON.parse(localStorage.getItem('users')) || {};
-
             if (isLogin) {
                 // Логін
-                if (users[username] && users[username].password === password) {
-                    localStorage.setItem('currentUser', username);
-                    window.location.href = 'cabinet.html';
-                } else {
-                    alert('Невірний логін або пароль');
-                }
+                auth.signInWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        localStorage.setItem('currentUser', user.uid);
+                        window.location.href = 'cabinet.html';
+                    })
+                    .catch((error) => {
+                        alert('Невірний логін або пароль');
+                    });
             } else {
                 // Реєстрація
-                if (users[username]) {
-                    alert('Користувач з таким логіном вже існує');
-                } else {
-                    users[username] = { password };
-                    localStorage.setItem('users', JSON.stringify(users));
-                    alert('Реєстрація успішна! Тепер ви можете увійти');
-                    toggleForm();
-                }
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        const user = userCredential.user;
+                        // Додати користувача до Firestore
+                        db.collection("users").doc(user.uid).set({
+                            daysCounter: 0,
+                            reprimandCounter: 0,
+                            warningCounter: 0,
+                            onlineChangesCounter: 0,
+                            punishmentsCounter: 0,
+                            warningsCounter: 0,
+                            techSupportCounter: 0,
+                            bonusCounter: 0,
+                            finesCounter: 0
+                        }).then(() => {
+                            alert('Реєстрація успішна!');
+                            toggleForm();
+                        });
+                    })
+                    .catch((error) => {
+                        alert(error.message);
+                    });
             }
         }
     </script>
 
 </body>
 </html>
-
