@@ -78,6 +78,7 @@
 
     <div class="login-box" id="login-box">
         <h1 id="form-title">Вхід</h1>
+        <input type="text" id="nickname" placeholder="Нікнейм" style="display: none;" required>
         <input type="email" id="username" placeholder="Електронна пошта" required>
         <input type="password" id="password" placeholder="Пароль" required>
         <button id="submit-btn" onclick="login()">Увійти</button>
@@ -111,18 +112,21 @@
             const title = document.getElementById('form-title');
             const submitBtn = document.getElementById('submit-btn');
             const toggleLink = document.querySelector('.toggle-link');
+            const nicknameInput = document.getElementById('nickname');
 
             isLogin = !isLogin;
             title.textContent = isLogin ? 'Вхід' : 'Реєстрація';
             submitBtn.textContent = isLogin ? 'Увійти' : 'Зареєструватися';
             toggleLink.textContent = isLogin ? 'Немає акаунту? Реєстрація' : 'Є акаунт? Увійти';
+            nicknameInput.style.display = isLogin ? 'none' : 'block';
         };
 
         window.login = function() {
+            const nickname = document.getElementById('nickname').value;
             const email = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            if (!email || !password) {
+            if (!email || !password || (!isLogin && !nickname)) {
                 alert('Будь ласка, заповніть всі поля');
                 return;
             }
@@ -145,6 +149,7 @@
                         const user = userCredential.user;
                         // Додати користувача до Firestore
                         setDoc(doc(db, "users", user.uid), {
+                            nickname: nickname, // Зберігаємо нікнейм
                             daysCounter: 0,
                             reprimandCounter: 0,
                             warningCounter: 0,
