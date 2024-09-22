@@ -17,7 +17,6 @@
             align-items: center;
             height: 100vh;
         }
-
         .login-box {
             background: rgba(0, 0, 0, 0.7);
             padding: 40px;
@@ -26,12 +25,10 @@
             width: 350px;
             text-align: center;
         }
-
         .login-box h1 {
             margin-bottom: 20px;
             font-size: 24px;
         }
-
         .login-box input {
             width: 100%;
             padding: 15px;
@@ -41,14 +38,7 @@
             background-color: rgba(255, 255, 255, 0.2);
             color: white;
             font-size: 16px;
-            transition: background-color 0.3s ease;
         }
-
-        .login-box input:focus {
-            background-color: rgba(255, 255, 255, 0.3);
-            outline: none;
-        }
-
         .login-box button {
             width: 100%;
             padding: 15px;
@@ -59,18 +49,16 @@
             color: white;
             font-size: 18px;
             margin-top: 15px;
-            transition: background-color 0.3s ease;
         }
-
-        .login-box button:hover {
-            background-color: #005757;
-        }
-
         .toggle-link {
             margin-top: 15px;
             color: #00FF00;
             cursor: pointer;
             text-decoration: underline;
+        }
+        .message {
+            color: green;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -78,15 +66,15 @@
 
     <div class="login-box" id="login-box">
         <h1 id="form-title">Вхід</h1>
-        <input type="text" id="nickname" placeholder="Нікнейм" style="display: none;" required>
+        <input type="text" id="nickname" placeholder="Нікнейм" required style="display: none;">
         <input type="email" id="username" placeholder="Електронна пошта" required>
         <input type="password" id="password" placeholder="Пароль" required>
         <button id="submit-btn" onclick="login()">Увійти</button>
         <div class="toggle-link" onclick="toggleForm()">Немає акаунту? Реєстрація</div>
+        <div class="message" id="message"></div>
     </div>
 
     <script type="module">
-        // Імпортуйте Firebase з модулів
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
         import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore.js";
@@ -107,7 +95,6 @@
 
         let isLogin = true;
 
-        // Експорт функцій, щоб вони були доступні глобально
         window.toggleForm = function() {
             const title = document.getElementById('form-title');
             const submitBtn = document.getElementById('submit-btn');
@@ -122,9 +109,9 @@
         };
 
         window.login = function() {
-            const nickname = document.getElementById('nickname').value;
             const email = document.getElementById('username').value;
             const password = document.getElementById('password').value;
+            const nickname = document.getElementById('nickname').value;
 
             if (!email || !password || (!isLogin && !nickname)) {
                 alert('Будь ласка, заповніть всі поля');
@@ -149,7 +136,7 @@
                         const user = userCredential.user;
                         // Додати користувача до Firestore
                         setDoc(doc(db, "users", user.uid), {
-                            nickname: nickname, // Зберігаємо нікнейм
+                            nickname: nickname,
                             daysCounter: 0,
                             reprimandCounter: 0,
                             warningCounter: 0,
@@ -160,8 +147,10 @@
                             bonusCounter: 0,
                             finesCounter: 0
                         }).then(() => {
-                            alert('Реєстрація успішна!');
-                            toggleForm();
+                            document.getElementById('message').textContent = 'Ви успішно зареєстровані';
+                            setTimeout(() => {
+                                window.location.href = 'cabinet.html';
+                            }, 2000); // Переходьте через 2 секунди
                         });
                     })
                     .catch((error) => {
