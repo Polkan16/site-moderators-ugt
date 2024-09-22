@@ -29,7 +29,7 @@
             top: 20px;
             right: 20px;
             transition: background-color 0.3s ease;
-            font-family: 'Comfortaa', sans-serif; /* Додаємо шрифт для кнопки */
+            font-family: 'Comfortaa', sans-serif;
             font-weight: 400;
         }
 
@@ -55,8 +55,8 @@
             object-fit: cover;
             border-radius: 15px;
             margin-top: 5px;
-            float: left; /* Додаємо флоат, щоб фото було ліворуч */
-            margin-right: 30px; /* Відступ справа */
+            float: left;
+            margin-right: 30px;
         }
 
         .container {
@@ -109,6 +109,7 @@
             background-color: rgba(255, 0, 0, 0.20);
         }
 
+        /* Інші стилі для кольорів */
         .yellow { background-color: rgba(255, 255, 0, 0.1); border: 1px solid rgba(255, 255, 0, 0.75); }
         .cyan { background-color: rgba(0, 255, 255, 0.1); border: 1px solid rgba(0, 255, 255, 0.75); }
         .purple { background-color: rgba(255, 0, 255, 0.1); border: 1px solid rgba(255, 0, 255, 0.75); }
@@ -179,29 +180,62 @@
         <button class="action-btn" onclick="alert('Друга дія')">Довідник</button>
     </div>
 
-    <button class="logout-btn" onclick="window.location.href='index.html'">
+    <button class="logout-btn" onclick="logout()">
         <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
     </button>
 
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore.js"></script>
     <script>
-        window.onload = function() {
-            const counters = [
-                'daysCounter', 'reprimandCounter', 'warningCounter', 
-                'onlineChangesCounter', 'punishmentsCounter', 
-                'warningsCounter', 'techSupportCounter', 
-                'bonusCounter', 'finesCounter'
-            ];
-            counters.forEach(id => {
-                const value = localStorage.getItem(id);
-                if (value) {
-                    document.getElementById(id).textContent = value;
-                }
-            });
-
-            // Отримуємо ім'я користувача з localStorage
-            const currentUser = localStorage.getItem('currentUser');
-            document.getElementById('username-display').textContent = currentUser || 'Гість';
+        const firebaseConfig = {
+            apiKey: "AIzaSyActJbyO19Id6kORysVIHLfuszxpOJIAhU",
+            authDomain: "my-site-ugt.firebaseapp.com",
+            projectId: "my-site-ugt",
+            storageBucket: "my-site-ugt.appspot.com",
+            messagingSenderId: "503757810760",
+            appId: "1:503757810760:web:a5423cc90427602ea4fc7d",
+            measurementId: "G-QQRT88S72B"
         };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        window.onload = function() {
+            const userId = localStorage.getItem('currentUser');
+
+            if (!userId) {
+                window.location.href = 'login.html'; // Якщо користувач не залогінений, переходимо на сторінку входу
+            } else {
+                db.collection("users").doc(userId).get().then((doc) => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        document.getElementById('username-display').textContent = userId; // Відображення ID користувача
+                        document.getElementById('daysCounter').textContent = data.daysCounter || 0;
+                        document.getElementById('reprimandCounter').textContent = data.reprimandCounter || '0/2';
+                        document.getElementById('warningCounter').textContent = data.warningCounter || '0/3';
+                        document.getElementById('onlineChangesCounter').textContent = data.onlineChangesCounter || 0;
+                        document.getElementById('punishmentsCounter').textContent = data.punishmentsCounter || 0;
+                        document.getElementById('warningsCounter').textContent = data.warningsCounter || 0;
+                        document.getElementById('techSupportCounter').textContent = data.techSupportCounter || 0;
+                        document.getElementById('bonusCounter').textContent = data.bonusCounter || 0;
+                        document.getElementById('finesCounter').textContent = data.finesCounter || 0;
+                    }
+                }).catch((error) => {
+                    console.error("Помилка отримання документа:", error);
+                });
+            }
+        };
+
+        function logout() {
+            auth.signOut().then(() => {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html'; // Переходимо на сторінку входу
+            }).catch((error) => {
+                console.error("Помилка виходу:", error);
+            });
+        }
     </script>
 
 </body>
