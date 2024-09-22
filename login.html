@@ -84,10 +84,12 @@
         <div class="toggle-link" onclick="toggleForm()">Немає акаунту? Реєстрація</div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore.js"></script>
-    <script>
+    <script type="module">
+        // Імпорт Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
+        import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore.js";
+
         const firebaseConfig = {
             apiKey: "AIzaSyActJbyO19Id6kORysVIHLfuszxpOJIAhU",
             authDomain: "my-site-ugt.firebaseapp.com",
@@ -98,9 +100,9 @@
             measurementId: "G-QQRT88S72B"
         };
 
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
         let isLogin = true;
 
@@ -115,7 +117,7 @@
             toggleLink.textContent = isLogin ? 'Немає акаунту? Реєстрація' : 'Є акаунт? Увійти';
         }
 
-        function login() {
+        async function login() {
             const email = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
@@ -126,39 +128,36 @@
 
             if (isLogin) {
                 // Логін
-                auth.signInWithEmailAndPassword(email, password)
-                    .then((userCredential) => {
-                        const user = userCredential.user;
-                        localStorage.setItem('currentUser', user.uid);
-                        window.location.href = 'cabinet.html';
-                    })
-                    .catch((error) => {
-                        alert('Невірний логін або пароль');
-                    });
+                try {
+                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
+                    localStorage.setItem('currentUser', user.uid);
+                    window.location.href = 'cabinet.html';
+                } catch (error) {
+                    alert('Невірний логін або пароль');
+                }
             } else {
                 // Реєстрація
-                auth.createUserWithEmailAndPassword(email, password)
-                    .then((userCredential) => {
-                        const user = userCredential.user;
-                        // Додати користувача до Firestore
-                        db.collection("users").doc(user.uid).set({
-                            daysCounter: 0,
-                            reprimandCounter: 0,
-                            warningCounter: 0,
-                            onlineChangesCounter: 0,
-                            punishmentsCounter: 0,
-                            warningsCounter: 0,
-                            techSupportCounter: 0,
-                            bonusCounter: 0,
-                            finesCounter: 0
-                        }).then(() => {
-                            alert('Реєстрація успішна!');
-                            toggleForm();
-                        });
-                    })
-                    .catch((error) => {
-                        alert(error.message);
+                try {
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
+                    // Додати користувача до Firestore
+                    await setDoc(doc(db, "users", user.uid), {
+                        daysCounter: 0,
+                        reprimandCounter: 0,
+                        warningCounter: 0,
+                        onlineChangesCounter: 0,
+                        punishmentsCounter: 0,
+                        warningsCounter: 0,
+                        techSupportCounter: 0,
+                        bonusCounter: 0,
+                        finesCounter: 0
                     });
+                    alert('Реєстрація успішна!');
+                    toggleForm();
+                } catch (error) {
+                    alert(error.message);
+                }
             }
         }
     </script>
