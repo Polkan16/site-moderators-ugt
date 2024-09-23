@@ -176,8 +176,8 @@
     </div>
 
     <div class="button-container">
-        <button class="action-btn" onclick="alert('Перша дія')">INFO M.D</button>
-        <button class="action-btn" onclick="alert('Друга дія')">Довідник</button>
+        <button class="action-btn" onclick="window.location.href='info.html'">INFO M.D</button>
+        <button class="action-btn" onclick="window.location.href='guide.html'">Довідник</button>
     </div>
 
     <button class="logout-btn" onclick="logout()">
@@ -206,15 +206,14 @@
 
         window.onload = function() {
             const userId = localStorage.getItem('currentUser');
-            console.log("Current User ID:", userId); // Логування ID користувача
             if (!userId) {
-                window.location.href = 'login.html'; // Якщо користувач не залогінений, переходимо на сторінку входу
+                window.location.href = 'login.html';
             } else {
                 const userRef = ref(db, 'users/' + userId);
                 get(userRef).then((snapshot) => {
                     if (snapshot.exists()) {
                         const data = snapshot.val();
-                        document.getElementById('username-display').textContent = data.nickname || userId; // Відображення імені користувача
+                        document.getElementById('username-display').textContent = data.nickname || userId;
                         document.getElementById('daysCounter').textContent = data.daysCounter || 0;
                         document.getElementById('reprimandCounter').textContent = data.reprimandCounter || '0/2';
                         document.getElementById('warningCounter').textContent = data.warningCounter || '0/3';
@@ -225,7 +224,7 @@
                         document.getElementById('bonusCounter').textContent = data.bonusCounter || 0;
                         document.getElementById('finesCounter').textContent = data.finesCounter || 0;
                     } else {
-                        console.warn("Того піздюка нема в базі даних!");
+                        console.warn("Користувача не знайдено в базі даних!");
                     }
                 }).catch((error) => {
                     console.error("Помилка отримання даних:", error);
@@ -236,11 +235,13 @@
         function logout() {
             auth.signOut().then(() => {
                 localStorage.removeItem('currentUser');
-                window.location.href = 'index.html'; // Переходимо на сторінку входу
+                window.location.href = 'index.html';
             }).catch((error) => {
                 console.error("Помилка виходу:", error);
             });
         }
+
+        window.logout = logout;
     </script>
 </body>
 </html>
