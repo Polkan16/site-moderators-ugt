@@ -8,7 +8,10 @@
     <style>
         body {
             font-family: 'Comfortaa', sans-serif;
-            background: url('https://i.imgur.com/gxpN7VC.png') no-repeat center center fixed;
+            background-color: black;
+            background-image: url('https://i.imgur.com/gxpN7VC.png');
+            background-repeat: no-repeat;
+            background-position: center;
             background-size: cover;
             color: white;
             margin: 0;
@@ -18,7 +21,7 @@
             height: 100vh;
         }
         .login-box {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(30, 30, 30, 0.8); /* Трохи світліше ніж чорний */
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
@@ -30,7 +33,7 @@
             font-size: 24px;
         }
         .login-box input {
-            width: 100%;
+            width: calc(100% - 30px); /* Врахування відступів */
             padding: 15px;
             margin: 10px 0;
             border: none;
@@ -38,9 +41,10 @@
             background-color: rgba(255, 255, 255, 0.2);
             color: white;
             font-size: 16px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
         .login-box button {
-            width: 100%;
+            width: calc(100% - 30px); /* Врахування відступів */
             padding: 15px;
             background-color: #008080;
             border: none;
@@ -49,6 +53,11 @@
             color: white;
             font-size: 18px;
             margin-top: 15px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: background-color 0.3s;
+        }
+        .login-box button:hover {
+            background-color: #007070; /* Змінюємо колір при наведенні */
         }
         .toggle-link {
             margin-top: 15px;
