@@ -77,11 +77,12 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
-        import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyActJbyO19Id6kORysVIHLfuszxpOJIAhU",
             authDomain: "my-site-ugt.firebaseapp.com",
+            databaseURL: "https://my-site-ugt-default-rtdb.firebaseio.com",
             projectId: "my-site-ugt",
             storageBucket: "my-site-ugt.appspot.com",
             messagingSenderId: "503757810760",
@@ -91,7 +92,7 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const db = getFirestore(app);
+        const database = getDatabase(app);
 
         let isLogin = true;
 
@@ -134,8 +135,8 @@
                 createUserWithEmailAndPassword(auth, email, password)
                     .then((userCredential) => {
                         const user = userCredential.user;
-                        // Додати користувача до Firestore
-                        setDoc(doc(db, "users", user.uid), {
+                        // Додати користувача до Realtime Database
+                        set(ref(database, 'users/' + user.uid), {
                             nickname: nickname,
                             daysCounter: 0,
                             reprimandCounter: 0,
@@ -151,6 +152,9 @@
                             setTimeout(() => {
                                 window.location.href = 'cabinet.html';
                             }, 2000); // Переходьте через 2 секунди
+                        }).catch((error) => {
+                            console.error("Помилка при запису даних:", error);
+                            alert("Помилка при реєстрації. Спробуйте ще раз.");
                         });
                     })
                     .catch((error) => {
