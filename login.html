@@ -148,7 +148,7 @@
                         finesCounter: 0
                     }).then(() => {
                         document.getElementById('message').textContent = 'Реєстрація пройшла успішно!';
-                        localStorage.setItem('currentUser', user.uid);
+                        localStorage.setItem('currentUser', user.uid); // Зберігаємо ID в локальному сховищі
                         setTimeout(() => {
                             window.location.href = 'cabinet.html'; // Переходимо на кабінет через 2 секунди
                         }, 2000);
