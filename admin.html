@@ -121,8 +121,8 @@
     </div>
 
     <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <script>
         // Firebase конфігурація
@@ -137,14 +137,20 @@
         };
 
         // Ініціалізація Firebase
-        const app = firebase.initializeApp(firebaseConfig);
+        firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
         // Завантаження користувачів у випадаючий список
         window.onload = function() {
+            loadUsers();
+        };
+
+        // Функція для завантаження користувачів
+        function loadUsers() {
             db.ref('/users').once('value').then(snapshot => {
                 const users = snapshot.val();
                 const userSelect = document.getElementById('userId');
+                userSelect.innerHTML = ''; // Очищення списку перед додаванням нових користувачів
                 for (const userId in users) {
                     const option = document.createElement('option');
                     option.value = userId;
@@ -152,7 +158,7 @@
                     userSelect.appendChild(option);
                 }
             });
-        };
+        }
 
         // Функція для оновлення даних користувача
         function updateUserData() {
@@ -178,7 +184,6 @@
                 fines: fines
             }).then(() => {
                 alert('Дані користувача успішно оновлено!');
-                // Оновлюємо дані у формі
                 clearForm();
                 loadUsers();
             }).catch(error => {
@@ -196,21 +201,6 @@
             document.getElementById('techSupportAnswers').value = '';
             document.getElementById('bonuses').value = '';
             document.getElementById('fines').value = '';
-        }
-        
-        // Завантаження користувачів у випадаючий список
-        function loadUsers() {
-            db.ref('/users').once('value').then(snapshot => {
-                const users = snapshot.val();
-                const userSelect = document.getElementById('userId');
-                userSelect.innerHTML = ''; // Очищення списку перед додаванням нових користувачів
-                for (const userId in users) {
-                    const option = document.createElement('option');
-                    option.value = userId;
-                    option.textContent = users[userId].nickname || users[userId].username || userId;
-                    userSelect.appendChild(option);
-                }
-            });
         }
     </script>
 
