@@ -184,13 +184,15 @@
         <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
     </button>
 
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore.js"></script>
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
+
         const firebaseConfig = {
             apiKey: "AIzaSyActJbyO19Id6kORysVIHLfuszxpOJIAhU",
             authDomain: "my-site-ugt.firebaseapp.com",
+            databaseURL: "https://my-site-ugt-default-rtdb.firebaseio.com",
             projectId: "my-site-ugt",
             storageBucket: "my-site-ugt.appspot.com",
             messagingSenderId: "503757810760",
@@ -198,9 +200,9 @@
             measurementId: "G-QQRT88S72B"
         };
 
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+        const db = getDatabase(app);
 
         window.onload = function() {
             const userId = localStorage.getItem('currentUser');
@@ -208,9 +210,10 @@
             if (!userId) {
                 window.location.href = 'login.html'; // Якщо користувач не залогінений, переходимо на сторінку входу
             } else {
-                db.collection("users").doc(userId).get().then((doc) => {
-                    if (doc.exists) {
-                        const data = doc.data();
+                const userRef = ref(db, 'users/' + userId);
+                get(userRef).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const data = snapshot.val();
                         document.getElementById('username-display').textContent = data.nickname || userId; // Відображення імені користувача
                         document.getElementById('daysCounter').textContent = data.daysCounter || 0;
                         document.getElementById('reprimandCounter').textContent = data.reprimandCounter || '0/2';
@@ -223,7 +226,7 @@
                         document.getElementById('finesCounter').textContent = data.finesCounter || 0;
                     }
                 }).catch((error) => {
-                    console.error("Помилка отримання документа:", error);
+                    console.error("Помилка отримання даних:", error);
                 });
             }
         };
