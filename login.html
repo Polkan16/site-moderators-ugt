@@ -124,7 +124,6 @@
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    // Зберігаємо ID користувача у localStorage
                     localStorage.setItem('currentUser', user.uid);
                     window.location.href = 'cabinet.html'; // Переходимо на кабінет
                 })
@@ -136,7 +135,6 @@
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    // Додати користувача до Realtime Database
                     set(ref(database, 'users/' + user.uid), {
                         nickname: nickname,
                         daysCounter: 0,
@@ -150,9 +148,9 @@
                         finesCounter: 0
                     }).then(() => {
                         document.getElementById('message').textContent = 'Реєстрація пройшла успішно!';
-                        localStorage.setItem('currentUser', user.uid); // Зберігаємо ID користувача
+                        localStorage.setItem('currentUser', user.uid);
                         setTimeout(() => {
-                            window.location.href = 'cabinet.html'; // Переходьте на кабінет через 2 секунди
+                            window.location.href = 'cabinet.html'; // Переходимо на кабінет через 2 секунди
                         }, 2000);
                     }).catch((error) => {
                         console.error("Помилка при запису даних:", error);
