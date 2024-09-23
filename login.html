@@ -64,105 +64,107 @@
 </head>
 <body>
 
-    <div class="login-box" id="login-box">
-        <h1 id="form-title">Вхід</h1>
-        <input type="text" id="nickname" placeholder="Нікнейм" required style="display: none;">
-        <input type="email" id="username" placeholder="Електронна пошта" required>
-        <input type="password" id="password" placeholder="Пароль" required>
-        <button id="submit-btn" onclick="login()">Увійти</button>
-        <div class="toggle-link" onclick="toggleForm()">Немає акаунту? Реєстрація</div>
-        <div class="message" id="message"></div>
-    </div>
+<div class="login-box" id="login-box">
+    <h1 id="form-title">Вхід</h1>
+    <input type="text" id="nickname" placeholder="Нікнейм" required style="display: none;">
+    <input type="email" id="username" placeholder="Електронна пошта" required>
+    <input type="password" id="password" placeholder="Пароль" required>
+    <button id="submit-btn" onclick="login()">Увійти</button>
+    <div class="toggle-link" onclick="toggleForm()">Немає акаунту? Реєстрація</div>
+    <div class="message" id="message"></div>
+</div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyActJbyO19Id6kORysVIHLfuszxpOJIAhU",
-            authDomain: "my-site-ugt.firebaseapp.com",
-            databaseURL: "https://my-site-ugt-default-rtdb.firebaseio.com",
-            projectId: "my-site-ugt",
-            storageBucket: "my-site-ugt.appspot.com",
-            messagingSenderId: "503757810760",
-            appId: "1:503757810760:web:a5423cc90427602ea4fc7d",
-            measurementId: "G-QQRT88S72B"
-        };
+    const firebaseConfig = {
+        apiKey: "AIzaSyActJbyO19Id6kORysVIHLfuszxpOJIAhU",
+        authDomain: "my-site-ugt.firebaseapp.com",
+        databaseURL: "https://my-site-ugt-default-rtdb.firebaseio.com",
+        projectId: "my-site-ugt",
+        storageBucket: "my-site-ugt.appspot.com",
+        messagingSenderId: "503757810760",
+        appId: "1:503757810760:web:a5423cc90427602ea4fc7d",
+        measurementId: "G-QQRT88S72B"
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const database = getDatabase(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const database = getDatabase(app);
 
-        let isLogin = true;
+    let isLogin = true;
 
-        window.toggleForm = function() {
-            const title = document.getElementById('form-title');
-            const submitBtn = document.getElementById('submit-btn');
-            const toggleLink = document.querySelector('.toggle-link');
-            const nicknameInput = document.getElementById('nickname');
+    window.toggleForm = function() {
+        const title = document.getElementById('form-title');
+        const submitBtn = document.getElementById('submit-btn');
+        const toggleLink = document.querySelector('.toggle-link');
+        const nicknameInput = document.getElementById('nickname');
 
-            isLogin = !isLogin;
-            title.textContent = isLogin ? 'Вхід' : 'Реєстрація';
-            submitBtn.textContent = isLogin ? 'Увійти' : 'Зареєструватися';
-            toggleLink.textContent = isLogin ? 'Немає акаунту? Реєстрація' : 'Є акаунт? Увійти';
-            nicknameInput.style.display = isLogin ? 'none' : 'block';
-        };
+        isLogin = !isLogin;
+        title.textContent = isLogin ? 'Вхід' : 'Реєстрація';
+        submitBtn.textContent = isLogin ? 'Увійти' : 'Зареєструватися';
+        toggleLink.textContent = isLogin ? 'Немає акаунту? Реєстрація' : 'Є акаунт? Увійти';
+        nicknameInput.style.display = isLogin ? 'none' : 'block';
+    };
 
-        window.login = function() {
-            const email = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const nickname = document.getElementById('nickname').value;
+    window.login = function() {
+        const email = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const nickname = document.getElementById('nickname').value;
 
-            if (!email || !password || (!isLogin && !nickname)) {
-                alert('Будь ласка, заповніть всі поля');
-                return;
-            }
+        if (!email || !password || (!isLogin && !nickname)) {
+            alert('Будь ласка, заповніть всі поля');
+            return;
+        }
 
-            if (isLogin) {
-                // Логін
-                signInWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                        const user = userCredential.user;
-                        localStorage.setItem('currentUser', user.uid);
-                        window.location.href = 'cabinet.html';
-                    })
-                    .catch((error) => {
-                        alert('Невірний логін або пароль');
+        if (isLogin) {
+            // Логін
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    // Зберігаємо ID користувача у localStorage
+                    localStorage.setItem('currentUser', user.uid);
+                    window.location.href = 'cabinet.html'; // Переходимо на кабінет
+                })
+                .catch((error) => {
+                    alert('Невірний логін або пароль');
+                });
+        } else {
+            // Реєстрація
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    // Додати користувача до Realtime Database
+                    set(ref(database, 'users/' + user.uid), {
+                        nickname: nickname,
+                        daysCounter: 0,
+                        reprimandCounter: 0,
+                        warningCounter: 0,
+                        onlineChangesCounter: 0,
+                        punishmentsCounter: 0,
+                        warningsCounter: 0,
+                        techSupportCounter: 0,
+                        bonusCounter: 0,
+                        finesCounter: 0
+                    }).then(() => {
+                        document.getElementById('message').textContent = 'Реєстрація пройшла успішно!';
+                        localStorage.setItem('currentUser', user.uid); // Зберігаємо ID користувача
+                        setTimeout(() => {
+                            window.location.href = 'cabinet.html'; // Переходьте на кабінет через 2 секунди
+                        }, 2000);
+                    }).catch((error) => {
+                        console.error("Помилка при запису даних:", error);
+                        alert("Помилка при реєстрації. Спробуйте ще раз.");
                     });
-            } else {
-                // Реєстрація
-                createUserWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
-                        const user = userCredential.user;
-                        // Додати користувача до Realtime Database
-                        set(ref(database, 'users/' + user.uid), {
-                            nickname: nickname,
-                            daysCounter: 0,
-                            reprimandCounter: 0,
-                            warningCounter: 0,
-                            onlineChangesCounter: 0,
-                            punishmentsCounter: 0,
-                            warningsCounter: 0,
-                            techSupportCounter: 0,
-                            bonusCounter: 0,
-                            finesCounter: 0
-                        }).then(() => {
-                            document.getElementById('message').textContent = 'Реєстрація пройшла успішно!';
-                            setTimeout(() => {
-                                window.location.href = 'cabinet.html';
-                            }, 2000); // Переходьте через 2 секунди
-                        }).catch((error) => {
-                            console.error("Помилка при запису даних:", error);
-                            alert("Помилка при реєстрації. Спробуйте ще раз.");
-                        });
-                    })
-                    .catch((error) => {
-                        alert(error.message);
-                    });
-            }
-        };
-    </script>
+                })
+                .catch((error) => {
+                    alert(error.message);
+                });
+        }
+    };
+</script>
 
 </body>
 </html>
