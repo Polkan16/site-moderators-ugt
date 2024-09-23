@@ -178,8 +178,38 @@
                 fines: fines
             }).then(() => {
                 alert('Дані користувача успішно оновлено!');
+                // Оновлюємо дані у формі
+                clearForm();
+                loadUsers();
             }).catch(error => {
                 alert('Сталася помилка: ' + error.message);
+            });
+        }
+
+        // Очищення форми після оновлення
+        function clearForm() {
+            document.getElementById('daysOnPosition').value = '';
+            document.getElementById('reprimands').value = '';
+            document.getElementById('warnings').value = '';
+            document.getElementById('onlineChanges').value = '';
+            document.getElementById('punishments').value = '';
+            document.getElementById('techSupportAnswers').value = '';
+            document.getElementById('bonuses').value = '';
+            document.getElementById('fines').value = '';
+        }
+        
+        // Завантаження користувачів у випадаючий список
+        function loadUsers() {
+            db.ref('/users').once('value').then(snapshot => {
+                const users = snapshot.val();
+                const userSelect = document.getElementById('userId');
+                userSelect.innerHTML = ''; // Очищення списку перед додаванням нових користувачів
+                for (const userId in users) {
+                    const option = document.createElement('option');
+                    option.value = userId;
+                    option.textContent = users[userId].nickname || users[userId].username || userId;
+                    userSelect.appendChild(option);
+                }
             });
         }
     </script>
