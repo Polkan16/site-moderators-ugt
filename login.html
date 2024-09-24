@@ -87,7 +87,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
-    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
+    import { getDatabase, ref, set, push } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyActJbyO19Id6kORysVIHLfuszxpOJIAhU",
@@ -135,6 +135,7 @@
                 .then((userCredential) => {
                     const user = userCredential.user;
                     localStorage.setItem('currentUser', user.uid);
+                    logUserAction(user.uid, 'Захід у кабінет'); // Логування дії входу
                     window.location.href = 'cabinet.html'; // Переходимо на кабінет
                 })
                 .catch((error) => {
@@ -145,10 +146,12 @@
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    const registrationTime = Date.now(); // Записуємо час реєстрації
+                    const registrationTime = new Date().toISOString(); // Отримуємо дату та час реєстрації
 
+                    // Записуємо дані користувача в базу даних
                     set(ref(database, 'users/' + user.uid), {
                         nickname: nickname,
+                        email: email,
                         daysCounter: 0,
                         reprimandCounter: '0/2',
                         warningCounter: '0/3',
@@ -160,6 +163,8 @@
                         finesCounter: 0,
                         registrationTimestamp: registrationTime // Додаємо поле з часом реєстрації
                     }).then(() => {
+                        // Логування реєстрації
+                        logRegistrationAction(user.uid, nickname, email, registrationTime);
                         document.getElementById('message').textContent = 'Реєстрація пройшла успішно!';
                         localStorage.setItem('currentUser', user.uid);
                         setTimeout(() => {
@@ -175,6 +180,35 @@
                 });
         }
     };
+
+    function logRegistrationAction(userId, nickname, email, timestamp) {
+        // Логування дій реєстрації у базі даних
+        const logRef = ref(database, 'logs/registrations');
+        push(logRef, {
+            userId: userId,
+            nickname: nickname,
+            email: email,
+            timestamp: timestamp
+        }).then(() => {
+            console.log('Дані про реєстрацію збережено у базі даних.');
+        }).catch((error) => {
+            console.error("Помилка при логуванні реєстрації:", error);
+        });
+    }
+
+    function logUserAction(userId, action) {
+        // Логування дій у базі даних
+        const logRef = ref(database, 'logs/actions');
+        push(logRef, {
+            userId: userId,
+            action: action,
+            timestamp: new Date().toISOString()
+        }).then(() => {
+            console.log('Дані про дію збережено у базі даних.');
+        }).catch((error) => {
+            console.error("Помилка при логуванні дії:", error);
+        });
+    }
 </script>
 </body>
 </html>
