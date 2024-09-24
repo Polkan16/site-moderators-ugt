@@ -130,6 +130,42 @@
             font-weight: bold;
             color: #FFA500;
         }
+
+        /* Mobile styles */
+        @media (max-width: 600px) {
+            .moderator-photo {
+                width: 100%;
+                height: auto;
+                margin: 0 auto 20px auto;
+                display: block;
+            }
+
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .counter-box {
+                width: 90%;
+                margin: 10px 0;
+            }
+
+            .button-container {
+                align-items: center;
+            }
+
+            .action-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .logout-btn {
+                width: 100%;
+                max-width: 300px;
+                position: static;
+                margin: 10px auto;
+            }
+        }
     </style>
 </head>
 <body>
