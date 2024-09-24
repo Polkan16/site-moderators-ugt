@@ -227,7 +227,7 @@
         // Відображення ніка користувача
         function displaynickname() {
             const userId = document.getElementById('userId').value;
-            const nickname = document.getElementById('userNick');
+            const nickname = document.getElementById('nickname');
             const userRef = ref(db, `users/${userId}`);
             get(userRef).then((snapshot) => {
                 const userData = snapshot.val();
