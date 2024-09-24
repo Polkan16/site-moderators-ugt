@@ -209,20 +209,33 @@
             const userSelect = document.getElementById('userId');
             const userRef = ref(db, 'users/');
             get(userRef).then((snapshot) => {
-                const users = snapshot.val();
-                userSelect.innerHTML = ''; // Очищення списку перед завантаженням
-
-                if (users) {
-                    Object.keys(users).forEach(userId => {
-                        const user = users[userId];
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        const userId = childSnapshot.key;
+                        const nickname = childSnapshot.val().nickname; // Отримуємо нік
                         const option = document.createElement('option');
                         option.value = userId;
-                        option.textContent = `${user.nickname} (ID: ${userId})`; // Відображення ніку та ID
+                        option.textContent = nickname; // Встановлюємо текст для варіанту
                         userSelect.appendChild(option);
                     });
                 }
             }).catch((error) => {
                 console.error("Помилка при отриманні користувачів:", error);
+            });
+        }
+
+        function displayNickname() {
+            const userId = document.getElementById('userId').value;
+            const userRef = ref(db, `users/${userId}`);
+            get(userRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const nickname = snapshot.val().nickname;
+                    console.log("Обраний нік:", nickname);
+                } else {
+                    console.log("Користувача не знайдено.");
+                }
+            }).catch((error) => {
+                console.error("Помилка при отриманні даних користувача:", error);
             });
         }
 
