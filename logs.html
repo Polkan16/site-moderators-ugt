@@ -14,7 +14,6 @@
             height: 100vh;
             margin: 0;
         }
-        /* Стиль для бокового меню з розділами */
         .sidebar {
             width: 20%;
             background-color: #0a0a0a; /* Трохи світліший чорний */
@@ -48,7 +47,6 @@
             border-color: #007080; /* Синя обводка при наведенні */
             color: #fff;
         }
-        /* Стиль для основного контенту */
         .content {
             width: 80%;
             padding: 20px;
@@ -88,7 +86,7 @@
     <ul>
         <li onclick="showSection('account')">Облікові дані</li>
         <li onclick="showSection('login')">Вхід/Вихід</li>
-        <li onclick="showSection('blockChanges')">Зміни у блоках</li> <!-- Додано новий розділ -->
+        <li onclick="showSection('blockChanges')">Зміни у блоках</li>
     </ul>
 </div>
 
@@ -100,9 +98,9 @@
         <table>
             <thead>
                 <tr>
-                    <th>Ім'я користувача</th>
                     <th>Електронна пошта</th>
                     <th>Пароль</th>
+                    <th>Ім'я користувача</th> <!-- Новий стовпець -->
                     <th>Дата реєстрації</th>
                 </tr>
             </thead>
@@ -170,7 +168,7 @@
     window.showSection = function(section) {
         document.getElementById('account-section').style.display = 'none';
         document.getElementById('login-section').style.display = 'none';
-        document.getElementById('block-changes-section').style.display = 'none'; // Сховати секцію змін у блоках
+        document.getElementById('block-changes-section').style.display = 'none';
 
         if (section === 'account') {
             document.getElementById('section-title').textContent = 'Облікові дані';
@@ -183,7 +181,7 @@
         } else if (section === 'blockChanges') {
             document.getElementById('section-title').textContent = 'Зміни у блоках';
             document.getElementById('block-changes-section').style.display = 'block';
-            loadBlockChangesLogs(); // Завантажити логи змін у блоках
+            loadBlockChangesLogs();
         }
     };
 
@@ -200,10 +198,10 @@
                 const user = users[userId];
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${user.nickname || '-'}</td>
                     <td>${user.email || '-'}</td>
                     <td>${user.password || '-'}</td>
-                    <td>${new Date(user.registrationDate || Date.now()).toLocaleString()}</td>
+                    <td>${user.username || '-'}</td> <!-- Додано ім'я користувача -->
+                    <td>${user.registrationDate ? new Date(user.registrationDate).toLocaleString() : '-'}</td> <!-- Форматування дати -->
                 `;
                 accountLogsTableBody.appendChild(row);
             }
@@ -220,17 +218,28 @@
             const logs = snapshot.val();
 
             for (const userId in logs) {
-                for (const logId in logs[userId]) {
-                    const log = logs[userId][logId];
-                    if (log.action === 'login' || log.action === 'logout') {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${userId}</td>
-                            <td>${log.action === 'login' ? new Date(log.timestamp).toLocaleString() : '-'}</td>
-                            <td>${log.action === 'logout' ? new Date(log.timestamp).toLocaleString() : '-'}</td>
-                            <td>${log.sessionTime ? log.sessionTime : '-'}</td>
-                        `;
-                        loginLogsTableBody.appendChild(row);
+                const userLogs = logs[userId];
+
+                // Змінні для тривалості сеансу
+                let lastLoginTime = null;
+
+                for (const logId in userLogs) {
+                    const log = userLogs[logId];
+                    const eventTime = new Date(log.timestamp);
+                    const eventDescription = log.event;
+
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${userId}</td>
+                        <td>${eventDescription === 'Захід у кабінет' ? eventTime.toLocaleString() : '-'}</td>
+                        <td>${eventDescription === 'Вихід з кабінету' ? eventTime.toLocaleString() : '-'}</td>
+                        <td>${lastLoginTime ? Math.round((eventTime - lastLoginTime) / 1000) : '-'}</td>
+                    `;
+                    loginLogsTableBody.appendChild(row);
+
+                    // Оновлення часу входу
+                    if (eventDescription === 'Захід у кабінет') {
+                        lastLoginTime = eventTime; // Зберігаємо час останнього входу
                     }
                 }
             }
@@ -239,8 +248,8 @@
 
     // Функція для завантаження логів змін у блоках
     function loadBlockChangesLogs() {
-        const blockChangesLogsTableBody = document.getElementById('block-changes-logs-table-body');
-        blockChangesLogsTableBody.innerHTML = ''; // Очищення таблиці перед завантаженням
+        const blockChangesTableBody = document.getElementById('block-changes-logs-table-body');
+        blockChangesTableBody.innerHTML = ''; // Очищення таблиці перед завантаженням
 
         const changesRef = ref(database, 'blockChanges/');
         onValue(changesRef, (snapshot) => {
@@ -250,16 +259,19 @@
                 const change = changes[changeId];
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${change.username || '-'}</td>
-                    <td>${change.changeDescription || '-'}</td>
+                    <td>${change.userId || '-'}</td>
+                    <td>${change.change || '-'}</td>
                     <td>${change.oldValue || '-'}</td>
                     <td>${change.newValue || '-'}</td>
-                    <td>${new Date(change.timestamp).toLocaleString() || '-'}</td>
+                    <td>${new Date(change.timestamp || Date.now()).toLocaleString()}</td>
                 `;
-                blockChangesLogsTableBody.appendChild(row);
+                blockChangesTableBody.appendChild(row);
             }
         });
     }
+
+    // Завантаження першого розділу за замовчуванням
+    showSection('login');
 </script>
 
 </body>
