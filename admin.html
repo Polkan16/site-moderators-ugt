@@ -15,34 +15,34 @@
             color: white;
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Змінено на flex-start */
+            align-items: flex-start;
             height: 100vh;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             position: relative;
-            padding-top: 50px; /* Додано відступ зверху */
+            padding-top: 50px;
         }
 
         .admin-panel {
             text-align: center;
-            max-width: 500px; /* Зменшена ширина */
+            max-width: 500px;
             width: 90%;
             background-color: rgba(255, 255, 255, 0.1);
-            padding: 30px; /* Зменшено відступи */
+            padding: 30px;
             border-radius: 15px;
             box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
         }
 
         h1 {
-            margin-bottom: 20px; /* Зменшено відступи */
+            margin-bottom: 20px;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
-            font-size: 1.8em; /* Зменшений розмір шрифту */
+            font-size: 1.8em;
         }
 
         .form-group {
-            margin-bottom: 15px; /* Зменшено відступи */
+            margin-bottom: 15px;
             text-align: left;
         }
 
@@ -50,13 +50,13 @@
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
-            font-size: 1em; /* Зменшений розмір шрифту */
+            font-size: 1em;
         }
 
         input, select {
             width: calc(100% - 22px);
-            padding: 10px; /* Зменшено відступи */
-            font-size: 14px; /* Зменшений розмір шрифту */
+            padding: 10px;
+            font-size: 14px;
             border: 1px solid #ddd;
             border-radius: 5px;
             background-color: rgba(255, 255, 255, 0.2);
@@ -65,7 +65,7 @@
         }
 
         .update-button {
-            padding: 10px; /* Зменшено відступи */
+            padding: 10px;
             margin-left: 5px;
             background-color: #2196F3;
             color: white;
@@ -84,12 +84,12 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            padding: 10px 15px; /* Зменшено відступи */
+            padding: 10px 15px;
             background-color: #f44336;
             color: white;
             border: none;
             cursor: pointer;
-            font-size: 14px; /* Зменшений розмір шрифту */
+            font-size: 14px;
             border-radius: 5px;
             transition: background-color 0.3s ease;
         }
@@ -119,18 +119,13 @@
         <div class="form-container">
             <div class="form-group">
                 <label for="userId">Виберіть користувача</label>
-                <select id="userId" onchange="displayUserNick()">
+                <select id="userId" onchange="displayNickname()">
                     <!-- Користувачі будуть завантажені динамічно -->
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="nickname">Нік користувача</label>
-                <input type="text" id="nickname" placeholder="Нік користувача" disabled>
-            </div>
-
-            <div class="form-group">
-                <label for="daysOnPosition">Кількість днів на посаді</label>
+                <label for="daysCounter">Кількість днів на посаді</label>
                 <input type="number" id="daysCounter" placeholder="Введіть кількість днів">
                 <button class="update-button" onclick="updateField('daysCounter')">Оновити</button>
             </div>
@@ -159,9 +154,9 @@
                 <button class="update-button" onclick="updateField('punishmentsCounter')">Оновити</button>
             </div>
 
-             <div class="form-group">
+            <div class="form-group">
                 <label for="warningsCounter">Кількість попереджень (гравцям)</label>
-                <input type="text" id="warningsCounter" placeholder="Введіть кількість попередженнь або текст">
+                <input type="text" id="warningsCounter" placeholder="Введіть кількість попереджень або текст">
                 <button class="update-button" onclick="updateField('warningsCounter')">Оновити</button>
             </div>
 
@@ -189,11 +184,9 @@
 
     <!-- Firebase SDK -->
     <script type="module">
-        // Import the necessary functions from the Firebase SDKs
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.0/firebase-app.js";
         import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/9.8.0/firebase-database.js";
 
-        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyActJbyO19Id6kORysVIHLfuszxpOJIAhU",
             authDomain: "my-site-ugt.firebaseapp.com",
@@ -205,11 +198,9 @@
             measurementId: "G-QQRT88S72B"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // Завантаження користувачів у випадаючий список
         window.onload = function() {
             loadUsers();
         };
@@ -218,49 +209,47 @@
             const userSelect = document.getElementById('userId');
             const userRef = ref(db, 'users/');
             get(userRef).then((snapshot) => {
-                const users = snapshot.val() || {};
+                const users = snapshot.val();
                 userSelect.innerHTML = ''; // Очищення списку перед завантаженням
 
-                for (const userId in users) {
-                    const option = document.createElement('option');
-                    option.value = userId;
-                    option.textContent = users[userId].name || userId; // Відображення псевдоніму або імені
-                    userSelect.appendChild(option);
+                if (users) {
+                    Object.keys(users).forEach(userId => {
+                        const user = users[userId];
+                        const option = document.createElement('option');
+                        option.value = userId;
+                        option.textContent = `${user.nickname} (ID: ${userId})`; // Відображення ніку та ID
+                        userSelect.appendChild(option);
+                    });
                 }
+            }).catch((error) => {
+                console.error("Помилка при отриманні користувачів:", error);
             });
         }
 
-        // Відображення ніка користувача
-        function displaynickname() {
-            const userId = document.getElementById('userId').value;
-            const nickname = document.getElementById('nickname');
-            const userRef = ref(db, `users/${userId}`);
-            get(userRef).then((snapshot) => {
-                const userData = snapshot.val();
-                nickname.value = userData ? userData.name : ''; // Відображення ніка користувача
-            });
-        }
-
-        // Функція для оновлення поля даних
-        window.updateField = function(field) {
+        function updateField(field) {
             const userId = document.getElementById('userId').value;
             const value = document.getElementById(field).value;
 
-            // Оновлення даних у Firebase
-            update(ref(db, `/users/${userId}`), { [field]: value })
-                .then(() => {
-                    alert('Дані користувача успішно оновлено!');
-                    document.getElementById(field).value = ''; // Очищення поля
-                })
-                .catch(error => {
-                    alert('Сталася помилка: ' + error.message);
-                });
-        };
+            if (!userId || value === '') {
+                alert('Будь ласка, виберіть користувача та введіть значення.');
+                return;
+            }
 
-        // Функція для виходу на головну сторінку
-        window.logout = function() {
+            const updates = {};
+            updates[field] = value;
+
+            update(ref(db, `users/${userId}`), updates)
+                .then(() => {
+                    alert('Дані оновлено успішно!');
+                })
+                .catch((error) => {
+                    console.error("Помилка при оновленні даних:", error);
+                });
+        }
+
+        function logout() {
             window.location.href = 'index.html'; // Заміни 'index.html' на потрібний URL
-        };
+        }
     </script>
 
 </body>
