@@ -131,8 +131,12 @@
             color: #FFA500;
         }
 
-        /* Mobile styles */
+        /* Стилі для мобільних пристроїв */
         @media (max-width: 600px) {
+            body {
+                padding-top: 60px; /* Опускаємо вміст на 40 пікселів */
+            }
+
             .moderator-photo {
                 width: 100%;
                 height: auto;
@@ -141,13 +145,13 @@
             }
 
             .container {
-                flex-direction: column;
-                align-items: center;
+                flex-direction: row; /* Встановлюємо рядковий формат */
+                justify-content: space-between;
             }
 
             .counter-box {
-                width: 90%;
-                margin: 10px 0;
+                width: 48%; /* Зменшуємо ширину блоків до 48% */
+                margin-bottom: 20px;
             }
 
             .button-container {
@@ -171,7 +175,7 @@
 <body>
 
     <h1>👋 Привіт, <span id="username-display"></span>! Це твоя основна інформація!</h1>
-    <img src="https://i.imgur.com/g51O6iF.png" alt="Moderator Photo" class="moderator-photo">
+    <img src="https://i.imgur.com/g51O6iF.png" alt="Фотографія модератора" class="moderator-photo">
 
     <div class="container">
         <div class="counter-box yellow">
@@ -213,13 +217,16 @@
     </div>
 
     <div class="button-container">
-      <button class="action-btn" onclick="window.location.href='https://sites.google.com/view/md-04-site/info-md?authuser=0'">INFO M.D</button>
-      <button class="action-btn" onclick="window.location.href='https://sites.google.com/view/md-04-site/%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D0%BD%D0%B0-%D1%96%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D1%96%D1%8F?authuser=0'">Довідник</button>
+        <button class="action-btn" onclick="location.href='https://example.com'">Перейти до дій</button>
+        <button class="action-btn" onclick="location.href='https://example.com'">Інша дія</button>
+        <button class="action-btn" onclick="location.href='https://example.com'">Ще одна дія</button>
     </div>
 
-    <button class="logout-btn" onclick="logout()">
-        <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
-    </button>
+    <div class="logout-container">
+        <button class="logout-btn" onclick="logout()">
+            <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
+        </button>
+    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
