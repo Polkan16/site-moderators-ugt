@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Адмін Панель</title>
+    <link rel="icon" href="https://i.imgur.com/COGd36E.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Comfortaa', sans-serif;
+            background-color: rgba(0, 0, 9, 0.9);
+            background-image: url('https://i.imgur.com/gxpN7VC.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .logout-btn {
+            display: inline-block;
+            background-color: rgba(255, 0, 0, 0.15);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-btn img {
+            vertical-align: middle;
+            margin-right: 8px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(255, 0, 0, 0.25);
+        }
+
+        h1 {
+            font-family: 'Comfortaa', sans-serif;
+            margin-top: 5px;
+        }
+
+        /* Стилі для таблиці користувачів */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        th {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Кнопки дій */
+        .action-btn {
+            background-color: rgba(0, 255, 0, 0.10);
+            border: 1px solid rgba(0, 255, 0, 0.75);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background-color: rgba(0, 255, 0, 0.20);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>👋 Привіт, <span id="username-display"></span>! Це твоя адмін панель!</h1>
+    <button class="logout-btn" onclick="logout()">
+        <img src="https://i.imgur.com/dtvfULB.png" alt="Вийти"> Вийти з кабінету
+    </button>
+
+    <h2>Список користувачів</h2>
+    <table id="userTable">
+        <thead>
+            <tr>
+                <th>Ім'я</th>
+                <th>Роль</th>
+                <th>Статус</th>
+                <th>Дії</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Користувачі будуть додані тут через JavaScript -->
+        </tbody>
+    </table>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
+        import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyActJbyO19Id6kORysVIHLfuszxpOJIAhU",
+            authDomain: "my-site-ugt.firebaseapp.com",
+            databaseURL: "https://my-site-ugt-default-rtdb.firebaseio.com",
+            projectId: "my-site-ugt",
+            storageBucket: "my-site-ugt.appspot.com",
+            messagingSenderId: "503757810760",
+            appId: "1:503757810760:web:a5423cc90427602ea4fc7d",
+            measurementId: "G-QQRT88S72B"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+        const db = getDatabase(app);
+
+        window.onload = function() {
+            const userId = localStorage.getItem('currentUser');
+            if (!userId) {
+                window.location.href = 'login.html';
+            } else {
+                const userRef = ref(db, 'users/' + userId);
+                get(userRef).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const data = snapshot.val();
+                        document.getElementById('username-display').textContent = data.nickname || userId;
+                        loadUsers();
+                    } else {
+                        console.warn("Користувача не знайдено в базі даних!");
+                    }
+                }).catch((error) => {
+                    console.error("Помилка отримання даних:", error);
+                });
+            }
+        };
+
+        function loadUsers() {
+            const usersRef = ref(db, 'users');
+            get(usersRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const users = snapshot.val();
+                    const userTable = document.getElementById('userTable').getElementsByTagName('tbody')[0];
+                    userTable.innerHTML = ''; // Очищення таблиці перед заповненням
+                    for (const userId in users) {
+                        const user = users[userId];
+                        const row = userTable.insertRow();
+                        row.innerHTML = `
+                            <td>${user.nickname || userId}</td>
+                            <td>${user.role || 'Користувач'}</td>
+                            <td>${user.isBanned ? 'Заблокований' : 'Активний'}</td>
+                            <td>
+                                <button class="action-btn" onclick="toggleBan('${userId}')">
+                                    ${user.isBanned ? 'Розбанити' : 'Забанити'}
+                                </button>
+                                <button class="action-btn" onclick="editUser('${userId}')">Редагувати</button>
+                            </td>
+                        `;
+                    }
+                }
+            }).catch((error) => {
+                console.error("Помилка отримання користувачів:", error);
+            });
+        }
+
+        function toggleBan(userId) {
+            const userRef = ref(db, 'users/' + userId);
+            get(userRef).then((snapshot) => {
+                if (snapshot.exists()) {
+                    const user = snapshot.val();
+                    update(userRef, { isBanned: !user.isBanned }).then(() => {
+                        loadUsers(); // Оновлення списку користувачів
+                    });
+                }
+            });
+        }
+
+        function editUser(userId) {
+            const newRole = prompt("Введіть нову роль (адмін, модератор, користувач):");
+            if (newRole) {
+                const userRef = ref(db, 'users/' + userId);
+                update(userRef, { role: newRole }).then(() => {
+                    loadUsers(); // Оновлення списку користувачів
+                });
+            }
+        }
+
+        function logout() {
+            auth.signOut().then(() => {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            }).catch((error) => {
+                console.error("Помилка виходу:", error);
+            });
+        }
+
+        window.logout = logout;
+    </script>
+</body>
+</html>
