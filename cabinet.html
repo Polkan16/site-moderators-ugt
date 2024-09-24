@@ -17,6 +17,7 @@
             margin: 0;
             padding: 20px;
         }
+
         .logout-btn {
             display: inline-block;
             background-color: rgba(255, 0, 0, 0.15);
@@ -32,19 +33,23 @@
             font-family: 'Comfortaa', sans-serif;
             font-weight: 400;
         }
+
         .logout-btn img {
             vertical-align: middle;
             margin-right: 8px;
             width: 20px;
             height: 20px;
         }
+
         .logout-btn:hover {
             background-color: rgba(255, 0, 0, 0.25);
         }
+
         h1 {
             font-family: 'Comfortaa', sans-serif;
             margin-top: 5px;
         }
+
         .moderator-photo {
             width: 250px;
             height: 300px;
@@ -54,6 +59,7 @@
             float: left;
             margin-right: 30px;
         }
+
         .container {
             display: flex;
             flex-wrap: wrap;
@@ -61,6 +67,7 @@
             max-width: 1000px;
             margin: 0 auto;
         }
+
         .counter-box {
             width: 180px;
             height: 100px;
@@ -75,15 +82,18 @@
             justify-content: center;
             align-items: center;
         }
+
         .counter-box:hover {
             background-color: rgba(255, 255, 255, 0.35);
         }
+
         .button-container {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             margin-top: 20px;
         }
+
         .action-btn {
             width: 250px;
             background-color: rgba(255, 0, 0, 0.10);
@@ -95,9 +105,11 @@
             margin-bottom: 15px;
             transition: background-color 0.3s ease;
         }
+
         .action-btn:hover {
             background-color: rgba(255, 0, 0, 0.20);
         }
+
         /* Інші стилі для кольорів */
         .yellow { background-color: rgba(255, 255, 0, 0.1); border: 1px solid rgba(255, 255, 0, 0.75); }
         .cyan { background-color: rgba(0, 255, 255, 0.1); border: 1px solid rgba(0, 255, 255, 0.75); }
@@ -108,14 +120,19 @@
         .orange { background-color: rgba(255, 165, 0, 0.1); border: 1px solid rgba(255, 165, 0, 0.75); }
         .pink { background-color: rgba(255, 192, 203, 0.1); border: 1px solid rgba(255, 192, 203, 0.75); }
         .teal { background-color: rgba(0, 128, 128, 0.1); border: 1px solid rgba(0, 128, 128, 0.75); }
+
         .counter-title {
             font-size: 14px;
         }
+
         .counter-value {
             font-size: 28px;
             font-weight: bold;
             color: #FFA500;
         }
+                }
+
+
     </style>
 </head>
 <body>
@@ -174,7 +191,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
         import { getAuth } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
-        import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyActJbyO19Id6kORysVIHLfuszxpOJIAhU",
@@ -190,7 +207,6 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth();
         const db = getDatabase(app);
-        let sessionStart;
 
         window.onload = function() {
             const userId = localStorage.getItem('currentUser');
@@ -211,10 +227,6 @@
                         document.getElementById('techSupportCounter').textContent = data.techSupportCounter || 0;
                         document.getElementById('bonusCounter').textContent = data.bonusCounter || 0;
                         document.getElementById('finesCounter').textContent = data.finesCounter || 0;
-
-                        // Логування заходу в кабінет
-                        logEvent(userId, 'Захід у кабінет');
-                        sessionStart = Date.now(); // Зберегти час початку сесії
                     } else {
                         console.warn("Користувача не знайдено в базі даних!");
                     }
@@ -224,24 +236,7 @@
             }
         };
 
-        function logEvent(userId, event) {
-            const logRef = ref(db, 'logs/' + userId + '/' + Date.now());
-            set(logRef, {
-                event: event,
-                timestamp: new Date().toISOString()
-            }).catch((error) => {
-                console.error("Помилка логування:", error);
-            });
-        }
-
         function logout() {
-            const userId = localStorage.getItem('currentUser');
-            const sessionEnd = Date.now();
-            const sessionDuration = sessionEnd - sessionStart; // Тривалість сеансу в мілісекундах
-
-            logEvent(userId, 'Вихід з кабінету'); // Логування виходу
-            logSessionDuration(userId, sessionDuration); // Логування тривалості сеансу
-
             auth.signOut().then(() => {
                 localStorage.removeItem('currentUser');
                 window.location.href = 'index.html';
@@ -250,18 +245,7 @@
             });
         }
 
-        function logSessionDuration(userId, duration) {
-            const sessionLogRef = ref(db, 'session_logs/' + userId + '/' + Date.now());
-            set(sessionLogRef, {
-                duration: duration, // Тривалість у мілісекундах
-                startTime: new Date(sessionStart).toISOString(),
-                endTime: new Date().toISOString()
-            }).catch((error) => {
-                console.error("Помилка логування тривалості сеансу:", error);
-            });
-        }
-
         window.logout = logout;
     </script>
-</body>
+    </body>
 </html>
