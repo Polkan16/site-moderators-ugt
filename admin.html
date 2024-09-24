@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Адмін-панель</title>
+    <title>Admin-panel</title>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
@@ -125,8 +125,8 @@
             </div>
 
             <div class="form-group">
-                <label for="userNick">Нік користувача</label>
-                <input type="text" id="userNick" placeholder="Нік користувача" disabled>
+                <label for="nickname">Нік користувача</label>
+                <input type="text" id="nickname" placeholder="Нік користувача" disabled>
             </div>
 
             <div class="form-group">
@@ -136,45 +136,45 @@
             </div>
 
             <div class="form-group">
-                <label for="reprimands">Кількість доган</label>
-                <input type="text" id="reprimands" placeholder="Введіть кількість доган або текст">
-                <button class="update-button" onclick="updateField('reprimands')">Оновити</button>
+                <label for="reprimandCounter">Кількість доган</label>
+                <input type="text" id="reprimandCounter" placeholder="Введіть кількість доган або текст">
+                <button class="update-button" onclick="updateField('reprimandCounter')">Оновити</button>
             </div>
 
             <div class="form-group">
-                <label for="warnings">Кількість попереджень</label>
-                <input type="text" id="warnings" placeholder="Введіть кількість попереджень або текст">
-                <button class="update-button" onclick="updateField('warnings')">Оновити</button>
+                <label for="warningCounter">Кількість попереджень M.D</label>
+                <input type="text" id="warningCounter" placeholder="Введіть кількість попереджень або текст">
+                <button class="update-button" onclick="updateField('warningCounter')">Оновити</button>
             </div>
 
             <div class="form-group">
-                <label for="onlineChanges">Кількість онлайн змін</label>
-                <input type="text" id="onlineChanges" placeholder="Введіть кількість змін або текст">
-                <button class="update-button" onclick="updateField('onlineChanges')">Оновити</button>
+                <label for="onlineChangesCounter">Кількість онлайн змін</label>
+                <input type="text" id="onlineChangesCounter" placeholder="Введіть кількість змін або текст">
+                <button class="update-button" onclick="updateField('onlineChangesCounter')">Оновити</button>
             </div>
 
             <div class="form-group">
-                <label for="punishments">Кількість покарань</label>
-                <input type="text" id="punishments" placeholder="Введіть кількість покарань або текст">
-                <button class="update-button" onclick="updateField('punishments')">Оновити</button>
+                <label for="punishmentsCounter">Кількість покарань</label>
+                <input type="text" id="punishmentsCounter" placeholder="Введіть кількість покарань або текст">
+                <button class="update-button" onclick="updateField('punishmentsCounter')">Оновити</button>
             </div>
 
             <div class="form-group">
-                <label for="techSupportAnswers">Кількість відповідей тех-підтримки</label>
-                <input type="text" id="techSupportAnswers" placeholder="Введіть кількість відповідей або текст">
-                <button class="update-button" onclick="updateField('techSupportAnswers')">Оновити</button>
+                <label for="techSupportCounter">Кількість відповідей тех-підтримки</label>
+                <input type="text" id="techSupportCounter" placeholder="Введіть кількість відповідей або текст">
+                <button class="update-button" onclick="updateField('techSupportCounter')">Оновити</button>
             </div>
 
             <div class="form-group">
-                <label for="bonuses">Кількість премії</label>
-                <input type="text" id="bonuses" placeholder="Введіть кількість премії або текст">
-                <button class="update-button" onclick="updateField('bonuses')">Оновити</button>
+                <label for="bonusCounter">Кількість премії</label>
+                <input type="text" id="bonusCounter" placeholder="Введіть кількість премії або текст">
+                <button class="update-button" onclick="updateField('bonusCounter')">Оновити</button>
             </div>
 
             <div class="form-group">
-                <label for="fines">Кількість штрафів</label>
-                <input type="text" id="fines" placeholder="Введіть кількість штрафів або текст">
-                <button class="update-button" onclick="updateField('fines')">Оновити</button>
+                <label for="finesCounter">Кількість штрафів</label>
+                <input type="text" id="finesCounter" placeholder="Введіть кількість штрафів або текст">
+                <button class="update-button" onclick="updateField('finesCounter')">Оновити</button>
             </div>
         </div>
     </div>
@@ -225,13 +225,13 @@
         }
 
         // Відображення ніка користувача
-        function displayUserNick() {
+        function displaynickname() {
             const userId = document.getElementById('userId').value;
-            const userNick = document.getElementById('userNick');
+            const nickname = document.getElementById('userNick');
             const userRef = ref(db, `users/${userId}`);
             get(userRef).then((snapshot) => {
                 const userData = snapshot.val();
-                userNick.value = userData ? userData.name : ''; // Відображення ніка користувача
+                nickname.value = userData ? userData.name : ''; // Відображення ніка користувача
             });
         }
 
