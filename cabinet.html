@@ -190,6 +190,7 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth();
         const db = getDatabase(app);
+        let sessionStart;
 
         window.onload = function() {
             const userId = localStorage.getItem('currentUser');
@@ -213,6 +214,7 @@
 
                         // Логування заходу в кабінет
                         logEvent(userId, 'Захід у кабінет');
+                        sessionStart = Date.now(); // Зберегти час початку сесії
                     } else {
                         console.warn("Користувача не знайдено в базі даних!");
                     }
@@ -234,12 +236,28 @@
 
         function logout() {
             const userId = localStorage.getItem('currentUser');
+            const sessionEnd = Date.now();
+            const sessionDuration = sessionEnd - sessionStart; // Тривалість сеансу в мілісекундах
+
             logEvent(userId, 'Вихід з кабінету'); // Логування виходу
+            logSessionDuration(userId, sessionDuration); // Логування тривалості сеансу
+
             auth.signOut().then(() => {
                 localStorage.removeItem('currentUser');
                 window.location.href = 'index.html';
             }).catch((error) => {
                 console.error("Помилка виходу:", error);
+            });
+        }
+
+        function logSessionDuration(userId, duration) {
+            const sessionLogRef = ref(db, 'session_logs/' + userId + '/' + Date.now());
+            set(sessionLogRef, {
+                duration: duration, // Тривалість у мілісекундах
+                startTime: new Date(sessionStart).toISOString(),
+                endTime: new Date().toISOString()
+            }).catch((error) => {
+                console.error("Помилка логування тривалості сеансу:", error);
             });
         }
 
