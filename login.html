@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вхід / Реєстрація</title>
-    <link rel="icon" href="https://i.imgur.com/COGd36E.png" type="image/png">
+       <link rel="icon" href="https://i.imgur.com/COGd36E.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
     <style>
         body {
@@ -22,7 +22,7 @@
             height: 100vh;
         }
         .login-box {
-            background: rgba(30, 30, 30, 0.8);
+            background: rgba(30, 30, 30, 0.8); /* Трохи світліше ніж чорний */
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
@@ -34,7 +34,7 @@
             font-size: 24px;
         }
         .login-box input {
-            width: calc(100% - 30px);
+            width: calc(100% - 30px); /* Врахування відступів */
             padding: 15px;
             margin: 10px 0;
             border: none;
@@ -45,7 +45,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
         .login-box button {
-            width: calc(100% - 30px);
+            width: calc(100% - 30px); /* Врахування відступів */
             padding: 15px;
             background-color: #008080;
             border: none;
@@ -58,7 +58,7 @@
             transition: background-color 0.3s;
         }
         .login-box button:hover {
-            background-color: #007070;
+            background-color: #007070; /* Змінюємо колір при наведенні */
         }
         .toggle-link {
             margin-top: 15px;
@@ -70,6 +70,7 @@
             color: green;
             margin-top: 10px;
         }
+                }
     </style>
 </head>
 <body>
@@ -87,7 +88,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
-    import { getDatabase, ref, set, push } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyActJbyO19Id6kORysVIHLfuszxpOJIAhU",
@@ -135,7 +136,6 @@
                 .then((userCredential) => {
                     const user = userCredential.user;
                     localStorage.setItem('currentUser', user.uid);
-                    logUserAction(user.uid, 'Захід у кабінет'); // Логування дії входу
                     window.location.href = 'cabinet.html'; // Переходимо на кабінет
                 })
                 .catch((error) => {
@@ -146,17 +146,11 @@
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
-                    const registrationTime = new Date().toISOString(); // Отримуємо дату та час реєстрації
-
-                    // Записуємо дані користувача в базу даних
-                    const userRef = ref(database, 'users/' + user.uid);
-                    set(userRef, {
+                    set(ref(database, 'users/' + user.uid), {
                         nickname: nickname,
-                        email: email,
-                        registrationTimestamp: registrationTime, // Додаємо поле з часом реєстрації
                         daysCounter: 0,
-                        reprimandCounter: '0/2',
-                        warningCounter: '0/3',
+                        reprimandCounter: 0,
+                        warningCounter: 0,
                         onlineChangesCounter: 0,
                         punishmentsCounter: 0,
                         warningsCounter: 0,
@@ -164,12 +158,10 @@
                         bonusCounter: 0,
                         finesCounter: 0
                     }).then(() => {
-                        // Логування реєстрації
-                        logRegistrationAction(user.uid, nickname, email, registrationTime);
                         document.getElementById('message').textContent = 'Реєстрація пройшла успішно!';
-                        localStorage.setItem('currentUser', user.uid);
+                        localStorage.setItem('currentUser', user.uid); // Зберігаємо ID в локальному сховищі
                         setTimeout(() => {
-                            window.location.href = 'cabinet.html'; // Переходимо на кабінет
+                            window.location.href = 'cabinet.html'; // Переходимо на кабінет через 2 секунди
                         }, 2000);
                     }).catch((error) => {
                         console.error("Помилка при запису даних:", error);
@@ -181,35 +173,6 @@
                 });
         }
     };
-
-    function logRegistrationAction(userId, nickname, email, timestamp) {
-        // Логування дій реєстрації у базі даних
-        const logRef = ref(database, 'logs/registrations');
-        push(logRef, {
-            userId: userId,
-            nickname: nickname,
-            email: email,
-            registrationTimestamp: timestamp // Додаємо поле з часом реєстрації
-        }).then(() => {
-            console.log('Дані про реєстрацію збережено у базі даних.');
-        }).catch((error) => {
-            console.error("Помилка при логуванні реєстрації:", error);
-        });
-    }
-
-    function logUserAction(userId, action) {
-        // Логування дій у базі даних
-        const logRef = ref(database, 'logs/actions');
-        push(logRef, {
-            userId: userId,
-            action: action,
-            timestamp: new Date().toISOString()
-        }).then(() => {
-            console.log('Дані про дію збережено у базі даних.');
-        }).catch((error) => {
-            console.error("Помилка при логуванні дії:", error);
-        });
-    }
 </script>
-</body>
+    </body>
 </html>
