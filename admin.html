@@ -13,112 +13,168 @@
             background-size: cover;
             background-position: center;
             color: white;
-            padding: 20px;
-            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Змінено на flex-start */
             height: 100vh;
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
+            position: relative;
+            padding-top: 50px; /* Додано відступ зверху */
         }
-        h1 {
+
+        .admin-panel {
             text-align: center;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
-        }
-        .form-container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
+            max-width: 500px; /* Зменшена ширина */
+            width: 90%;
             background-color: rgba(255, 255, 255, 0.1);
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
+            padding: 30px; /* Зменшено відступи */
+            border-radius: 15px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
         }
-        .form-group {
-            margin-bottom: 15px;
+
+        h1 {
+            margin-bottom: 20px; /* Зменшено відступи */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+            font-size: 1.8em; /* Зменшений розмір шрифту */
         }
+
+        .form-group {
+            margin-bottom: 15px; /* Зменшено відступи */
+            text-align: left;
+        }
+
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
+            font-size: 1em; /* Зменшений розмір шрифту */
         }
+
         input, select {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
+            width: calc(100% - 22px);
+            padding: 10px; /* Зменшено відступи */
+            font-size: 14px; /* Зменшений розмір шрифту */
             border: 1px solid #ddd;
             border-radius: 5px;
             background-color: rgba(255, 255, 255, 0.2);
             color: white;
+            display: inline-block;
         }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
+
+        .update-button {
+            padding: 10px; /* Зменшено відступи */
+            margin-left: 5px;
+            background-color: #2196F3;
             color: white;
             border: none;
             cursor: pointer;
-            font-size: 18px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+        }
+
+        .update-button:hover {
+            background-color: #1976D2;
+        }
+
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 15px; /* Зменшено відступи */
+            background-color: #f44336;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 14px; /* Зменшений розмір шрифту */
             border-radius: 5px;
             transition: background-color 0.3s ease;
         }
-        button:hover {
-            background-color: #45a049;
+
+        .logout-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5em;
+            }
+            .admin-panel {
+                padding: 20px;
+            }
+            .logout-btn {
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <h1>Адмін-панель</h1>
+    <div class="admin-panel">
+        <h1>Адмін-панель</h1>
 
-    <div class="form-container">
-        <div class="form-group">
-            <label for="userId">Виберіть користувача</label>
-            <select id="userId">
-                <!-- Користувачі будуть завантажені динамічно -->
-            </select>
+        <div class="form-container">
+            <div class="form-group">
+                <label for="userId">Виберіть користувача</label>
+                <select id="userId">
+                    <!-- Користувачі будуть завантажені динамічно -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="daysOnPosition">Кількість днів на посаді</label>
+                <input type="number" id="daysOnPosition" placeholder="Введіть кількість днів">
+                <button class="update-button" onclick="updateField('daysOnPosition')">Оновити</button>
+            </div>
+
+            <div class="form-group">
+                <label for="reprimands">Кількість доган</label>
+                <input type="text" id="reprimands" placeholder="Введіть кількість доган або текст">
+                <button class="update-button" onclick="updateField('reprimands')">Оновити</button>
+            </div>
+
+            <div class="form-group">
+                <label for="warnings">Кількість попереджень</label>
+                <input type="text" id="warnings" placeholder="Введіть кількість попереджень або текст">
+                <button class="update-button" onclick="updateField('warnings')">Оновити</button>
+            </div>
+
+            <div class="form-group">
+                <label for="onlineChanges">Кількість онлайн змін</label>
+                <input type="text" id="onlineChanges" placeholder="Введіть кількість змін або текст">
+                <button class="update-button" onclick="updateField('onlineChanges')">Оновити</button>
+            </div>
+
+            <div class="form-group">
+                <label for="punishments">Кількість покарань</label>
+                <input type="text" id="punishments" placeholder="Введіть кількість покарань або текст">
+                <button class="update-button" onclick="updateField('punishments')">Оновити</button>
+            </div>
+
+            <div class="form-group">
+                <label for="techSupportAnswers">Кількість відповідей тех-підтримки</label>
+                <input type="text" id="techSupportAnswers" placeholder="Введіть кількість відповідей або текст">
+                <button class="update-button" onclick="updateField('techSupportAnswers')">Оновити</button>
+            </div>
+
+            <div class="form-group">
+                <label for="bonuses">Кількість премії</label>
+                <input type="text" id="bonuses" placeholder="Введіть кількість премії або текст">
+                <button class="update-button" onclick="updateField('bonuses')">Оновити</button>
+            </div>
+
+            <div class="form-group">
+                <label for="fines">Кількість штрафів</label>
+                <input type="text" id="fines" placeholder="Введіть кількість штрафів або текст">
+                <button class="update-button" onclick="updateField('fines')">Оновити</button>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label for="daysOnPosition">Кількість днів на посаді</label>
-            <input type="number" id="daysOnPosition" placeholder="Введіть кількість днів">
-        </div>
-
-        <div class="form-group">
-            <label for="reprimands">Кількість доган</label>
-            <input type="text" id="reprimands" placeholder="Введіть кількість доган або текст">
-        </div>
-
-        <div class="form-group">
-            <label for="warnings">Кількість попереджень</label>
-            <input type="text" id="warnings" placeholder="Введіть кількість попереджень або текст">
-        </div>
-
-        <div class="form-group">
-            <label for="onlineChanges">Кількість онлайн змін</label>
-            <input type="text" id="onlineChanges" placeholder="Введіть кількість змін або текст">
-        </div>
-
-        <div class="form-group">
-            <label for="punishments">Кількість покарань</label>
-            <input type="text" id="punishments" placeholder="Введіть кількість покарань або текст">
-        </div>
-
-        <div class="form-group">
-            <label for="techSupportAnswers">Кількість відповідей тех-підтримки</label>
-            <input type="text" id="techSupportAnswers" placeholder="Введіть кількість відповідей або текст">
-        </div>
-
-        <div class="form-group">
-            <label for="bonuses">Кількість премії</label>
-            <input type="text" id="bonuses" placeholder="Введіть кількість премії або текст">
-        </div>
-
-        <div class="form-group">
-            <label for="fines">Кількість штрафів</label>
-            <input type="text" id="fines" placeholder="Введіть кількість штрафів або текст">
-        </div>
-
-        <button onclick="updateUserData()">Оновити дані користувача</button>
     </div>
+
+    <button class="logout-btn" onclick="logout()">Вихід</button>
 
     <!-- Firebase SDK -->
     <script type="module">
@@ -158,56 +214,31 @@
                 for (const userId in users) {
                     const option = document.createElement('option');
                     option.value = userId;
-                    option.textContent = users[userId].nickname || users[userId].username || userId;
+                    option.textContent = users[userId].nickname || users[userId].name || userId; // Відображення псевдоніму або імені
                     userSelect.appendChild(option);
                 }
-            }).catch(error => {
-                console.error("Помилка при завантаженні користувачів: ", error);
             });
         }
 
-        // Функція для оновлення даних користувача
-        function updateUserData() {
+        // Функція для оновлення поля даних
+        function updateField(field) {
             const userId = document.getElementById('userId').value;
-            const daysOnPosition = document.getElementById('daysOnPosition').value;
-            const reprimands = document.getElementById('reprimands').value;
-            const warnings = document.getElementById('warnings').value;
-            const onlineChanges = document.getElementById('onlineChanges').value;
-            const punishments = document.getElementById('punishments').value;
-            const techSupportAnswers = document.getElementById('techSupportAnswers').value;
-            const bonuses = document.getElementById('bonuses').value;
-            const fines = document.getElementById('fines').value;
+            const value = document.getElementById(field).value;
 
             // Оновлення даних у Firebase
-            const userRef = ref(db, `/users/${userId}`);
-            update(userRef, {
-                daysOnPosition: daysOnPosition,
-                reprimands: reprimands,
-                warnings: warnings,
-                onlineChanges: onlineChanges,
-                punishments: punishments,
-                techSupportAnswers: techSupportAnswers,
-                bonuses: bonuses,
-                fines: fines
-            }).then(() => {
-                alert('Дані користувача успішно оновлено!');
-                clearForm();
-                loadUsers();
-            }).catch(error => {
-                alert('Сталася помилка: ' + error.message);
-            });
+            update(ref(db, `/users/${userId}`), { [field]: value })
+                .then(() => {
+                    alert('Дані користувача успішно оновлено!');
+                    document.getElementById(field).value = ''; // Очищення поля
+                })
+                .catch(error => {
+                    alert('Сталася помилка: ' + error.message);
+                });
         }
 
-        // Очищення форми після оновлення
-        function clearForm() {
-            document.getElementById('daysOnPosition').value = '';
-            document.getElementById('reprimands').value = '';
-            document.getElementById('warnings').value = '';
-            document.getElementById('onlineChanges').value = '';
-            document.getElementById('punishments').value = '';
-            document.getElementById('techSupportAnswers').value = '';
-            document.getElementById('bonuses').value = '';
-            document.getElementById('fines').value = '';
+        // Функція для виходу на головну сторінку
+        function logout() {
+            window.location.href = 'index.html'; // Заміни 'index.html' на потрібний URL
         }
     </script>
 
