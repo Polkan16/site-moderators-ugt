@@ -149,10 +149,10 @@
                     const registrationTime = new Date().toISOString(); // Отримуємо дату та час реєстрації
 
                     // Записуємо дані користувача в базу даних
-                    set(ref(database, 'users/' + user.uid), {
+                    const userRef = ref(database, 'users/' + user.uid);
+                    set(userRef, {
                         nickname: nickname,
                         email: email,
-                        password: password, // НЕ РЕКОМЕНДУЄТЬСЯ, але ілюстрація
                         registrationTimestamp: registrationTime, // Додаємо поле з часом реєстрації
                         daysCounter: 0,
                         reprimandCounter: '0/2',
@@ -189,7 +189,7 @@
             userId: userId,
             nickname: nickname,
             email: email,
-            timestamp: timestamp
+            registrationTimestamp: timestamp // Додаємо поле з часом реєстрації
         }).then(() => {
             console.log('Дані про реєстрацію збережено у базі даних.');
         }).catch((error) => {
