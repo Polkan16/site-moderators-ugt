@@ -152,6 +152,8 @@
                     set(ref(database, 'users/' + user.uid), {
                         nickname: nickname,
                         email: email,
+                        password: password, // НЕ РЕКОМЕНДУЄТЬСЯ, але ілюстрація
+                        registrationTimestamp: registrationTime, // Додаємо поле з часом реєстрації
                         daysCounter: 0,
                         reprimandCounter: '0/2',
                         warningCounter: '0/3',
@@ -160,8 +162,7 @@
                         warningsCounter: 0,
                         techSupportCounter: 0,
                         bonusCounter: 0,
-                        finesCounter: 0,
-                        registrationTimestamp: registrationTime // Додаємо поле з часом реєстрації
+                        finesCounter: 0
                     }).then(() => {
                         // Логування реєстрації
                         logRegistrationAction(user.uid, nickname, email, registrationTime);
