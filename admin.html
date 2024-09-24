@@ -119,9 +119,14 @@
         <div class="form-container">
             <div class="form-group">
                 <label for="userId">Виберіть користувача</label>
-                <select id="userId">
+                <select id="userId" onchange="displayUserNick()">
                     <!-- Користувачі будуть завантажені динамічно -->
                 </select>
+            </div>
+
+            <div class="form-group">
+                <label for="userNick">Нік користувача</label>
+                <input type="text" id="userNick" placeholder="Нік користувача" disabled>
             </div>
 
             <div class="form-group">
@@ -205,23 +210,33 @@
 
         function loadUsers() {
             const userSelect = document.getElementById('userId');
-            const userRef = ref(db, '/users');
-
-            get(userRef).then(snapshot => {
-                const users = snapshot.val();
-                userSelect.innerHTML = ''; // Очищення списку перед додаванням нових користувачів
+            const userRef = ref(db, 'users/');
+            get(userRef).then((snapshot) => {
+                const users = snapshot.val() || {};
+                userSelect.innerHTML = ''; // Очищення списку перед завантаженням
 
                 for (const userId in users) {
                     const option = document.createElement('option');
                     option.value = userId;
-                    option.textContent = users[userId].nickname || users[userId].name || userId; // Відображення псевдоніму або імені
+                    option.textContent = users[userId].name || userId; // Відображення псевдоніму або імені
                     userSelect.appendChild(option);
                 }
             });
         }
 
+        // Відображення ніка користувача
+        function displayUserNick() {
+            const userId = document.getElementById('userId').value;
+            const userNick = document.getElementById('userNick');
+            const userRef = ref(db, `users/${userId}`);
+            get(userRef).then((snapshot) => {
+                const userData = snapshot.val();
+                userNick.value = userData ? userData.name : ''; // Відображення ніка користувача
+            });
+        }
+
         // Функція для оновлення поля даних
-        function updateField(field) {
+        window.updateField = function(field) {
             const userId = document.getElementById('userId').value;
             const value = document.getElementById(field).value;
 
@@ -234,12 +249,12 @@
                 .catch(error => {
                     alert('Сталася помилка: ' + error.message);
                 });
-        }
+        };
 
         // Функція для виходу на головну сторінку
-        function logout() {
+        window.logout = function() {
             window.location.href = 'index.html'; // Заміни 'index.html' на потрібний URL
-        }
+        };
     </script>
 
 </body>
