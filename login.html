@@ -145,6 +145,8 @@
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     const user = userCredential.user;
+                    const registrationTime = Date.now(); // Записуємо час реєстрації
+
                     set(ref(database, 'users/' + user.uid), {
                         nickname: nickname,
                         daysCounter: 0,
@@ -155,7 +157,8 @@
                         warningsCounter: 0,
                         techSupportCounter: 0,
                         bonusCounter: 0,
-                        finesCounter: 0
+                        finesCounter: 0,
+                        registrationTimestamp: registrationTime // Додаємо поле з часом реєстрації
                     }).then(() => {
                         document.getElementById('message').textContent = 'Реєстрація пройшла успішно!';
                         localStorage.setItem('currentUser', user.uid);
