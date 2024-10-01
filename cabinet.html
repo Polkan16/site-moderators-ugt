@@ -130,6 +130,9 @@
             font-weight: bold;
             color: #FFA500;
         }
+                }
+
+
     </style>
 </head>
 <body>
@@ -187,31 +190,23 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
-        import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
-        import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyBbn-kGZZE9-QUjwZBzGWkMM-nAyDkEcUI",
-            authDomain: "moderator-room.firebaseapp.com",
-            projectId: "moderator-room",
-            storageBucket: "moderator-room.appspot.com",
-            messagingSenderId: "303470163244",
-            appId: "1:303470163244:web:1de4cc2fa78e33158b1461",
-            databaseURL: "https://moderator-room-default-rtdb.europe-west1.firebasedatabase.app/"
+            apiKey: "AIzaSyActJbyO19Id6kORysVIHLfuszxpOJIAhU",
+            authDomain: "my-site-ugt.firebaseapp.com",
+            databaseURL: "https://my-site-ugt-default-rtdb.firebaseio.com",
+            projectId: "my-site-ugt",
+            storageBucket: "my-site-ugt.appspot.com",
+            messagingSenderId: "503757810760",
+            appId: "1:503757810760:web:a5423cc90427602ea4fc7d",
+            measurementId: "G-QQRT88S72B"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth();
         const db = getDatabase(app);
-
-        function logout() {
-            signOut(auth).then(() => {
-                localStorage.removeItem('currentUser');
-                window.location.href = 'login.html';
-            }).catch((error) => {
-                console.error("Помилка при виході: ", error);
-            });
-        }
 
         window.onload = function() {
             const userId = localStorage.getItem('currentUser');
@@ -223,15 +218,7 @@
                     if (snapshot.exists()) {
                         const data = snapshot.val();
                         document.getElementById('username-display').textContent = data.nickname || userId;
-                        
-                        // Якщо є дата початку роботи, обчислюємо кількість днів на посаді
-                        if (data.startDate) {
-                            const daysOnPosition = calculateDaysOnPosition(data.startDate);
-                            document.getElementById('daysCounter').textContent = daysOnPosition;
-                        } else {
-                            document.getElementById('daysCounter').textContent = 0;
-                        }
-                        
+                        document.getElementById('daysCounter').textContent = data.daysCounter || 0;
                         document.getElementById('reprimandCounter').textContent = data.reprimandCounter || '0/2';
                         document.getElementById('warningCounter').textContent = data.warningCounter || '0/3';
                         document.getElementById('onlineChangesCounter').textContent = data.onlineChangesCounter || 0;
@@ -249,13 +236,16 @@
             }
         };
 
-        function calculateDaysOnPosition(startDate) {
-            const start = new Date(startDate);
-            const today = new Date();
-            const differenceInTime = today.getTime() - start.getTime();
-            const differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24)); // Конвертація мілісекунд у дні
-            return differenceInDays;
+        function logout() {
+            auth.signOut().then(() => {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            }).catch((error) => {
+                console.error("Помилка виходу:", error);
+            });
         }
+
+        window.logout = logout;
     </script>
-</body>
+    </body>
 </html>
