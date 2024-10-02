@@ -186,12 +186,10 @@
     </button>
 
     <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "firebase/app";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
         import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-database.js";
-        import { getAnalytics } from "firebase/analytics";
 
-        // Ваші конфігурації Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyActJbyO19Id6kORysVIHLfuszxpOJIAhU",
             authDomain: "my-site-ugt.firebaseapp.com",
@@ -203,15 +201,9 @@
             measurementId: "G-QQRT88S72B"
         };
 
-        // Ініціалізація Firebase
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
+        const auth = getAuth();
         const db = getDatabase(app);
-
-        function logout() {
-            localStorage.removeItem('currentUser');
-            window.location.href = 'login.html';
-        }
 
         window.onload = function() {
             const userId = localStorage.getItem('currentUser');
@@ -223,14 +215,6 @@
                     if (snapshot.exists()) {
                         const data = snapshot.val();
                         document.getElementById('username-display').textContent = data.nickname || userId;
-
-                        // Отримуємо дату призначення
-                        const appointmentDateString = data.appointmentDate; // Отримуємо рядок дати
-                        const startDate = new Date(appointmentDateString); // Перетворюємо рядок у Date об'єкт
-                        const currentDate = new Date();
-                        const daysInPosition = Math.floor((currentDate - startDate) / (1000 * 60 * 60 * 24)); // Обчислюємо кількість днів
-
-                        document.getElementById('daysCounter').textContent = daysInPosition || 0;
                         document.getElementById('reprimandCounter').textContent = data.reprimandCounter || '0/2';
                         document.getElementById('warningCounter').textContent = data.warningCounter || '0/3';
                         document.getElementById('onlineChangesCounter').textContent = data.onlineChangesCounter || 0;
@@ -239,6 +223,14 @@
                         document.getElementById('techSupportCounter').textContent = data.techSupportCounter || 0;
                         document.getElementById('bonusCounter').textContent = data.bonusCounter || 0;
                         document.getElementById('finesCounter').textContent = data.finesCounter || 0;
+
+                        // Отримання дати призначення
+                        const appointmentDate = new Date(data.appointmentDate);
+                        const today = new Date();
+                        const timeDifference = today - appointmentDate; // Різниця в мілісекундах
+                        const dayDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24)); // Перетворення в дні
+
+                        document.getElementById('daysCounter').textContent = dayDifference || 0;
                     } else {
                         console.warn("Користувача не знайдено в базі даних!");
                     }
@@ -247,6 +239,17 @@
                 });
             }
         };
+
+        function logout() {
+            auth.signOut().then(() => {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            }).catch((error) => {
+                console.error("Помилка виходу:", error);
+            });
+        }
+
+        window.logout = logout;
     </script>
 </body>
 </html>
