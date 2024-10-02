@@ -6,6 +6,7 @@
     <title>Вхід / Реєстрація</title>
     <link rel="icon" href="https://i.imgur.com/fQLBeQ9.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
         /* Ваші стилі */
         body {
@@ -80,12 +81,14 @@
     <input type="text" id="nickname" placeholder="Нікнейм" required style="display: none;">
     <input type="email" id="username" placeholder="Електронна пошта" required>
     <input type="password" id="password" placeholder="Пароль" required>
-    <input type="date" id="appointmentDate" placeholder="Дата призначення" required style="display: none;">
+    <input type="text" id="appointmentDate" placeholder="Дата призначення" required style="display: none;">
     <button id="submit-btn" onclick="login()">Увійти</button>
     <div class="toggle-link" onclick="toggleForm()">Немає акаунту? Реєстрація</div>
     <div class="message" id="message"></div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/uk.js"></script> <!-- Українська локалізація -->
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js";
@@ -121,6 +124,14 @@
         toggleLink.textContent = isLogin ? 'Немає акаунту? Реєстрація' : 'Є акаунт? Увійти';
         nicknameInput.style.display = isLogin ? 'none' : 'block';
         appointmentDateInput.style.display = isLogin ? 'none' : 'block'; // Дата призначення
+
+        if (!isLogin) {
+            // Ініціалізація календаря flatpickr
+            flatpickr("#appointmentDate", {
+                locale: "uk", // Використовуємо українську локалізацію
+                dateFormat: "Y-m-d", // Формат дати
+            });
+        }
     };
 
     window.login = function() {
