@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вхід / Реєстрація</title>
-       <link rel="icon" href="https://i.imgur.com/fQLBeQ9.png" type="image/png">
+    <link rel="icon" href="https://i.imgur.com/fQLBeQ9.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400&display=swap" rel="stylesheet">
     <style>
+        /* Ваші стилі */
         body {
             font-family: 'Comfortaa', sans-serif;
             background-color: black;
@@ -22,7 +23,7 @@
             height: 100vh;
         }
         .login-box {
-            background: rgba(30, 30, 30, 0.8); /* Трохи світліше ніж чорний */
+            background: rgba(30, 30, 30, 0.8);
             padding: 40px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
@@ -34,7 +35,7 @@
             font-size: 24px;
         }
         .login-box input {
-            width: calc(100% - 30px); /* Врахування відступів */
+            width: calc(100% - 30px);
             padding: 15px;
             margin: 10px 0;
             border: none;
@@ -45,7 +46,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
         .login-box button {
-            width: calc(100% - 30px); /* Врахування відступів */
+            width: calc(100% - 30px);
             padding: 15px;
             background-color: #008080;
             border: none;
@@ -58,7 +59,7 @@
             transition: background-color 0.3s;
         }
         .login-box button:hover {
-            background-color: #007070; /* Змінюємо колір при наведенні */
+            background-color: #007070;
         }
         .toggle-link {
             margin-top: 15px;
@@ -70,7 +71,6 @@
             color: green;
             margin-top: 10px;
         }
-                }
     </style>
 </head>
 <body>
@@ -80,6 +80,7 @@
     <input type="text" id="nickname" placeholder="Нікнейм" required style="display: none;">
     <input type="email" id="username" placeholder="Електронна пошта" required>
     <input type="password" id="password" placeholder="Пароль" required>
+    <input type="date" id="appointmentDate" placeholder="Дата призначення" required style="display: none;">
     <button id="submit-btn" onclick="login()">Увійти</button>
     <div class="toggle-link" onclick="toggleForm()">Немає акаунту? Реєстрація</div>
     <div class="message" id="message"></div>
@@ -112,20 +113,23 @@
         const submitBtn = document.getElementById('submit-btn');
         const toggleLink = document.querySelector('.toggle-link');
         const nicknameInput = document.getElementById('nickname');
+        const appointmentDateInput = document.getElementById('appointmentDate');
 
         isLogin = !isLogin;
         title.textContent = isLogin ? 'Вхід' : 'Реєстрація';
         submitBtn.textContent = isLogin ? 'Увійти' : 'Зареєструватися';
         toggleLink.textContent = isLogin ? 'Немає акаунту? Реєстрація' : 'Є акаунт? Увійти';
         nicknameInput.style.display = isLogin ? 'none' : 'block';
+        appointmentDateInput.style.display = isLogin ? 'none' : 'block'; // Дата призначення
     };
 
     window.login = function() {
         const email = document.getElementById('username').value;
         const password = document.getElementById('password').value;
         const nickname = document.getElementById('nickname').value;
+        const appointmentDate = document.getElementById('appointmentDate').value;
 
-        if (!email || !password || (!isLogin && !nickname)) {
+        if (!email || !password || (!isLogin && !nickname) || (!isLogin && !appointmentDate)) {
             alert('Будь ласка, заповніть всі поля');
             return;
         }
@@ -148,6 +152,7 @@
                     const user = userCredential.user;
                     set(ref(database, 'users/' + user.uid), {
                         nickname: nickname,
+                        appointmentDate: appointmentDate, // Зберігаємо дату призначення
                         daysCounter: 0,
                         reprimandCounter: 0,
                         warningCounter: 0,
@@ -174,5 +179,5 @@
         }
     };
 </script>
-    </body>
+</body>
 </html>
